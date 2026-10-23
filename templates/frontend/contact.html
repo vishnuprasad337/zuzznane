@@ -1,0 +1,233 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+
+{% block seo_title %}Contact Us | Zuzanne Handcrafted Ceremonial Consultations{% endblock %}
+{% block seo_description %}Get in touch with Zuzanne for custom baptism gowns, holy communion dresses, ceremonial consultations, and bulk orders.{% endblock %}
+
+
+{% block extra_css %}
+<style>
+{% comment %} scrolling text style start  {% endcomment %}
+    .zuz-marquee-section {
+    background: #c39d7d5c;
+    overflow: hidden;
+    padding: 22px 0;
+    border-bottom: 1px solid rgba(231,101,137,0.15);
+    border: 2px solid white;
+}
+
+.zuz-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: zuzMarquee 28s linear infinite;
+}
+
+.zuz-marquee-content {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.zuz-marquee-content span {
+    font-family: var(--font-heading);
+    font-size: 30px;
+    color: white;
+    white-space: nowrap;
+    padding: 0 24px;
+    letter-spacing: 1px;
+}
+
+.zuz-marquee-dot {
+    display: inline-flex;
+    align-items: center;
+}
+
+@keyframes zuzMarquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+.zuz-marquee-section:hover .zuz-marquee-track {
+    animation-play-state: paused;
+}
+
+@media (max-width: 767px) {
+    .zuz-marquee-content span {
+        font-size: 18px;
+        padding: 0 16px;
+    }
+}
+.zuz-marquee-dot img {
+    height: 28px;
+    width: auto;
+    display: block;
+    object-fit: contain;
+}
+
+@media (max-width: 767px) {
+    .zuz-marquee-dot img {
+        height: 20px;
+    }
+}
+
+{% comment %} scrolling text style end here {% endcomment %}
+
+
+<!-- map style start here -->
+.contact-map {
+    width: 100%;
+    height: 500px;
+    border: 0;
+    display: block;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.10);
+}
+
+@media (max-width: 767px) {
+    .contact-map {
+        height: 350px;
+    }
+}
+<!-- map style  end here -->
+
+</style>
+{% endblock %}
+
+
+{% block content %}
+    <!-- Page Title/Header Start -->
+    <div class="page-title-section section" data-bg-image="{% static 'frontend/assets/new_images/hero_section_inner.png' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+
+                    <div class="page-title wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.1s">
+                        <h1 class="title">Contact us</h1>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active">Contact us</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Page Title/Header End -->
+
+
+     <!-- Scrolling Marquee Text Start -->
+<section class="zuz-marquee-section">
+    <div class="zuz-marquee-track">
+        <div class="zuz-marquee-content">
+            <span>Sacred Threads</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne2.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+            <span>Made With Prayer</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne2.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+            <span>Bespoke Craftsmanship</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne2.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+            <span>Handcrafted Ceremonial Wear</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne2.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+        </div>
+        <div class="zuz-marquee-content" aria-hidden="true">
+            <span>Sacred Threads</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne2.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+            <span>Made With Prayer</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne2.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+            <span>Bespoke Craftsmanship</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne2.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+            <span>Handcrafted Ceremonial Wear</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne2.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+        </div>
+    </div>
+</section>
+<!-- Scrolling Marquee Text End -->
+
+    <!-- Contact Information & Map Section Start -->
+    <div class="section section-padding zuz-floral-section">
+        <div class="zuz-floral-bg zuz-bg-top-right">
+            <img src="{% static 'frontend/assets/new_images/floral2.svg' %}" alt="">
+        </div>
+        <div class="container">
+            <!-- Section Title Start -->
+            <div class="section-title2 text-center">
+                <h2 class="title wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.1s">Keep in touch with us</h2>
+                <p class="wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.2s">Feel free to reach out to us for bespoke custom orders, partnerships, or any questions about our hand-crafted baptism and communion ceremony creations.</p>
+            </div>
+            <!-- Section Title End -->
+
+            <!-- Contact Information Start -->
+            <div class="row learts-mb-n30">
+                <div class="col-lg-4 col-md-6 col-12 learts-mb-30">
+                    <div class="contact-info wow fadeInUp" data-wow-duration="1.2s" data-wow-delay="0s">
+                        <h4 class="title">ADDRESS</h4>
+                        <span class="info"><i class="icon fas fa-map-marker-alt"></i> Zuzanne Boutique, Building No:25/400, T&J Creations, Mrala, Muttom, Thodupuzha, Kerala 685587</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12 learts-mb-30">
+                    <div class="contact-info wow fadeInUp" data-wow-duration="1.2s" data-wow-delay="0.1s">
+                        <h4 class="title">CONTACT</h4>
+                        <span class="info"><i class="icon fas fa-phone-alt"></i> Phone: 7902545698 <br> WhatsApp: 7902545698</span>
+                        <span class="info"><i class="icon far fa-envelope"></i> Email: <a href="mailto:info@zuzanne.com">info@zuzanne.com</a></span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12 learts-mb-30">
+                    <div class="contact-info wow fadeInUp" data-wow-duration="1.2s" data-wow-delay="0.2s">
+                        <h4 class="title"> HOUR OF OPERATION</h4>
+                        <span class="info"><i class="icon far fa-clock"></i> Monday – Saturday : 09:00 – 18:00 <br> Sunday: Closed</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Contact Information End -->
+
+            <!-- Contact Map Start -->
+            <div class="row learts-mt-60">
+                <div class="col wow fadeInUp" data-wow-duration="1.5s" data-wow-delay="0.15s">
+                    <iframe  class="contact-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3930.7440317977084!2d76.7245219!3d9.8718293!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b07c7c4d40cc36b%3A0x5a5c2af362bde2e2!2sZuzanne!5e0!3m2!1sen!2sin!4v1782808399476!5m2!1sen!2sin" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                </div>
+            </div>
+            <!-- Contact Map End -->
+
+        </div>
+    </div>
+    <!-- Contact Information & Map Section End -->
+
+    <!-- Contact Form Section Start -->
+    <div class="section section-padding pt-0">
+        <div class="container">
+            <!-- Section Title Start -->
+            <div class="section-title2 text-center">
+                <h2 class="title wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.1s">Send a message</h2>
+            </div>
+            <!-- Section Title End -->
+
+            <div class="row">
+                <div class="col-lg-8 col-12 mx-auto">
+                    <div class="contact-form wow fadeInUp" data-wow-duration="1.4s" data-wow-delay="0.2s">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <div class="row learts-mb-n30">
+                                <div class="col-md-6 col-12 learts-mb-30"><input type="text" placeholder="First Name *" name="first_name" required></div>
+                                <div class="col-md-6 col-12 learts-mb-30"><input type="text" placeholder="Last Name *" name="last_name" required></div>
+                                <div class="col-md-6 col-12 learts-mb-30"><input type="email" placeholder="Email *" name="email" required></div>
+                                <div class="col-md-6 col-12 learts-mb-30"><input type="tel" placeholder="Phone Number *" name="phone" required></div>
+                                <div class="col-12 learts-mb-30"><textarea name="message" placeholder="Message *" required></textarea></div>
+                                <div class="col-12 text-center learts-mb-30"><button class="btn btn-dark btn-outline-hover-dark">Submit</button></div>
+                            </div>
+                        </form>
+                        <p class="form-messege"></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Contact Form Section End -->
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  new WOW({ offset: 250, mobile: true, live: true }).init();
+</script>
+{% endblock %}

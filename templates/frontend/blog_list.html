@@ -1,0 +1,268 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+
+{% block seo_title %}Our Blog – Ceremonial Traditions, Styling Guides & Preparation Tips | Zuzanne{% endblock %}
+{% block seo_description %}Read Zuzanne's blog for parenting tips, baptismal traditions, holy communion preparation, and styling guides for your child's sacred milestone celebrations.{% endblock %}
+
+
+{% block extra_css %}
+<style>
+{% comment %} scrolling text style start  {% endcomment %}
+    .zuz-marquee-section {
+    background: #c39d7d5c;
+    overflow: hidden;
+    padding: 22px 0;
+    border-bottom: 1px solid rgba(231,101,137,0.15);
+    border: 2px solid white;
+}
+
+.zuz-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: zuzMarquee 28s linear infinite;
+}
+
+.zuz-marquee-content {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.zuz-marquee-content span {
+    font-family: var(--font-heading);
+    font-size: 30px;
+    color: white;
+    white-space: nowrap;
+    padding: 0 24px;
+    letter-spacing: 1px;
+}
+
+.zuz-marquee-dot {
+    display: inline-flex;
+    align-items: center;
+}
+
+@keyframes zuzMarquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+.zuz-marquee-section:hover .zuz-marquee-track {
+    animation-play-state: paused;
+}
+
+@media (max-width: 767px) {
+    .zuz-marquee-content span {
+        font-size: 18px;
+        padding: 0 16px;
+    }
+}
+.zuz-marquee-dot img {
+    height: 28px;
+    width: auto;
+    display: block;
+    object-fit: contain;
+}
+
+@media (max-width: 767px) {
+    .zuz-marquee-dot img {
+        height: 20px;
+    }
+}
+
+{% comment %} scrolling text style end here {% endcomment %}
+
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Page Title/Header Start -->
+    <div class="page-title-section section" data-bg-image="{% static 'frontend/assets/new_images/hero_section_inner.png' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+
+                    <div class="page-title wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.1s">
+                        <h1 class="title">Blog</h1>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active">Blog</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Page Title/Header End -->
+
+
+     <!-- Scrolling Marquee Text Start -->
+<section class="zuz-marquee-section">
+    <div class="zuz-marquee-track">
+        <div class="zuz-marquee-content">
+            <span>Sacred Threads</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne2.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+            <span>Made With Prayer</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne2.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+            <span>Bespoke Craftsmanship</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne2.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+            <span>Handcrafted Ceremonial Wear</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne2.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+        </div>
+        <div class="zuz-marquee-content" aria-hidden="true">
+            <span>Sacred Threads</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne2.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+            <span>Made With Prayer</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne2.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+            <span>Bespoke Craftsmanship</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne2.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+            <span>Handcrafted Ceremonial Wear</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne2.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+        </div>
+    </div>
+</section>
+<!-- Scrolling Marquee Text End -->
+
+
+    <!-- Blog Section Start -->
+    <div class="section section-padding zuz-floral-section">
+        <div class="zuz-floral-bg zuz-bg-top-right">
+            <img src="{% static 'frontend/assets/new_images/floral2.svg' %}" alt="">
+        </div>
+        <div class="container">
+            <div class="row learts-mb-n50">
+
+                <div class="col-xl-9 col-lg-8 col-12 learts-mb-50">
+                    <div class="row learts-mb-n40" id="blog-grid-container">
+                        {% for blog in blogs %}
+                        <div class="col-md-6 col-12 learts-mb-40">
+                            <div class="blog wow fadeInUp" data-wow-duration="1.2s" data-wow-delay="0.1s">
+                                <div class="image">
+                                    {% if blog.image %}
+                                    <a href="{% url 'blog_detail' blog.slug %}"><img src="{{ blog.image.url }}" alt="{{ blog.title }}"></a>
+                                    {% endif %}
+                                </div>
+                                <div class="content">
+                                    <ul class="meta">
+                                        <li><i class="far fa-calendar"></i><a href="{% url 'blog_detail' blog.slug %}">{{ blog.created_at|date:"F d, Y" }}</a></li>
+                                    </ul>
+                                    <h5 class="title"><a href="{% url 'blog_detail' blog.slug %}">{{ blog.title }}</a></h5>
+                                    <div class="desc">
+                                        <p>{{ blog.description|truncatewords:12| safe}}</p>
+                                    </div>
+                                    <a href="{% url 'blog_detail' blog.slug %}" class="link">Read More</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    {% if blogs.has_next %}
+                    <div class="row learts-mt-50 wow fadeInUp" id="load-more-container" data-wow-duration="1.2s" data-wow-delay="0.1s">
+                        <div class="col text-center">
+                            <button id="load-more-btn" data-next-page="{{ blogs.next_page_number }}" class="btn btn-dark btn-outline-hover-dark">Load More</button>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="col-xl-3 col-lg-4 col-12 learts-mb-10 wow fadeInRight" data-wow-duration="1.4s" data-wow-delay="0.2s">
+                    <!-- Blog Post Widget Start -->
+                    <div class="single-widget learts-mb-40">
+                        <h3 class="widget-title product-filter-widget-title">Recent Post</h3>
+                        <ul class="widget-blogs">
+                            {% for recent in recent_blogs %}
+                            <li class="widget-blog">
+                                <div class="thumbnail">
+                                    {% if recent.image %}
+                                    <a href="{% url 'blog_detail' recent.slug %}"><img src="{{ recent.image.url }}" alt="Widget Blog Post"></a>
+                                    {% endif %}
+                                </div>
+                                <div class="content">
+                                    <h6 class="title"><a href="{% url 'blog_detail' recent.slug %}">{{ recent.title }}</a></h6>
+                                    <span class="date">{{ recent.created_at|date:"F d, Y" }}</span>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <!-- Blog Post Widget End -->
+
+                    <!-- Banner widget Start -->
+                    <div class="single-widget learts-mb-40">
+                        <div class="widget-banner">
+                            <img src="{% static 'frontend/assets/new_images/widget-banner.png' %}" alt="">
+                        </div>
+                    </div>
+                    <!-- Banner widget End -->
+
+                    <!-- Collections Widget Start -->
+                    <div class="single-widget learts-mb-40">
+                        <h3 class="widget-title product-filter-widget-title">Our Collections</h3>
+                        <ul class="widget-list">
+                            {% for col in collections_tree %}
+                            <li><a href="{% url 'collection' col.slug %}">{{ col.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <!-- Collections Widget End -->
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <!-- Blog Section End -->
+
+    
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  new WOW({ offset: 250, mobile: true, live: true }).init();
+
+  $(document).ready(function() {
+      $('#load-more-btn').on('click', function(e) {
+          e.preventDefault();
+          var btn = $(this);
+          var nextPage = btn.attr('data-next-page');
+          var originalText = btn.text();
+
+          if (!nextPage) return;
+
+          btn.text('Loading...');
+          btn.prop('disabled', true);
+
+          $.ajax({
+              url: window.location.pathname + '?page=' + nextPage,
+              type: 'GET',
+              headers: {
+                  'X-Requested-With': 'XMLHttpRequest'
+              },
+              success: function(response) {
+                  if (response.html) {
+                      $('#blog-grid-container').append(response.html);
+                      
+                      // Re-initialize WOW on new elements
+                      new WOW({ offset: 250, mobile: true, live: true }).init();
+                  }
+
+                  if (response.has_next) {
+                      btn.attr('data-next-page', response.next_page_number);
+                      btn.text(originalText);
+                      btn.prop('disabled', false);
+                  } else {
+                      $('#load-more-container').remove();
+                  }
+              },
+              error: function() {
+                  alert('Error loading more blogs. Please try again.');
+                  btn.text(originalText);
+                  btn.prop('disabled', false);
+              }
+          });
+      });
+  });
+</script>
+{% endblock %}

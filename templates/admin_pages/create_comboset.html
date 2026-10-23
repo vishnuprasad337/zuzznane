@@ -1,0 +1,282 @@
+{% extends "admin_pages/base.html" %}
+{% load static %}
+
+{% block title %}{% if comboset %}Edit Comboset{% else %}Add Comboset{% endif %} | Admin Dashboard{% endblock %}
+
+{% block extra_css %}
+<style>
+.selected-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 20px;
+    padding: 4px 10px 4px 4px;
+    font-size: 13px;
+    color: #1e1b4b;
+}
+
+.selected-chip img,
+.selected-chip .chip-noimg {
+    width: 24px;
+    height: 24px;
+    object-fit: cover;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.selected-chip .chip-noimg {
+    background: #d1d5db;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #6b7280;
+}
+
+.selected-chip .chip-close {
+    cursor: pointer;
+    color: #6366f1;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1;
+    padding: 0 2px;
+}
+
+.selected-chip .chip-close:hover {
+    color: #dc2626;
+}
+
+.product-check-row {
+    padding: 6px 4px;
+    border-radius: 6px;
+}
+
+.product-check-row:hover {
+    background: #f9fafb;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard sp_bottom_100">
+    <div class="container-fluid full__width__padding">
+        <div class="row">
+            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+                <div class="dashboard__section__title">
+                    <h4 class="mb-0">{% if comboset %}Edit Comboset{% else %}Add Comboset{% endif %}</h4>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <form method="post" enctype="multipart/form-data" class="needs-validation form-wrapper" novalidate>
+                            {% csrf_token %}
+                            <div class="row">
+
+                                <!-- Products (multi-select with image + selected chips) -->
+                                <div class="col-12 mb-4">
+                                    <label class="form-label">Select Products <span class="text-danger">*</span></label>
+
+                                    <!-- Selected products preview strip -->
+                                    <div id="selected-products-preview" class="d-flex flex-wrap gap-2 mb-2"></div>
+
+                                    <div class="border rounded p-3" style="max-height: 320px; overflow-y: auto;">
+                                        {% for product in form.products.field.queryset %}
+                                            <div class="form-check d-flex align-items-center gap-2 mb-2 product-check-row">
+                                                <input
+                                                    class="form-check-input mt-0"
+                                                    type="checkbox"
+                                                    name="products"
+                                                    value="{{ product.id }}"
+                                                    id="product_{{ product.id }}"
+                                                    data-name="{{ product.name }}"
+                                                    data-image="{% if product.images.first %}{{ product.images.first.image.url }}{% endif %}"
+                                                    {% if comboset and product in comboset.products.all %}checked{% endif %}
+                                                >
+                                                {% if product.images.first %}
+                                                    <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}"
+                                                         style="width: 36px; height: 36px; object-fit: cover; border-radius: 6px; border: 1px solid #e5e7eb;">
+                                                {% else %}
+                                                    <div style="width: 36px; height: 36px; border-radius: 6px; background: #f3f4f6; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; color: #9ca3af; border: 1px dashed #d1d5db;">
+                                                        <i class="icofont-image"></i>
+                                                    </div>
+                                                {% endif %}
+                                                <label class="form-check-label mb-0" for="product_{{ product.id }}">
+                                                    {{ product.name }}
+                                                </label>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="invalid-feedback d-block" id="products-error" style="display:none;"></div>
+                                </div>
+
+                                <!-- Combo Name -->
+                                <div class="col-12 mb-4">
+                                    <label for="combo_name" class="form-label">Combo Name <span class="text-danger">*</span></label>
+                                    <input type="text" name="combo_name" id="combo_name" class="form-control modern-input" value="{{ comboset.combo_name|default:'' }}" placeholder="Enter combo name" required>
+                                    <div class="invalid-feedback">Please provide a combo name.</div>
+                                </div>
+
+                                <!-- Description -->
+                                <div class="col-12 mb-4">
+                                    <label for="description" class="form-label">Description</label>
+                                    <textarea name="description" id="description" class="form-control modern-input" rows="6" placeholder="Optional description">{{ comboset.description|default:'' }}</textarea>
+                                </div>
+
+                                <!-- Image -->
+                                <div class="col-12 mb-4">
+                                    <label for="image" class="form-label">Image {% if not comboset %}<span class="text-danger">*</span>{% endif %}</label>
+                                    <input type="file" name="image" id="image" class="form-control modern-input" accept="image/*" {% if not comboset %}required{% endif %}>
+                                    {% if comboset and comboset.image %}
+                                        <div class="mt-3">
+                                            <p class="mb-2">Current Image:</p>
+                                            <img src="{{ comboset.image.url }}" alt="Comboset Image" class="img-thumbnail" style="height: 100px; width: 100px; object-fit: cover;">
+                                            <p class="text-muted mt-2 small">Uploading a new image will replace the existing one.</p>
+                                        </div>
+                                    {% endif %}
+                                    <div class="invalid-feedback">Please upload an image.</div>
+                                </div>
+
+                                <!-- Submit -->
+                                <div class="col-12 mt-4">
+                                    <div class="dashboard__form__button">
+                                        <button type="submit" class="default__button">{% if comboset %}Save Changes{% else %}Add Comboset{% endif %}</button>
+                                        <a href="{% url 'comboset_list' %}" class="default__button" style="background: #6c757d;">Cancel</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector('form');
+
+    const fields = {
+        combo_name: {
+            element: document.getElementById('combo_name'),
+            error: document.createElement('div'),
+            validate: v => !v.trim() ? "Combo name is required." : null
+        },
+        image: {
+            element: document.getElementById('image'),
+            error: document.createElement('div'),
+            validate: files => {
+                const isEdit = {% if comboset %}true{% else %}false{% endif %};
+                if (!isEdit && (!files || files.length === 0)) return "Image is required.";
+                return null;
+            }
+        }
+    };
+
+    Object.values(fields).forEach(f => {
+        f.error.classList.add('text-danger', 'mt-1');
+        f.element.insertAdjacentElement('afterend', f.error);
+    });
+
+    function validateField(name) {
+        const f = fields[name];
+        let value = f.element.type === 'file' ? f.element.files : f.element.value;
+        const error = f.validate(value);
+        f.error.textContent = error || '';
+        f.error.style.display = error ? 'block' : 'none';
+        f.element.classList.toggle('field-error-border', !!error);
+        return !error;
+    }
+
+    Object.keys(fields).forEach(name => {
+        const f = fields[name];
+        if (f.element.type === 'file') {
+            f.element.addEventListener('change', () => validateField(name));
+        } else {
+            f.element.addEventListener('blur', () => validateField(name));
+            f.element.addEventListener('change', () => validateField(name));
+            f.element.addEventListener('input', () => { if (f.error.textContent) validateField(name); });
+        }
+    });
+
+    // ---------- Products: checkbox + selected chips ----------
+    const previewContainer = document.getElementById('selected-products-preview');
+    const productCheckboxes = document.querySelectorAll('input[name="products"]');
+
+    function renderChips() {
+        previewContainer.innerHTML = '';
+        productCheckboxes.forEach(cb => {
+            if (cb.checked) {
+                const chip = document.createElement('div');
+                chip.className = 'selected-chip';
+                chip.dataset.for = cb.id;
+
+                const imgUrl = cb.dataset.image;
+                const imgHtml = imgUrl
+                    ? `<img src="${imgUrl}" alt="">`
+                    : `<span class="chip-noimg"><i class="icofont-image"></i></span>`;
+
+                chip.innerHTML = `
+                    ${imgHtml}
+                    <span>${cb.dataset.name}</span>
+                    <span class="chip-close" title="Remove">&times;</span>
+                `;
+
+                chip.querySelector('.chip-close').addEventListener('click', () => {
+                    cb.checked = false;
+                    renderChips();
+                    validateProducts();
+                });
+
+                previewContainer.appendChild(chip);
+            }
+        });
+    }
+
+    function validateProducts() {
+        const checked = document.querySelectorAll('input[name="products"]:checked');
+        const errorDiv = document.getElementById('products-error');
+        if (checked.length === 0) {
+            errorDiv.textContent = "Please select at least one product.";
+            errorDiv.style.display = 'block';
+            return false;
+        }
+        errorDiv.textContent = '';
+        errorDiv.style.display = 'none';
+        return true;
+    }
+
+    productCheckboxes.forEach(cb => {
+        cb.addEventListener('change', () => {
+            renderChips();
+            validateProducts();
+        });
+    });
+
+    // Initial render (handles edit mode with pre-checked products)
+    renderChips();
+
+    // ---------- Form submit ----------
+    form.addEventListener('submit', function (e) {
+        const otherFieldsValid = Object.keys(fields).every(validateField);
+        const productsValid = validateProducts();
+
+        if (!otherFieldsValid || !productsValid) {
+            e.preventDefault();
+
+            if (!productsValid) {
+                document.getElementById('products-error').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+                const first = Object.keys(fields).find(f => fields[f].error.textContent);
+                if (first) fields[first].element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+    });
+});
+</script>
+{% endblock %}

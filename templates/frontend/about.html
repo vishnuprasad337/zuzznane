@@ -1,0 +1,1093 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+
+{% block seo_title %}About Us | Zuzanne – Our Ceremonial Garments Story{% endblock %}
+{% block seo_description %}Learn about Zuzanne, a premium Christian ceremonial clothing brand. Discover our story of crafting premium, faith-inspired, and handcrafted baptism and holy communion wear.{% endblock %}
+
+{% block extra_css %}
+<style>
+    .video-banner {
+        position: relative;
+        min-height: 480px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .zuz-video-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    .zuz-video-bg iframe {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        width: 177.77vmax;
+        height: 56.25vmax;
+        transform: translate(-50%, -50%);
+        opacity: 0.85;
+    }
+
+    /* Dark overlay to make the play button pop and ensure contrast */
+    .video-banner::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.25);
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    .video-banner .content {
+        position: relative;
+        z-index: 3;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .video-banner .content a.video-popup {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    .video-banner .content a.video-popup img {
+        width: 94px;
+        height: 94px;
+        transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        border-radius: 50% !important;
+    }
+
+    .video-banner .content a.video-popup:hover img {
+        transform: scale(1.12);
+        box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+    }
+
+
+    {% comment %} scrolling text style start  {% endcomment %}
+    .zuz-marquee-section {
+    background: #c39d7d5c;;
+    overflow: hidden;
+    padding: 22px 0;
+    border-bottom: 1px solid rgba(231,101,137,0.15);
+    border: 2px solid white;
+}
+
+.zuz-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: zuzMarquee 28s linear infinite;
+}
+
+.zuz-marquee-content {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.zuz-marquee-content span {
+    font-family: var(--font-heading);
+    font-size: 28px;
+    color: white;
+    white-space: nowrap;
+    padding: 0 24px;
+    letter-spacing: 1px;
+}
+
+.zuz-marquee-dot {
+    display: inline-flex;
+    align-items: center;
+}
+
+@keyframes zuzMarquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+.zuz-marquee-section:hover .zuz-marquee-track {
+    animation-play-state: paused;
+}
+
+@media (max-width: 767px) {
+    .zuz-marquee-content span {
+        font-size: 18px;
+        padding: 0 16px;
+    }
+}
+.zuz-marquee-dot img {
+    height: 28px;
+    width: auto;
+    display: block;
+    object-fit: contain;
+}
+
+@media (max-width: 767px) {
+    .zuz-marquee-dot img {
+        height: 20px;
+    }
+}
+
+{% comment %} scrolling text style end here {% endcomment %}
+
+
+{% comment %} owner story section style start {% endcomment %}
+
+/* === Owner Story Sticky Section === */
+.zuz-owner-section {
+    position: relative;
+    background: #fff;
+}
+
+.zuz-owner-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+}
+
+.zuz-owner-sticky {
+    position: sticky;
+    top: 100px;
+    align-self: start;
+}
+
+.zuz-owner-image-wrap {
+    overflow: hidden;
+    border-radius: var(--zuz-image-radius, 0px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+}
+
+.zuz-owner-image-wrap img {
+    width: 100%;
+    height: 85vh;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+}
+
+.zuz-owner-content {
+    padding-top: 20px;
+    padding-bottom: 0px;
+}
+
+.zuz-owner-content .sub-title {
+    font-size: 20px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: #b98795;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.zuz-owner-content .title {
+    font-size: 46px;
+    font-weight: 400;
+    color: #222;
+    line-height: 1.2;
+    margin-bottom: 24px;
+}
+
+.zuz-owner-content .desc {
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 1.9;
+    color: #555;
+    margin-bottom: 28px;
+}
+
+.zuz-owner-signature {
+    font-family: var(--font-heading);
+    font-weight:400;
+    font-size: 36px;
+    color: #b98795;
+    margin-top: 30px;
+}
+
+.zuz-owner-role {
+    font-size: 18px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #999;
+    margin-top: 4px;
+}
+
+@media (max-width: 991px) {
+    .zuz-owner-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .zuz-owner-sticky {
+        position: relative;
+        top: auto;
+    }
+
+    .zuz-owner-image-wrap img {
+        height: 55vh;
+    }
+
+    .zuz-owner-content .title {
+        font-size: 30px;
+    }
+
+    .zuz-owner-content {
+        padding-top: 0;
+    }
+}
+{% comment %} owner story style end  {% endcomment %}
+
+{% comment %} brand story style start {% endcomment %}
+{% comment %} .zuz-brand-story-section {
+    
+    position: relative;
+}
+
+.zuz-brand-story-card {
+    background: #fff;
+    padding: 55px 45px;
+    border-radius: 22px;
+    box-shadow: 0 18px 45px rgba(0,0,0,0.06);
+    border: 1px solid rgba(185,135,149,0.18);
+}
+
+.zuz-brand-story-card .sub-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: #b98795;
+    display: block;
+    margin-bottom: 16px;
+}
+
+.zuz-brand-story-card h2 {
+    font-size: 36px;
+    line-height: 1.25;
+    font-weight: 400;
+    color: #222;
+    margin-bottom: 18px;
+}
+
+.zuz-verse {
+    color: #b98795;
+    font-size: 15px;
+    margin-bottom: 0;
+}
+
+.zuz-brand-story-content p {
+    font-size: 16px;
+    line-height: 1.9;
+    color: #555;
+    margin-bottom: 18px;
+}
+
+.zuz-brand-story-content h5 {
+    font-size: 20px;
+    line-height: 1.5;
+    color: #b98795;
+    font-weight: 500;
+    margin-top: 25px;
+}
+
+@media (max-width: 767px) {
+    .zuz-brand-story-card {
+        padding: 35px 25px;
+    }
+
+    .zuz-brand-story-card h2 {
+        font-size: 28px;
+    }
+
+    .zuz-brand-story-content p {
+        font-size: 15px;
+    }
+} {% endcomment %}
+
+{% comment %} brand story overlap section start {% endcomment %}
+.zuz-story-section {
+    position: relative;
+    background: #fff;
+}
+
+.zuz-story-image-wrap {
+    position: relative;
+    width: 100%;
+    padding-bottom: 40px;
+    padding-right: 40px;
+}
+
+.zuz-story-img-main {
+    width: 78%;
+    border-radius: var(--zuz-image-radius, 0px);
+    overflow: hidden;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.1);
+}
+
+.zuz-story-img-main img {
+    width: 100%;
+    height: 480px;
+    object-fit: cover;
+    display: block;
+}
+
+.zuz-story-img-secondary {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 52%;
+    border-radius: var(--zuz-image-radius, 0px);
+    overflow: hidden;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15);
+    border: 6px solid #fff;
+}
+
+.zuz-story-img-secondary img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    display: block;
+}
+
+.zuz-story-content .sub-title {
+    font-size: 20px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: #b98795;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.zuz-story-content .title {
+    font-size: 46px;
+    font-weight: 400;
+    color: #222;
+    line-height: 1.25;
+    margin-bottom: 24px;
+}
+
+.zuz-story-content p {
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 1.9;
+    color: #555;
+    margin-bottom: 18px;
+}
+
+.zuz-story-tagline {
+    font-family: var(--font-heading);
+    font-size: 24px;
+    font-weight:400;
+    color: #b98795;
+    line-height: 1.4;
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(185, 135, 149, 0.2);
+}
+
+@media (max-width: 991px) {
+    .zuz-story-image-wrap {
+        padding-right: 15px;
+        padding-bottom: 60px;
+        margin-bottom: 20px;
+    }
+
+    .zuz-story-img-main img {
+        height: 360px;
+    }
+
+    .zuz-story-img-secondary {
+        width: 60%;
+    }
+
+    .zuz-story-img-secondary img {
+        height: 220px;
+    }
+
+    .zuz-story-content .title {
+        font-size: 30px;
+    }
+}
+
+.zuz-story-image-wrap .zuz-story-img-main {
+    position: relative;
+    width: 78%;
+    margin: 0;
+    border-radius: var(--zuz-image-radius, 0px);
+    overflow: hidden;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.1);
+}
+
+.zuz-story-image-wrap .zuz-story-img-secondary {
+    position: absolute !important;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    top: auto;
+    width: 52%;
+    margin: 0;
+    z-index: 2;
+    border-radius: var(--zuz-image-radius, 0px);
+    overflow: hidden;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15);
+    border: 6px solid #fff;
+}
+
+.zuz-story-section .row {
+    align-items: flex-start; /* important: overrides align-items-center so sticky can work */
+}
+
+.zuz-story-sticky-col {
+    position: sticky;
+    top: 100px; /* adjust to match your header height */
+    align-self: flex-start;
+}
+{% comment %} brand story overlap section end {% endcomment %}
+
+{% comment %} brand story style end  {% endcomment %}
+
+{% comment %} about section style start  {% endcomment %}
+/* About Section Typography */
+.about-us4 .sub-title{
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: #b98795;
+}
+
+.about-us4 .title{
+    font-size: 46px;
+    font-weight: 800;
+    line-height: 1.2;
+    font-weight: 500;
+    margin-bottom: 25px;
+}
+
+.about-us4 .desc p{
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 2;
+    color: #555;
+}
+
+.icon-box4 .content .title{
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.icon-box4 .content p{
+    font-size: 18px;
+    line-height: 1.8;
+    color: #666;
+}
+@media (max-width: 767px){
+
+    .about-us4 .sub-title{
+        font-size: 14px;
+    }
+
+    .about-us4 .title{
+        font-size: 32px;
+    }
+
+    .about-us4 .desc p{
+        font-size: 17px;
+        line-height: 1.9;
+    }
+
+    .icon-box4 .content .title{
+        font-size: 18px;
+    }
+
+    .icon-box4 .content p{
+        font-size: 16px;
+        line-height: 1.8;
+    }
+
+}
+{% comment %} about section style end  {% endcomment %}
+
+
+{% comment %} about-7 sticky image section start {% endcomment %}
+ .zuz-about7-section .row {
+    align-items: flex-start; /* overrides align-items-center so sticky works */
+}
+
+.zuz-about7-sticky-col {
+    position: sticky;
+    top: 100px; /* match your header height, same as other sticky sections */
+    align-self: flex-start;
+}
+
+@media (max-width: 991px) {
+    .zuz-about7-sticky-col {
+        position: relative;
+        top: auto;
+    }
+} 
+{% comment %} about-7 sticky image section end {% endcomment %}
+
+</style>
+{% endblock %}
+
+{% block content %}
+    <!-- Page Title/Header Start -->
+    <div class="page-title-section section" data-bg-image="{% static 'frontend/assets/new_images/hero_section_inner.png' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+
+                    <div class="page-title">
+                        <h1 class="title">About Zuzanne</h1>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active">About us</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Page Title/Header End -->
+
+
+    <!-- Scrolling Marquee Text Start -->
+<section class="zuz-marquee-section">
+    <div class="zuz-marquee-track">
+        <div class="zuz-marquee-content">
+            <span>Sacred Threads</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne2.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+            <span>Made With Prayer</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne2.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+            <span>Bespoke Craftsmanship</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne2.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+            <span>Handcrafted Ceremonial Wear</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne2.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+        </div>
+        <div class="zuz-marquee-content" aria-hidden="true">
+            <span>Sacred Threads</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne2.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+            <span>Made With Prayer</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne2.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+            <span>Bespoke Craftsmanship</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne2.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+            <span>Handcrafted Ceremonial Wear</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne2.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+        </div>
+    </div>
+</section>
+<!-- Scrolling Marquee Text End -->
+
+
+   <!-- Owner Story Sticky Section Start -->
+<div class="section section-padding zuz-owner-section">
+    <div class="container">
+        <div class="zuz-owner-grid">
+
+            <!-- Left: Sticky owner photo -->
+            <div class="zuz-owner-sticky">
+                <div class="zuz-owner-image-wrap zuz-image-anime zuz-reveal">
+                    <img src="{% static 'frontend/assets/images/hero-section/zuzanne-founder.png' %}" alt="Teena Juby - Founder of Zuzanne">
+                </div>
+            </div>
+
+            <!-- Right: Scrolling content -->
+            <div class="zuz-owner-content">
+                <span class="sub-title wow fadeInUp" data-wow-duration="1.2s" data-wow-delay="0.1s">Meet Our Founder</span>
+                <h2 class="title wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.2s">A Journey Stitched with Faith and Love</h2>
+
+                <p class="desc wow fadeInUp" data-wow-duration="1.2s" data-wow-delay="0.3s">
+                    Teena Juby is the Founder and CEO of Zuzanne, a premium Indian brand dedicated to creating elegant sacramental attire for Baptism, First Holy Communion, and other cherished Christian celebrations.
+                </p>
+
+                <p class="desc wow fadeInUp" data-wow-duration="1.2s" data-wow-delay="0.35s">
+                    With a postgraduate degree in Fashion Design, Teena founded Zuzanne in 2016 with a vision to create timeless garments that beautifully honor life’s most sacred moments. Inspired by her faith in God and devotion to Mother Mary, every Zuzanne creation reflects purity, elegance, and exceptional craftsmanship.
+                </p>
+
+                <p class="desc wow fadeInUp" data-wow-duration="1.2s" data-wow-delay="0.4s">
+                    Beyond her entrepreneurial journey, Teena is the wife of Juby Isac, Managing Director of Lunar Rubber Pvt. Ltd., a devoted mother of five daughters, and a Partner at Prathal Food Products. She believes that faith, family, and purpose are the strongest foundations for meaningful success and lasting impact.
+                </p>
+
+                <p class="desc wow fadeInUp" data-wow-duration="1.2s" data-wow-delay="0.4s">
+                    Today, Zuzanne is trusted by families across India and around the world for its handcrafted ceremonial wear, blending tradition, premium quality, and timeless elegance.
+                </p>
+
+                <p class="desc wow fadeInUp" data-wow-duration="1.2s" data-wow-delay="0.4s">
+                    “Every garment we create is stitched with faith, Prayerfully crafted with love, and designed to become a treasured memory for generations.”
+                </p>
+
+                <div class="zuz-owner-signature wow fadeInUp" data-wow-duration="1.2s" data-wow-delay="0.45s">Teena Juby</div>
+                <div class="zuz-owner-role wow fadeInUp" data-wow-duration="1.2s" data-wow-delay="0.5s">Founder & Lead Designer, Zuzanne</div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Owner Story Sticky Section End -->
+
+
+
+<!-- Brand Story Overlap Section Start -->
+<div class="section section-padding zuz-story-section">
+    <div class="zuz-floral-bg zuz-bg-top-right">
+        <img src="{% static 'frontend/assets/new_images/floral2.svg' %}" alt="">
+    </div>
+    <div class="container">
+        <div class="row learts-mb-n30">  <!-- removed align-items-center -->
+
+            <div class="col-lg-6 col-12 learts-mb-30 wow fadeInLeft zuz-story-sticky-col" data-wow-duration="1.5s" data-wow-delay="0.1s">
+                <div class="zuz-story-image-wrap">
+                    <figure class="zuz-story-img-main zuz-image-anime zuz-reveal m-0">
+                        <img src="{% static 'frontend/assets/new_images/Brand-story-1.png' %}" alt="Zuzanne handcrafted ceremonial wear">
+                    </figure>
+                    <figure class="zuz-story-img-secondary zuz-image-anime zuz-reveal m-0">
+                        <img src="{% static 'frontend/assets/new_images/Brand-story-2.png' %}" alt="Zuzanne baptism gown detail">
+                    </figure>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-12 learts-mb-30 wow fadeInRight" data-wow-duration="1.5s" data-wow-delay="0.25s">
+                <div class="zuz-story-content">
+                    <span class="sub-title">Since 2016</span>
+                    <h2 class="title">Rooted in Faith. Crafted with Grace.</h2>
+
+                    <p>Founded in 2016, Zuzanne is a unique brand dedicated to crafting premium christening outfits and ceremonial attire for babies. Inspired by Psalm 92:12–14, Zuzanne symbolizes a plant in the House of God—firmly rooted in faith, blooming fresh and flourishing in the loving presence of Mother Mary.</p>
+
+                    <p>Every Zuzanne creation reflects the purity, grace, and sacredness of a child's first step into the Christian faith. Combining timeless craftsmanship with elegant design, we create heirloom-quality christening gowns, baptism robes, ceremonial suits, rompers, and accessories that honor this precious occasion.</p>
+
+                    <p>Each garment is thoughtfully handcrafted using premium fabrics, delicate lace, intricate embroidery, and meticulous attention to detail, ensuring exceptional comfort and lasting beauty. From premature baby gowns to toddler christening outfits for both boys and girls, every piece is designed to become a treasured part of your family's spiritual journey.</p>
+
+                    <p>For nearly a decade, Zuzanne has been trusted by families to make christenings and other sacred ceremonies truly memorable. More than a clothing brand, Zuzanne represents faith, tradition, and the joy of celebrating life's most meaningful moments.</p>
+
+                    <div class="zuz-story-tagline">
+                        Zuzanne – Rooted in Faith. Crafted with Grace. Cherished for Generations.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Brand Story Overlap Section End -->
+
+
+
+
+ <!-- About Section Start -->
+    <div class="section section-padding zuz-floral-section">
+        <div class="zuz-floral-bg zuz-bg-top-right">
+            <img src="{% static 'frontend/assets/new_images/floral2.svg' %}" alt="">
+        </div>
+        <div class="container">
+            <div class="row learts-mb-n30">
+                <div class="col-lg-4 col-12 align-self-center learts-mb-30 wow fadeInLeft" data-wow-duration="1.3s" data-wow-delay="0.1s">
+                    <div class="about-us4">
+                        <span class="sub-title">Zuzanne</span>
+                        <h2 class="title">Beautifully Handcrafted Ceremony Creations</h2>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-12 learts-mb-30 wow fadeInRight" data-wow-duration="1.5s" data-wow-delay="0.2s">
+                    <figure class="zuz-image-anime zuz-reveal" style="border-radius: var(--zuz-image-radius); width: 100%;">
+                        <img src="{% static 'frontend/assets/new_images/about-6.png' %}" alt="">
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About Section End -->
+
+
+
+ <!-- About Section Start -->
+<div class="section section-fluid section-padding zuz-about7-section">
+    <div class="container">
+        <div class="row learts-mb-n30">
+
+            <div class="col-lg-6 col-12 text-center learts-mb-30 zuz-about7-sticky-col wow fadeInLeft" data-wow-duration="1.5s" data-wow-delay="0.1s">
+                <figure class="zuz-image-anime zuz-reveal" style="border-radius: var(--zuz-image-radius); width: 100%;">
+                    <img src="{% static 'frontend/assets/new_images/about-7.png' %}" alt="">
+                </figure>
+            </div>
+
+            <div class="col-lg-6 col-12 learts-mb-30 wow fadeInRight" data-wow-duration="1.5s" data-wow-delay="0.25s">
+                <div class="about-us4">
+                        <div class="row learts-mb-n30">
+                            <div class="col-xl-8 col-12 learts-mb-30">
+                                <div class="desc mb-0">
+                                    <p>Designing and crafting beautiful baptism and communion gowns, suits, and ceremony kits with our own hands is a labor of love. We take absolute joy in perfecting every detail of our customized accessories to make your child's special day completely unique and unforgettable.</p>
+                                </div>
+                            </div>
+                            <div class="col-12 learts-mb-30 wow fadeInUp" data-wow-duration="1.2s" data-wow-delay="0.1s">
+                                <div class="icon-box4 text-left justify-content-start text-start">
+                                    <div class="inner">
+                                        <div class="content">
+                                            <h6 class="title">CREATION</h6>
+                                            <p>Customized Baptism dresses, suits, designer kits, & communion ceremony creations</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 learts-mb-30 wow fadeInUp" data-wow-duration="1.2s" data-wow-delay="0.25s">
+                                <div class="icon-box4 text-left justify-content-start text-start">
+                                    <div class="inner">
+                                        <div class="content">
+                                            <h6 class="title">PHONE</h6>
+                                            <p>Phone: +91 7902545698 <br> WhatsApp: +91 7902545698</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 learts-mb-30 wow fadeInUp" data-wow-duration="1.2s" data-wow-delay="0.4s">
+                                <div class="icon-box4 text-left justify-content-start text-start">
+                                    <div class="inner">
+                                        <div class="content">
+                                            <h6 class="title">EMAIL</h6>
+                                            <p>info@zuzanne.com</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- About Section End --> 
+
+
+
+   <!-- About Section Start -->
+    {% comment %} <div class="section section-fluid section-padding">
+        <div class="container">
+            <div class="row learts-mb-n30">
+
+                <div class="col-lg-6 col-12 text-center learts-mb-30 wow fadeInLeft" data-wow-duration="1.5s" data-wow-delay="0.1s">
+                    <figure class="zuz-image-anime zuz-reveal" style="border-radius: var(--zuz-image-radius); width: 100%;">
+                        <img src="{% static 'frontend/assets/new_images/about-7.png' %}" alt="">
+                    </figure>
+                </div>
+
+                <div class="col-lg-6 col-12 align-self-center learts-mb-30 wow fadeInRight" data-wow-duration="1.5s" data-wow-delay="0.25s">
+                    <div class="about-us4">
+                        <div class="row learts-mb-n30">
+                            <div class="col-xl-8 col-12 learts-mb-30">
+                                <div class="desc mb-0">
+                                    <p>Designing and crafting beautiful baptism and communion gowns, suits, and ceremony kits with our own hands is a labor of love. We take absolute joy in perfecting every detail of our customized accessories to make your child's special day completely unique and unforgettable.</p>
+                                </div>
+                            </div>
+                            <div class="col-12 learts-mb-30 wow fadeInUp" data-wow-duration="1.2s" data-wow-delay="0.1s">
+                                <div class="icon-box4 text-left justify-content-start text-start">
+                                    <div class="inner">
+                                        <div class="content">
+                                            <h6 class="title">CREATION</h6>
+                                            <p>Customized Baptism dresses, suits, designer kits, & communion ceremony creations</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 learts-mb-30 wow fadeInUp" data-wow-duration="1.2s" data-wow-delay="0.25s">
+                                <div class="icon-box4 text-left justify-content-start text-start">
+                                    <div class="inner">
+                                        <div class="content">
+                                            <h6 class="title">PHONE</h6>
+                                            <p>Phone: +91 7902545698 <br> WhatsApp: +91 7902545698</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 learts-mb-30 wow fadeInUp" data-wow-duration="1.2s" data-wow-delay="0.4s">
+                                <div class="icon-box4 text-left justify-content-start text-start">
+                                    <div class="inner">
+                                        <div class="content">
+                                            <h6 class="title">EMAIL</h6>
+                                            <p>info@zuzanne.com</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>  {% endcomment %}
+    <!-- About Section End -->
+
+    <!-- Video Banner Section Start -->
+    <div class="section">
+        <div class="video-banner" data-bg-image="{% static 'frontend/assets/new_images/video-banner-1.png' %}">
+            <!-- YOUTUBE BACKGROUND VIDEO PLACEHOLDER (Uncomment and replace VIDEO_ID when ready) -->
+            <!-- 
+            <div class="zuz-video-bg">
+                <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID_HERE?autoplay=1&mute=1&loop=1&playlist=YOUR_VIDEO_ID_HERE&controls=0&showinfo=0&rel=0&enablejsapi=1&iv_load_policy=3&playsinline=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+            -->
+            
+            <div class="content wow fadeInUp" data-wow-duration="1.6s" data-wow-delay="0.2s">
+                <!-- PLAY BUTTON POPUP LINK PLACEHOLDER (Replace URL with your YouTube video link when ready) -->
+                <a href="https://www.youtube.com/watch?v=YOUR_VIDEO_ID_HERE" class="video-popup">
+                    <img src="{% static 'frontend/assets/images/icons/button-play-light.webp' %}" alt="Play Button">
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- Video Banner Section End -->
+
+    <!-- Testimonial Section Start -->
+    <div class="section section-padding">
+        <div class="container">
+
+            <div class="section-title2 row justify-content-between align-items-center">
+                <div class="col-md-auto col-12">
+                    <!-- Section Title Start -->
+                    <h2 class="title title-icon-right wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.1s">We love our clients</h2>
+                    <!-- Section Title End -->
+                </div>
+            </div>
+
+            <div class="testimonial-carousel">
+                {% for testimonial in testimonials %}
+                <div class="col">
+                    <div class="testimonial wow fadeInUp">
+                        <p>{{ testimonial.review }}</p>
+                        <div class="author">
+                            {% if testimonial.image %}
+                            <img src="{{ testimonial.image.url }}" alt="{{ testimonial.name }}">
+                            {% else %}
+                            <img src="{% static 'frontend/assets/images/testimonial/testimonial-1.webp' %}" alt="{{ testimonial.name }}">
+                            {% endif %}
+                            <div class="content">
+                                <h6 class="name">{{ testimonial.name }}</h6>
+                                <span class="title">Customer</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col">
+                    <div class="testimonial wow fadeInUp">
+                        <p>The custom lace baptism gown was absolutely breathtaking. The quality of the fabric was so soft on my daughter's skin. Thank you, Zuzanne, for making her day so special!</p>
+                        <div class="author">
+                            <img src="{% static 'frontend/assets/images/testimonial/testimonial-1.webp' %}" alt="">
+                            <div class="content">
+                                <h6 class="name">Anais Coulon</h6>
+                                <span class="title">Customer</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="testimonial wow fadeInUp">
+                        <p>I ordered a communion suit and customized candle set. The details on the embroidery are so delicate and beautiful. Excellent craftsmanship!</p>
+                        <div class="author">
+                            <img src="{% static 'frontend/assets/images/testimonial/testimonial-2.webp' %}" alt="">
+                            <div class="content">
+                                <h6 class="name">Ian Schneider</h6>
+                                <span class="title">Customer</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="testimonial wow fadeInUp">
+                        <p>Zuzanne's customer service and dedication are amazing. The communion gown fits my daughter perfectly and it has such a timeless, graceful feel.</p>
+                        <div class="author">
+                            <img src="{% static 'frontend/assets/images/testimonial/testimonial-3.webp' %}" alt="">
+                            <div class="content">
+                                <h6 class="name">Florence Polla</h6>
+                                <span class="title">Customer</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="testimonial wow fadeInUp">
+                        <p>Everything from the christening booties to the keepsake box was coordinated beautifully. Highly recommend Zuzanne for ceremonial wear!</p>
+                        <div class="author">
+                            <img src="{% static 'frontend/assets/images/testimonial/testimonial-4.webp' %}" alt="">
+                            <div class="content">
+                                <h6 class="name">Sally Ramsey</h6>
+                                <span class="title">Customer</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="testimonial wow fadeInUp">
+                        <p>Beautiful designs, amazing fabric, and outstanding customer service. Absolute dream to work with Zuzanne!</p>
+                        <div class="author">
+                            <img src="{% static 'frontend/assets/images/testimonial/testimonial-2.webp' %}" alt="">
+                            <div class="content">
+                                <h6 class="name">Lillian Bennett</h6>
+                                <span class="title">Customer</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="testimonial wow fadeInUp">
+                        <p>The communion gown and tailored suit arrived perfectly on time and looked absolutely stunning on the day.</p>
+                        <div class="author">
+                            <img src="{% static 'frontend/assets/images/testimonial/testimonial-3.webp' %}" alt="">
+                            <div class="content">
+                                <h6 class="name">Arthur Pendelton</h6>
+                                <span class="title">Customer</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+    <!-- Testimonial Section End -->
+
+    <!-- Instagram Section Start -->
+    <div class="section section-padding pt-0">
+        <div class="container">
+            <div class="row row-cols-lg-2 row-cols-1 learts-mb-n50">
+
+                <div class="col align-self-center learts-mb-50 order-lg-2 wow fadeInRight" data-wow-duration="1.3s" data-wow-delay="0.15s">
+                    <div class="section-title3 text-center m-0" data-bg-image="{% static 'frontend/assets/images/title/title-3.webp' %}">
+                        <h2 class="title">Follow us on Instagram</h2>
+                        <p class="desc">@zuzanne_creations</p>
+                    </div>
+                </div>
+
+                <div class="col learts-mb-50 wow fadeInLeft" data-wow-duration="1.5s" data-wow-delay="0.1s">
+
+                    <div class="instafeed instafeed-carousel instafeed-carousel2">
+                        <a class="instafeed-item zuz-image-anime zuz-reveal" href="#">
+                            <img src="{% static 'frontend/assets/new_images/instagram-1.jpeg' %}" alt="instagram image" />
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a class="instafeed-item zuz-image-anime zuz-reveal" href="#">
+                            <img src="{% static 'frontend/assets/new_images/instagram-2.jpeg' %}" alt="instagram image" />
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a class="instafeed-item zuz-image-anime zuz-reveal" href="#">
+                            <img src="{% static 'frontend/assets/new_images/instagram-3.jpeg' %}" alt="instagram image" />
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a class="instafeed-item zuz-image-anime zuz-reveal" href="#">
+                            <img src="{% static 'frontend/assets/new_images/instagram-4.jpeg' %}" alt="instagram image" />
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- Instagram Section End -->
+    <div class="section section-padding pt-0">
+    <div class="container">
+        <div class="row align-items-stretch gy-5">
+
+            <div class="col-lg-5 col-12 mb-5 mb-lg-0 d-flex align-items-center wow fadeInLeft" data-wow-duration="1.5s" data-wow-delay="0.1s">
+                <div class="about-us-faq-image w-100 zuz-image-anime zuz-reveal" style="height: 100%; min-height: 350px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex;">
+                    <img src="{% static 'frontend/assets/new_images/about-5.png' %}" alt="Zuzanne Baptism Ceremony Handcrafts" style="width: 100%; height: 100%; display: block; object-fit: cover;">
+                </div>
+            </div>
+
+            <div class="col-lg-7 col-12 mt-4 mt-lg-0 d-flex flex-column justify-content-center">
+                
+                <div class="section-title2 mb-4">
+                    <h2 class="title wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.1s" style="font-size: clamp(28px, 4vw, 36px); font-weight: 500; line-height: 1.2;">Frequently Asked Questions</h2>
+                    <p class="desc wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.2s" style="color: #666; font-size: 15px; margin-top: 12px; max-width: 550px;">Everything you need to know about our baptism, communion, and ceremonial creations.</p>
+                </div>
+                <div class="accordion" id="faq-accordion" style="--bs-accordion-border-color: #eee; --bs-accordion-btn-focus-box-shadow: none;">
+                    
+                    <div class="accordion-item mb-3 wow fadeInUp" data-wow-duration="1.0s" data-wow-delay="0.1s" style="border: 1px solid #eee; border-radius: 8px; overflow: hidden; background: #fff;">
+                        <h3 class="accordion-header" id="heading-1">
+                            <button class="accordion-button px-4 py-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-1" aria-expanded="true" aria-controls="collapse-1" style="font-size: 16px; font-weight: 500; color: #333; background: #fdfdfd;">
+                                Are the gowns and suits fully customizable?
+                            </button>
+                        </h3>
+                        <div id="collapse-1" class="accordion-collapse collapse show" aria-labelledby="heading-1" data-bs-parent="#faq-accordion">
+                            <div class="accordion-body px-4 py-3" style="font-size: 14.5px; line-height: 1.7; color: #666; border-top: 1px solid #eee;">
+                                Yes, absolutely! Every baptism gown, communion dress, and boy's suit created by Teena Juby at Zuzanne is tailored to your child's exact measurements and design preferences, ensuring a perfect fit and a unique style for their special day.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item mb-3 wow fadeInUp" data-wow-duration="1.0s" data-wow-delay="0.2s" style="border: 1px solid #eee; border-radius: 8px; overflow: hidden; background: #fff;">
+                        <h3 class="accordion-header" id="heading-2">
+                            <button class="accordion-button collapsed px-4 py-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-2" aria-expanded="false" aria-controls="collapse-2" style="font-size: 16px; font-weight: 500; color: #333; background: #fdfdfd;">
+                                How far in advance should I place a custom order?
+                            </button>
+                        </h3>
+                        <div id="collapse-2" class="accordion-collapse collapse" aria-labelledby="heading-2" data-bs-parent="#faq-accordion">
+                            <div class="accordion-body px-4 py-3" style="font-size: 14.5px; line-height: 1.7; color: #666; border-top: 1px solid #eee;">
+                                Since each ceremonial outfit is handcrafted with premium fabrics, intricate embroidery, and personalized details, we recommend placing your order at least 3 to 4 weeks prior to the ceremony date to allow ample time for tailoring and transit.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item mb-3 wow fadeInUp" data-wow-duration="1.0s" data-wow-delay="0.3s" style="border: 1px solid #eee; border-radius: 8px; overflow: hidden; background: #fff;">
+                        <h3 class="accordion-header" id="heading-3">
+                            <button class="accordion-button collapsed px-4 py-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-3" aria-expanded="false" aria-controls="collapse-3" style="font-size: 16px; font-weight: 500; color: #333; background: #fdfdfd;">
+                                What materials and fabrics do you use?
+                            </button>
+                        </h3>
+                        <div id="collapse-3" class="accordion-collapse collapse" aria-labelledby="heading-3" data-bs-parent="#faq-accordion">
+                            <div class="accordion-body px-4 py-3" style="font-size: 14.5px; line-height: 1.7; color: #666; border-top: 1px solid #eee;">
+                                We source only the finest, softest materials suitable for sensitive skin. This includes organic silks, soft premium cotton linters, imported French laces, delicate satins, and lightweight breathable linens.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item wow fadeInUp" data-wow-duration="1.0s" data-wow-delay="0.4s" style="border: 1px solid #eee; border-radius: 8px; overflow: hidden; background: #fff;">
+                        <h3 class="accordion-header" id="heading-4">
+                            <button class="accordion-button collapsed px-4 py-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-4" aria-expanded="false" aria-controls="collapse-4" style="font-size: 16px; font-weight: 500; color: #333; background: #fdfdfd;">
+                                Can you create matching baptism accessories?
+                            </button>
+                        </h3>
+                        <div id="collapse-4" class="accordion-collapse collapse" aria-labelledby="heading-4" data-bs-parent="#faq-accordion">
+                            <div class="accordion-body px-4 py-3" style="font-size: 14.5px; line-height: 1.7; color: #666; border-top: 1px solid #eee;">
+                                Yes! We offer coordinated baptismal sets that include matching booties, bonnets, customized candles, embroidered baptism cloths, oil bottles, and keepsake boxes tailored to match the gown's lace and design perfectly.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+   
+{% endblock %}
+
+{% block extra_js %}
+{% endblock %}

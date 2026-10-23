@@ -1,0 +1,4472 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+
+{% block seo_title %}Zuzanne – Premium Handcrafted Christian Ceremonial Outfits{% endblock %}
+{% block seo_description %}Discover premium handcrafted Christian baptism sets, holy communion dresses, ceremonial wear,
+and accessories, created with care and prayers at Zuzanne.{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Collection & Blog Background SVG Styles */
+    .zuz-collection-section,
+    .zuz-blog-section {
+        position: relative;
+        overflow-x: clip; /* Retained to prevent GSAP scrolling conflict */
+        isolation: isolate;
+        background: radial-gradient(circle at top right, rgba(231,101,137,0.04), transparent 45%), #fff;
+    }
+
+    .zuz-collection-bg,
+    .zuz-blog-bg {
+        position: absolute;
+        z-index: 1;
+        pointer-events: none;
+        user-select: none;
+        opacity: 0.18;
+        transition: transform 0.8s ease;
+    }
+
+    .zuz-collection-bg img,
+    .zuz-blog-bg img {
+        width: 100%;
+        height: auto;
+        display: block;
+        filter: blur(0.2px) drop-shadow(0 0 20px rgba(231,101,137,0.06));
+    }
+
+    .zuz-collection-section .zuz-bg-top-right,
+    .zuz-blog-section .zuz-bg-top-right {
+        width: 850px;
+        top: -140px;
+        right: -180px;
+    }
+
+    .zuz-collection-section .zuz-bg-top-left,
+    .zuz-blog-section .zuz-bg-top-left {
+        width: 750px;
+        top: -160px;
+        left: -200px;
+        transform: scaleX(-1) rotate(15deg);
+        opacity: 0.12;
+    }
+
+    .zuz-collection-section .zuz-bg-bottom-left,
+    .zuz-blog-section .zuz-bg-bottom-left {
+        width: 700px;
+        bottom: -180px;
+        left: -160px;
+        transform: scaleX(-1) rotate(-8deg);
+        opacity: 0.1;
+    }
+
+    .zuz-collection-section .container,
+    .zuz-blog-section .container {
+        position: relative;
+        z-index: 2;
+    }
+
+    @media(max-width:991px) {
+        .zuz-collection-section .zuz-bg-top-right,
+        .zuz-blog-section .zuz-bg-top-right {
+            width: 340px;
+            top: -40px;
+            right: -120px;
+            opacity: 0.12;
+        }
+        .zuz-collection-section .zuz-bg-top-left,
+        .zuz-blog-section .zuz-bg-top-left {
+            width: 300px;
+            top: -40px;
+            left: -100px;
+            opacity: 0.08;
+        }
+        .zuz-collection-section .zuz-bg-bottom-left,
+        .zuz-blog-section .zuz-bg-bottom-left {
+            width: 260px;
+            left: -80px;
+            bottom: -80px;
+            opacity: 0.07;
+        }
+    }
+    /* Luxury Floral Ornaments */
+    .zuz-floral-ornament {
+        position: absolute;
+        pointer-events: none;
+        user-select: none;
+        overflow: visible;
+        z-index: 1;
+        opacity: 0.45;
+    }
+    .zuz-floral-right {
+        top: -60px;
+        right: -60px;
+        width: 350px;
+    }
+    .zuz-floral-left {
+        bottom: -60px;
+        left: -60px;
+        width: 350px;
+    }
+    .zuz-floral-mirror {
+        transform: scaleX(-1);
+    }
+    .zuz-light-floral path {
+        stroke: #e76589;
+    }
+    .zuz-dark-floral path {
+        stroke: #333333;
+    }
+
+    @media (max-width: 991px) {
+        .zuz-floral-right {
+            top: -20px;
+            right: -30px;
+            width: 180px;
+            opacity: 0.35;
+        }
+        .zuz-floral-left {
+            bottom: -20px;
+            left: -30px;
+            width: 180px;
+            opacity: 0.35;
+        }
+    }
+    @font-face {
+        font-family: 'RomansStory';
+        src: url('/static/frontend/assets/fonts/romans_story/Romans%20Story.otf') format('opentype');
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    :root {
+        --space-xs: 12px;
+        --space-sm: 20px;
+        --space-md: 40px;
+        --space-lg: 80px;
+        --space-xl: 120px;
+
+        --font-hero: 'RomansStory', serif;
+        --font-heading: 'Modesty', serif;
+        --font-body: 'Futura', sans-serif;
+    }
+
+    /* Typography System */
+    {% comment %} .zuz-heading-xl {
+        font-family: var(--font-hero);
+        font-size: clamp(58px, 8vw, 120px);
+        letter-spacing: -0.03em;
+        line-height: 0.9;
+        font-weight: 400;
+    } {% endcomment %}
+    
+ 
+    .zuz-heading-xl{
+    font-size: clamp(48px, 7vw, 110px);
+    line-height: 0.95;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    }
+
+    .zuz-heading-lg {
+        font-family: var(--font-heading);
+        font-size: 52px;
+        font-weight: 400;
+        line-height: 1.2;
+    }
+
+    .zuz-heading-md {
+        font-family: var(--font-heading);
+        font-size: 26px;
+        font-weight: 400;
+        line-height: 1.3;
+    }
+
+    .zuz-body {
+        font-family: var(--font-body);
+        font-size: 16px;
+        line-height: 1.8;
+    }
+
+    .zuz-caption {
+        font-family: var(--font-body);
+        font-size: 14px;
+        color: #999;
+    }
+
+    .zuz-label {
+        font-family: var(--font-body);
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    /* Spacing System Utility Classes */
+    .mt-xs {
+        margin-top: var(--space-xs) !important;
+    }
+
+    .mt-sm {
+        margin-top: var(--space-sm) !important;
+    }
+
+    .mt-md {
+        margin-top: var(--space-md) !important;
+    }
+
+    .mt-lg {
+        margin-top: var(--space-lg) !important;
+    }
+
+    .mt-xl {
+        margin-top: var(--space-xl) !important;
+    }
+
+    .mb-xs {
+        margin-bottom: var(--space-xs) !important;
+    }
+
+    .mb-sm {
+        margin-bottom: var(--space-sm) !important;
+    }
+
+    .mb-md {
+        margin-bottom: var(--space-md) !important;
+    }
+
+    .mb-lg {
+        margin-bottom: var(--space-lg) !important;
+    }
+
+    .mb-xl {
+        margin-bottom: var(--space-xl) !important;
+    }
+
+    /* Zuzanne Ritual Products — Deck Spread Animation */
+    @media (min-width: 992px) {
+        .zuz-ritual-products {
+            padding: 20px 0;
+            /* Overflow must be visible so stacked cards can breathe */
+            overflow: visible;
+        }
+        .zuz-ritual-card {
+            will-change: transform, opacity;
+            transform-origin: center center;
+        }
+    }
+
+
+
+    /* === Main Header — Single Row Version === */
+.zuz-home-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: transparent;
+    transition: all 0.3s ease;
+}
+
+/* Single Row: Logo | Nav | Actions */
+.zuz-header-single-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 24px;
+    padding: 16px 0;
+}
+
+/* Logo */
+.zuz-header-logo-center {
+    text-align: left;
+}
+
+.zuz-home-header .zuz-home-logo {
+    height: 80px !important;
+    width: auto !important;
+    filter: none;
+}
+
+/* Nav menu */
+.zuz-header-single-row .site-main-menu {
+    display: flex;
+    justify-content: center;
+}
+
+.zuz-header-single-row .site-main-menu>ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 34px;
+    white-space: nowrap;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.zuz-header-single-row .site-main-menu>ul>li {
+    flex: 0 0 auto;
+}
+
+.zuz-home-header .site-main-menu ul>li>a {
+    color: #fff;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    transition: color 0.2s ease;
+    opacity: 0.9;
+}
+
+.zuz-home-header .site-main-menu ul>li>a:hover {
+    color: var(--zuz-pink);
+    opacity: 1;
+}
+
+/* Right side action buttons */
+.zuz-header-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.zuz-header-actions .btn-icon {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.zuz-header-actions .btn-icon:hover {
+    background: #fff;
+    border-color: #fff;
+    color: #333;
+}
+
+.zuz-header-actions .btn-dark {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.zuz-header-actions .btn-outline-dark {
+    border-color: rgba(255, 255, 255, 0.4);
+    color: #fff;
+}
+
+/* === STICKY HEADER (slides in from top on scroll) === */
+.zuz-sticky-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(201, 78, 114, 0.10);
+    transform: translateY(-100%);
+    transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.zuz-sticky-header.is-visible {
+    transform: translateY(0);
+}
+
+.zuz-sticky-header-inner {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 24px;
+    min-height: 64px;
+}
+
+.zuz-sticky-logo img {
+    height: 44px;
+    width: auto;
+}
+
+.zuz-sticky-header .site-main-menu>ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.zuz-sticky-header .site-main-menu ul>li>a {
+    color: #444;
+}
+
+.zuz-sticky-header .site-main-menu ul>li>a:hover {
+    color: #b98795;
+}
+
+.zuz-sticky-actions {
+    display: flex;
+    gap: 8px;
+}
+
+@media (max-width: 1199px) {
+    .zuz-sticky-header {
+        display: none !important;
+    }
+}
+
+/* Mega menu for transparent header */
+.zuz-home-header .zuz-mega-panel {
+    background: rgba(255, 255, 255, 0.98) !important;
+    backdrop-filter: blur(8px);
+    border-radius: 16px;
+    margin-top: 10px;
+}
+
+.zuz-home-header .zuz-mega-panel .zuz-col-title,
+.zuz-home-header .zuz-mega-panel .zuz-cat-list li a {
+    color: #333 !important;
+}
+
+.zuz-home-header .zuz-mega-panel .zuz-cat-list li,
+.zuz-home-header .zuz-mega-panel .zuz-cat-list li a {
+    display: block !important;
+    text-align: center !important;
+    white-space: normal !important;
+}
+
+.zuz-home-header .zuz-mega-panel .zuz-cat-list li a:hover {
+    color: var(--zuz-pink-dark) !important;
+    transform: none !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1199px) {
+    .zuz-home-header {
+        position: relative;
+        background: #fff;
+        backdrop-filter: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .zuz-home-header .zuz-home-logo {
+        filter: none;
+        height: 72px !important;
+        width: auto !important;
+    }
+
+    .zuz-home-header .site-main-menu ul>li>a {
+        color: #444;
+    }
+
+    .zuz-header-actions .btn-icon {
+        background: transparent;
+        border-color: #ddd;
+        color: #333;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1399px) {
+    .zuz-header-single-row {
+        gap: 16px;
+    }
+
+    .zuz-header-single-row .site-main-menu>ul {
+        gap: 22px;
+    }
+}
+
+/* Nav link underline effect */
+.zuz-home-header .site-main-menu ul>li>a,
+.zuz-sticky-header .site-main-menu ul>li>a {
+    position: relative;
+    padding-bottom: 4px;
+}
+
+.zuz-home-header .site-main-menu ul>li>a::after,
+.zuz-sticky-header .site-main-menu ul>li>a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0%;
+    height: 1px;
+    background-color: var(--zuz-pink);
+    transition: width 0.3s ease;
+}
+
+.zuz-home-header .site-main-menu ul>li>a:hover::after,
+.zuz-sticky-header .site-main-menu ul>li>a:hover::after {
+    width: 100%;
+}
+
+/* Sticky header underline uses a darker pink since background is white */
+.zuz-sticky-header .site-main-menu ul>li>a::after {
+    background-color: #b98795;
+}
+
+/* Fix Shop dropdown arrow vertical alignment */
+.zuz-header-single-row .site-main-menu>ul>li.has-children>a {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+}
+
+.zuz-header-single-row .site-main-menu>ul>li.has-children>a::before {
+    position: static;
+    top: auto;
+    right: auto;
+    transform: none;
+    margin-left: 6px;
+    line-height: 1;
+    align-self: center;
+    order: 2;   /* push the arrow after the text */
+}
+
+.zuz-header-single-row .site-main-menu>ul>li.has-children>a .menu-text {
+    order: 1;   /* text comes first */
+}
+
+
+
+
+    {% comment %} /* === Main Header — Clean, visible version === */
+    .zuz-home-header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        background: transparent;
+        transition: all 0.3s ease;
+    }
+
+    /* Row 1: social | logo | actions */
+    .zuz-header-top-row {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        padding: 12px 0 10px;
+    }
+
+    /* Social icons - visible white */
+    .zuz-header-socials {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+    }
+
+    .zuz-header-socials a {
+        color: #fff;
+        font-size: 16px;
+        transition: color 0.2s ease;
+        opacity: 0.9;
+    }
+
+    .zuz-header-socials a:hover {
+        color: var(--zuz-pink);
+        opacity: 1;
+    }
+
+    /* Center Logo */
+    .zuz-header-logo-center {
+        text-align: center;
+    }
+
+    /* Logo - use original colors, no filter */
+    .zuz-home-header .zuz-home-logo {
+        height: 60px !important;
+        width: auto !important;
+        filter: none;
+    }
+
+    /* Right side action buttons */
+    .zuz-header-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+
+    .zuz-header-actions .btn-icon {
+        background: rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: #fff;
+        transition: all 0.3s ease;
+    }
+
+    .zuz-header-actions .btn-icon:hover {
+        background: #fff;
+        border-color: #fff;
+        color: #333;
+    }
+
+    .zuz-header-actions .btn-dark {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .zuz-header-actions .btn-outline-dark {
+        border-color: rgba(255, 255, 255, 0.4);
+        color: #fff;
+    }
+
+    /* Row 2: Navigation menu */
+    .zuz-header-nav-row {
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
+        padding: 0;
+        display: flex;
+        justify-content: center;
+    }
+
+    .zuz-header-nav-row .site-main-menu>ul {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: nowrap;
+        gap: 34px;
+        white-space: nowrap;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    .zuz-header-nav-row .site-main-menu>ul>li {
+        flex: 0 0 auto;
+    }
+
+    .zuz-home-header .site-main-menu ul>li>a {
+        color: #fff;
+        font-weight: 400;
+        letter-spacing: 0.5px;
+        transition: color 0.2s ease;
+        opacity: 0.9;
+    }
+
+    .zuz-home-header .site-main-menu ul>li>a:hover {
+        color: var(--zuz-pink);
+        opacity: 1;
+    }
+
+    /* === STICKY HEADER (slides in from top on scroll) === */
+    .zuz-sticky-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 200;
+        background: rgba(255, 255, 255, 0.97);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        border-bottom: 1px solid rgba(201, 78, 114, 0.10);
+        transform: translateY(-100%);
+        transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .zuz-sticky-header.is-visible {
+        transform: translateY(0);
+    }
+
+    .zuz-sticky-header-inner {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 24px;
+        min-height: 64px;
+    }
+
+    .zuz-sticky-logo img {
+        height: 44px;
+        width: auto;
+    }
+
+    .zuz-sticky-header .site-main-menu>ul {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+        flex-wrap: nowrap;
+        white-space: nowrap;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    .zuz-sticky-header .site-main-menu ul>li>a {
+        color: #444;
+    }
+
+    .zuz-sticky-header .site-main-menu ul>li>a:hover {
+        color: #b98795;
+    }
+
+    .zuz-sticky-actions {
+        display: flex;
+        gap: 8px;
+    }
+
+    /* Ensure sticky header doesn't show on mobile when it shouldn't */
+    @media (max-width: 1199px) {
+        .zuz-sticky-header {
+            display: none !important;
+        }
+    }
+
+    /* Mega menu for transparent header */
+    .zuz-home-header .zuz-mega-panel {
+        background: rgba(255, 255, 255, 0.98) !important;
+        backdrop-filter: blur(8px);
+        border-radius: 16px;
+        margin-top: 10px;
+    }
+
+    .zuz-home-header .zuz-mega-panel .zuz-col-title,
+    .zuz-home-header .zuz-mega-panel .zuz-cat-list li a {
+        color: #333 !important;
+    }
+
+    .zuz-home-header .zuz-mega-panel .zuz-cat-list li,
+    .zuz-home-header .zuz-mega-panel .zuz-cat-list li a {
+        display: block !important;
+        text-align: center !important;
+        white-space: normal !important;
+    }
+
+    .zuz-home-header .zuz-mega-panel .zuz-cat-list li a:hover {
+        color: var(--zuz-pink-dark) !important;
+        transform: none !important;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 1199px) {
+        .zuz-home-header {
+            position: relative;
+            background: #fff;
+            backdrop-filter: none;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .zuz-home-header .zuz-home-logo {
+            filter: none;
+            height: 72px !important;
+            width: auto !important;
+        }
+
+        .zuz-header-socials a {
+            color: #888;
+        }
+
+        .zuz-home-header .site-main-menu ul>li>a {
+            color: #444;
+        }
+
+        .zuz-header-actions .btn-icon {
+            background: transparent;
+            border-color: #ddd;
+            color: #333;
+        }
+
+        .zuz-header-nav-row {
+            border-top-color: rgba(0, 0, 0, 0.08);
+        }
+    }
+
+    @media (min-width: 1200px) and (max-width: 1399px) {
+        .zuz-home-header .site-main-menu ul {
+            gap: 24px;
+        }
+    } {% endcomment %}
+
+
+
+    /* Hero Slider Styles - Full Background Image Version */
+    .zuz-hero-slider {
+        position: relative;
+        overflow: hidden;
+        min-height: 100vh;
+        min-height: 100svh;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid rgba(201, 78, 114, 0.12);
+        padding-top: 0;
+    }
+
+    .zuz-hero-slider .swiper-slide {
+        min-height: 100vh;
+        min-height: 100svh;
+        display: flex;
+        align-items: center;
+        position: relative;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .zuz-hero-slider .container {
+        position: relative;
+        z-index: 5;
+        padding-top: 100px;
+        /* Space for absolute header */
+    }
+
+    @media (max-width: 1199px) {
+        .zuz-hero-slider {
+            min-height: calc(100vh - 94px);
+            min-height: calc(100svh - 94px);
+        }
+
+        .zuz-hero-slider .swiper-slide {
+            min-height: calc(100vh - 94px);
+            min-height: calc(100svh - 94px);
+        }
+
+        .zuz-hero-slider .container {
+            padding-top: 0;
+        }
+    }
+
+    /* Overlay for text readability */
+    .zuz-hero-slider .swiper-slide::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.75);
+        z-index: 1;
+    }
+
+    /* Darker overlay option - uncomment if light overlay doesn't work */
+    /*
+    .zuz-hero-slider .swiper-slide::before {
+        background: rgba(0, 0, 0, 0.45);
+    }
+    */
+
+    /* Top gradient overlay — makes the transparent navbar always legible */
+    .zuz-hero-slider::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 180px;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.45) 0%, transparent 100%);
+        z-index: 10;
+        pointer-events: none;
+    }
+
+    .zuz-hero-slider .container {
+        position: relative;
+        z-index: 5;
+    }
+
+    .zuz-hero-content {
+        max-width: 650px;
+    }
+
+    /* Center content on mobile */
+    @media (max-width: 991px) {
+        .zuz-hero-content {
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        .zuz-hero-actions {
+            justify-content: center;
+        }
+
+        .zuz-hero-subtext {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+    .zuz-hero-label {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--zuz-pink-dark);
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(231, 101, 137, 0.24);
+        border-radius: 30px;
+        padding: 6px 14px;
+        margin-bottom: 24px;
+    }
+
+    .zuz-hero-title {
+        font-family: 'RomansStory', serif;
+        font-size: clamp(48px, 6vw, 90px);
+        line-height: 0.9;
+        margin: 0 0 36px;
+        letter-spacing: -0.03em;
+        color: #1a1a1a;
+        font-weight: 400;
+    }
+
+    .zuz-hero-subtext {
+        max-width: 520px;
+        color: #333;
+        font-size: 16px;
+        line-height: 1.7;
+        margin-bottom: 32px;
+    }
+
+    .zuz-hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    /* Hero CTA buttons — compact elegant pills */
+    .zuz-hero-actions .btn {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        padding: 9px 22px;
+        border-radius: 30px;
+        border-width: 1px;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+    }
+
+    .zuz-hero-trust {
+        font-size: 13px;
+        color: #666;
+    }
+
+    .zuz-hero-nav {
+        position: absolute;
+        bottom: 30px;
+        right: 30px;
+        display: flex;
+        gap: 12px;
+        z-index: 20;
+    }
+
+    .zuz-hero-nav .swiper-button-prev,
+    .zuz-hero-nav .swiper-button-next {
+        position: relative;
+        width: 44px;
+        height: 44px;
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 50%;
+        color: #333;
+        transition: all 0.3s ease;
+        margin: 0;
+    }
+
+    .zuz-hero-nav .swiper-button-prev::after,
+    .zuz-hero-nav .swiper-button-next::after {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .zuz-hero-nav .swiper-button-prev:hover,
+    .zuz-hero-nav .swiper-button-next:hover {
+        background: var(--zuz-pink-dark);
+        color: #fff;
+        border-color: var(--zuz-pink-dark);
+    }
+
+    .zuz-hero-pagination {
+        position: absolute;
+        bottom: 30px;
+        left: 30px;
+        z-index: 20;
+        display: flex;
+        gap: 8px;
+    }
+
+    .zuz-hero-pagination .swiper-pagination-bullet {
+        width: 8px;
+        height: 8px;
+        background: #999;
+        opacity: 0.6;
+        transition: all 0.3s ease;
+    }
+
+    .zuz-hero-pagination .swiper-pagination-bullet-active {
+        width: 24px;
+        border-radius: 4px;
+        background: var(--zuz-pink-dark);
+        opacity: 1;
+    }
+
+    @media (max-width: 767px) {
+        .zuz-hero-nav {
+            display: none;
+        }
+
+        .zuz-hero-slider,
+        .zuz-hero-slider .swiper-slide {
+            min-height: 100vh;
+            min-height: 100svh;
+            padding: 0;
+        }
+
+        .zuz-hero-slider .container {
+            padding-top: 100px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .zuz-hero-content {
+            max-width: 100%;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        .zuz-hero-label {
+            font-size: 9px;
+            letter-spacing: 2px;
+            padding: 4px 12px;
+            margin-bottom: 16px;
+        }
+
+        .zuz-hero-title {
+            font-family: 'RomansStory', serif;
+            font-size: 40px !important;
+            line-height: 0.9 !important;
+            letter-spacing: -0.03em;
+            font-weight: 400;
+            margin-bottom: 20px !important;
+            word-break: break-word;
+        }
+
+        .zuz-hero-subtext {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+            padding: 0 10px;
+        }
+
+        .zuz-hero-actions {
+            gap: 12px;
+            margin-bottom: 16px;
+            justify-content: center;
+        }
+
+        .zuz-hero-actions .btn {
+            font-size: 10px !important;
+            padding: 8px 18px !important;
+            white-space: nowrap;
+        }
+
+        .zuz-hero-trust {
+            font-size: 11px;
+            margin-top: 8px;
+        }
+
+        /* Adjust hero slider dots position */
+        .zuz-hero-pagination {
+            bottom: 15px;
+            left: 0;
+            right: 0;
+            justify-content: center;
+        }
+
+        .zuz-hero-nav {
+            bottom: 15px;
+            right: 15px;
+        }
+
+        .zuz-hero-nav .swiper-button-prev,
+        .zuz-hero-nav .swiper-button-next {
+            width: 36px;
+            height: 36px;
+        }
+
+        .zuz-hero-nav .swiper-button-prev::after,
+        .zuz-hero-nav .swiper-button-next::after {
+            font-size: 14px;
+        }
+    }
+
+    /* Extra small devices (max-width: 480px) */
+    @media (max-width: 480px) {
+        .zuz-hero-slider .container {
+            padding-top: 90px;
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+
+        .zuz-hero-title {
+            font-size: 34px !important;
+            margin-bottom: 16px !important;
+        }
+
+        .zuz-hero-label {
+            font-size: 8px;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+        }
+
+        .zuz-hero-actions {
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+            max-width: 200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .zuz-hero-actions .btn {
+            width: 100%;
+            text-align: center;
+            font-size: 10px !important;
+            padding: 10px 0 !important;
+        }
+
+        .zuz-hero-pagination {
+            bottom: 10px;
+        }
+
+        /* Hide navigation arrows on very small screens */
+        .zuz-hero-nav {
+            display: none;
+        }
+    }
+
+    /* For devices with notch/dynamic island */
+    @supports (padding-top: env(safe-area-inset-top)) {
+        .zuz-hero-slider .container {
+            padding-top: calc(100px + env(safe-area-inset-top));
+        }
+    }
+
+
+
+    /* Premium Cinematic Carousel */
+    .cinematic-section {
+        background-color: #1a1a1a;
+        color: #fff;
+        padding: 40px 0;
+        overflow: hidden;
+    }
+
+    .cinematic-section .section-title2 .title {
+        color: #fff;
+        font-family: "Modesty", serif;
+        font-size: 64px;
+        margin-bottom: 5px;
+    }
+
+    .cinematic-section .section-title2 .title::before,
+    .cinematic-section .section-title2 .title::after {
+        display: none;
+        /* Hide the leafy icons for this dark section */
+    }
+
+    .cinematic-section .section-title2 p {
+        color: #aaa;
+        font-size: 16px;
+        letter-spacing: 1px;
+    }
+
+    .cinematic-carousel-wrapper {
+        position: relative;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .swiper-container.cinematic-carousel {
+        width: 100%;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        overflow: visible;
+        /* so scaled center slide can pop out */
+    }
+
+    .cinematic-carousel .swiper-slide {
+        background-position: center;
+        background-size: cover;
+        width: 320px;
+        height: 480px;
+        border-radius: 16px;
+        overflow: hidden;
+        transition: opacity 0.5s ease;
+        opacity: 0.45;
+        position: relative;
+    }
+
+    .cinematic-carousel .swiper-slide-active {
+        opacity: 1;
+        z-index: 10;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .cinematic-carousel .swiper-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+    }
+
+    .cinematic-carousel .swiper-slide-active:hover img {
+        transform: scale(1.05);
+    }
+
+    .cinematic-carousel .slide-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0) 100%);
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        padding: 30px 20px;
+        transition: opacity 0.5s ease;
+    }
+
+    .cinematic-carousel .swiper-slide-active .slide-overlay {
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 60%);
+    }
+
+    .cinematic-carousel .slide-content {
+        width: 100%;
+        text-align: center;
+        opacity: 0;
+        transform: translateY(15px);
+        transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        transition-delay: 0.1s;
+    }
+
+    .cinematic-carousel .swiper-slide-active .slide-content {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .cinematic-carousel .slide-label {
+        color: #fff;
+        font-size: 18px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin: 0;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .cinematic-carousel-nav {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        transform: translateY(-50%);
+        z-index: 20;
+        pointer-events: none;
+        padding: 0 5%;
+    }
+
+    .cinematic-carousel-nav .swiper-button-prev,
+    .cinematic-carousel-nav .swiper-button-next {
+        position: static;
+        width: 50px;
+        height: 50px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(4px);
+        border-radius: 50%;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: auto;
+        transition: all 0.3s ease;
+        margin: 0;
+    }
+
+    .cinematic-carousel-nav .swiper-button-prev:hover,
+    .cinematic-carousel-nav .swiper-button-next:hover {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: #fff;
+    }
+
+    .cinematic-carousel-nav .swiper-button-prev::after,
+    .cinematic-carousel-nav .swiper-button-next::after {
+        font-size: 18px;
+    }
+
+    @media (max-width: 991px) {
+        .cinematic-carousel .swiper-slide {
+            width: 280px;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .cinematic-carousel .swiper-slide {
+            width: 250px;
+            height: 360px;
+        }
+
+        .cinematic-section .section-title2 .title {
+            font-size: 48px;
+        }
+
+        .cinematic-carousel-nav {
+            display: none;
+        }
+    }
+
+    /* Mobile 2-column product grid */
+    @media (max-width: 575px) {
+        .products.row>.col {
+            padding-left: 6px !important;
+            padding-right: 6px !important;
+        }
+
+        .products.row {
+            margin-left: -6px !important;
+            margin-right: -6px !important;
+        }
+
+        .product-thumb .image img {
+            aspect-ratio: 3 / 4;
+            object-fit: cover;
+            object-position: center top;
+            width: 100%;
+            display: block;
+        }
+
+        .product-info .title {
+            font-size: 12px !important;
+            line-height: 1.4 !important;
+            margin-bottom: 4px !important;
+        }
+
+        .product-info .price {
+            font-size: 11px !important;
+        }
+
+        .product-info .product-buttons {
+            gap: 4px !important;
+        }
+
+        .product-info .product-button {
+            width: 28px !important;
+            height: 28px !important;
+            font-size: 11px !important;
+        }
+    }
+
+    /* === GSAP Pinned Section === */
+    .zuz-pinned-section {
+        position: relative;
+        background: #fff;
+    }
+
+    .zuz-pin-wrapper {
+        height: 100vh;
+        /* Forces the pinned container to be exactly screen height */
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .zuz-pinned-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+    }
+
+    .zuz-scroll-content {
+        min-height: 100vh;
+        padding: 60px 15px;
+        /* Breathing room for the scrolling products */
+        background: #fdfdfd;
+        /* Slight off-white to contrast with the image */
+    }
+
+    /* === Editorial Blog Section === */
+    .editorial-blog-layout {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 60px;
+        align-items: start;
+    }
+
+    .featured-blog-sticky {
+        position: sticky;
+        top: 100px;
+        align-self: start;
+    }
+
+    .editorial-blog-list {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    /* Hover Effects & Styling */
+    .image-wrapper {
+        overflow: hidden;
+        border-radius: var(--zuz-image-radius, 0px);
+    }
+
+    .featured-image {
+        width: 100%;
+        height: 600px;
+        object-fit: cover;
+        transition: transform 0.8s ease;
+    }
+
+    .small-image {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        transition: transform 0.8s ease;
+    }
+
+    .featured-blog-card:hover .featured-image,
+    .small-blog-card:hover .small-image {
+        transform: scale(1.05);
+    }
+
+    .featured-blog-card,
+    .small-blog-card {
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+        border-radius: var(--zuz-image-radius, 0px);
+    }
+
+    .featured-blog-card:hover,
+    .small-blog-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.06);
+    }
+
+    .small-blog-card {
+        background: #fff;
+        padding: 20px;
+    }
+
+    .featured-blog-card {
+        background: #fff;
+        padding: 30px;
+    }
+
+    .meta-date {
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: #999;
+    }
+
+    .featured-blog-card .title {
+        font-size: 30px;
+        font-weight: 400;
+        line-height: 1.3;
+    }
+
+    .featured-blog-card .title a {
+        color: #333;
+    }
+
+    .featured-blog-card .title a:hover {
+        color: #b98795;
+    }
+
+    .small-blog-card .title {
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 1.3;
+    }
+
+    .small-blog-card .title a {
+        color: #333;
+    }
+
+    .small-blog-card .title a:hover {
+        color: #b98795;
+    }
+
+    .desc {
+        color: #666;
+        font-size: 15px;
+        line-height: 1.7;
+    }
+
+    .read-more-btn {
+        display: inline-block;
+        margin-top: 12px;
+    }
+
+    .read-more-link {
+        display: inline-block;
+        margin-top: 15px;
+        font-size: 14px;
+        color: #b98795;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .read-more-link:hover {
+        color: #333;
+        text-decoration: underline;
+    }
+
+    @media(max-width:991px) {
+        .editorial-blog-layout {
+            grid-template-columns: 1fr;
+            gap: 50px;
+        }
+
+        .featured-blog-sticky {
+            position: relative;
+            top: auto;
+        }
+
+        .featured-image {
+            height: 400px;
+        }
+    }
+
+    /* === Luxury Product Showcase === */
+    .luxury-product-showcase {
+        padding: 40px 0;
+    }
+
+    .luxury-showcase-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: start;
+    }
+
+    .luxury-sticky-image {
+        position: sticky;
+        top: 100px;
+        align-self: start;
+    }
+
+    .luxury-left-split {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        gap: 20px;
+        height: 85vh;
+    }
+
+    .luxury-left-top,
+    .luxury-left-bottom {
+        overflow: hidden;
+        border-radius: var(--zuz-image-radius, 0px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
+    }
+
+    .luxury-left-top img,
+    .luxury-left-bottom img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top center;
+        transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .luxury-left-top:hover img,
+    .luxury-left-bottom:hover img {
+        transform: scale(1.03);
+    }
+
+    .luxury-scroll-content {
+        padding-top: 40px;
+        padding-bottom: 80px;
+    }
+
+    .luxury-text-block .sub-title {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        color: #b98795;
+        display: block;
+        margin-bottom: 15px;
+    }
+
+    .luxury-text-block .title {
+        font-size: 38px;
+        font-weight: 400;
+        color: #222;
+        line-height: 1.2;
+    }
+
+    .luxury-text-block .desc {
+        font-size: 16px;
+        line-height: 1.9;
+        color: #555;
+        max-width: 90%;
+    }
+
+    .luxury-features {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .luxury-features li {
+        position: relative;
+        padding-left: 20px;
+        margin-bottom: 15px;
+        font-size: 14px;
+        color: #444;
+        letter-spacing: 0.5px;
+    }
+
+    .luxury-features li::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 8px;
+        width: 6px;
+        height: 6px;
+        background-color: #b98795;
+        border-radius: 50%;
+    }
+
+    .luxury-gallery {
+        display: flex;
+        flex-direction: column;
+        gap: 60px;
+    }
+
+    .luxury-gallery-img {
+        overflow: hidden;
+        border-radius: var(--zuz-image-radius, 0px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    }
+
+    .luxury-gallery-img img {
+        width: 100%;
+        height: auto;
+        display: block;
+        transition: transform 0.8s ease;
+    }
+
+    .luxury-gallery-img:hover img {
+        transform: scale(1.03);
+    }
+
+    @media(max-width:991px) {
+        .luxury-showcase-grid {
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+
+        .luxury-sticky-image {
+            position: relative;
+            top: auto;
+        }
+
+        .luxury-left-split {
+            height: auto;
+            grid-template-rows: auto auto;
+        }
+
+        .luxury-left-top img,
+        .luxury-left-bottom img {
+            height: 50vh;
+        }
+
+        .luxury-text-block .title {
+            font-size: 32px;
+        }
+
+        .luxury-scroll-content {
+            padding-top: 0px;
+            padding-bottom: 20px;
+        }
+    }
+
+    /* === Product Showcase Sticky Scroll === */
+    .zuz-showcase-section {
+        position: relative;
+        background: #fff;
+    }
+
+    /* Left image grid wrapper — 
+       height determined by right scroll col */
+    .zuz-showcase-image-grid {
+        display: flex;
+        width: 100%;
+    }
+
+    /* Left pinned column — sticky image */
+    .zuz-showcase-col-left {
+        flex: 0 0 50%;
+        position: relative;
+        border-right: 3px solid #fff;
+    }
+
+    .zuz-showcase-sticky-img {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+    }
+
+    .zuz-showcase-sticky-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+        display: block;
+    }
+
+    /* Right scrolling column */
+    .zuz-showcase-col-right {
+        flex: 0 0 50%;
+    }
+
+    .zuz-showcase-col-right img {
+        width: 100%;
+        height: 100vh;
+        object-fit: cover;
+        object-position: center top;
+        display: block;
+    }
+
+    /* Right side details — sticky panel */
+    .zuz-showcase-details-col {
+        position: relative;
+    }
+
+    .zuz-showcase-details {
+        position: sticky;
+        top: 80px;
+        padding: 60px 50px;
+    }
+
+    .zuz-showcase-details .collection-label {
+        font-size: 12px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--zuz-pink);
+        display: block;
+        margin-bottom: 16px;
+    }
+
+    .zuz-showcase-details .product-title {
+        font-size: 36px;
+        font-weight: 400;
+        line-height: 1.2;
+        color: #111;
+        margin-bottom: 24px;
+    }
+
+    .zuz-showcase-details .product-desc {
+        font-size: 15px;
+        line-height: 1.9;
+        color: #666;
+        margin-bottom: 32px;
+    }
+
+    .zuz-showcase-details .meta-row {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 16px;
+        align-items: center;
+    }
+
+    .zuz-showcase-details .meta-label {
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #999;
+        min-width: 60px;
+    }
+
+    .zuz-showcase-details .size-tag {
+        display: inline-block;
+        padding: 4px 14px;
+        border: 1px solid #ddd;
+        font-size: 12px;
+        color: #333;
+        border-radius: 2px;
+        margin: 2px;
+    }
+
+    .zuz-showcase-details .divider {
+        border: none;
+        border-top: 1px solid #f0f0f0;
+        margin: 28px 0;
+    }
+
+    .zuz-showcase-details .showcase-btns {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    @media (max-width: 991px) {
+
+        /* Stack the two Bootstrap columns vertically */
+        .zuz-showcase-section .row.g-0 {
+            flex-direction: column;
+        }
+
+        /* Full width on mobile */
+        .zuz-showcase-section .col-lg-7,
+        .zuz-showcase-section .col-lg-5 {
+            width: 100%;
+            max-width: 100%;
+            flex: 0 0 100%;
+        }
+
+        /* Image grid: swipable row */
+        .zuz-showcase-image-grid {
+            display: flex;
+            flex-direction: row;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 12px;
+            padding: 0 20px;
+            padding-bottom: 16px;
+            scrollbar-width: none;
+        }
+
+        .zuz-showcase-image-grid::-webkit-scrollbar {
+            display: none;
+        }
+
+        .zuz-showcase-col-left,
+        .zuz-showcase-col-right {
+            display: contents;
+            /* Flatten hierarchy so images become direct flex items */
+        }
+
+        /* All swipable items */
+        .zuz-showcase-sticky-img,
+        .zuz-showcase-col-right img {
+            flex: 0 0 85%;
+            /* Show 85% so the next image peeks out */
+            scroll-snap-align: center;
+            height: 100vw;
+            max-height: 420px;
+            border-radius: 12px;
+            position: relative !important;
+            top: auto !important;
+            margin: 0;
+            display: block;
+        }
+
+        /* Specifically target the left image which is wrapped */
+        .zuz-showcase-sticky-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            border-radius: 12px;
+        }
+
+        .zuz-showcase-col-right img {
+            width: 100%;
+            object-fit: cover;
+            object-position: center top;
+        }
+
+        /* Details panel — remove sticky, normal flow */
+        .zuz-showcase-details-col {
+            position: static !important;
+        }
+
+        .zuz-showcase-details {
+            position: static !important;
+            top: auto !important;
+            padding: 32px 20px 40px;
+        }
+
+        .zuz-showcase-details .product-title {
+            font-size: 26px;
+            line-height: 1.3;
+        }
+
+        .zuz-showcase-details .product-desc {
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        .zuz-showcase-details .showcase-btns {
+            flex-direction: column;
+        }
+
+        .zuz-showcase-details .showcase-btns .btn {
+            width: 100%;
+            text-align: center;
+        }
+    }
+
+    @media (min-width: 992px) {
+        .zuz-scroll-content {
+            padding: 80px 30px 100px 50px;
+        }
+    }
+
+    @media (max-width: 991px) {
+        .zuz-pin-wrapper {
+            min-height: auto !important;
+            padding: 60px 30px !important;
+        }
+
+        /* Mobile normal flow: disable sticky/pinned layout structures */
+        .featured-blog-sticky,
+        .luxury-sticky-image,
+        .zuz-showcase-sticky-img,
+        .zuz-showcase-details,
+        .zuz-pin-wrapper {
+            position: relative !important;
+            top: auto !important;
+            height: auto !important;
+            min-height: auto !important;
+        }
+
+        .zuz-pinned-section,
+        .zuz-pin-wrapper,
+        .zuz-showcase-section {
+            overflow: visible !important;
+            min-height: auto !important;
+            height: auto !important;
+        }
+
+        /* Keep this section as a mobile horizontal carousel */
+        .zuz-showcase-section .row.g-0 {
+            flex-direction: column !important;
+        }
+
+        .zuz-showcase-image-grid {
+            display: flex !important;
+            flex-direction: row !important;
+            overflow-x: auto !important;
+            overflow-y: hidden !important;
+            scroll-snap-type: x mandatory !important;
+            -webkit-overflow-scrolling: touch;
+            gap: 12px !important;
+            padding: 0 20px 16px !important;
+            scrollbar-width: none;
+        }
+
+        .zuz-showcase-image-grid::-webkit-scrollbar {
+            display: none;
+        }
+
+        .zuz-showcase-col-left,
+        .zuz-showcase-col-right {
+            display: contents !important;
+        }
+
+        .zuz-showcase-sticky-img,
+        .zuz-showcase-col-right img {
+            flex: 0 0 85% !important;
+            scroll-snap-align: center !important;
+            height: 100vw !important;
+            max-height: 420px !important;
+            border-radius: 12px;
+            width: auto !important;
+            position: relative !important;
+            top: auto !important;
+            margin: 0 !important;
+            display: block;
+            object-fit: cover;
+            object-position: center top;
+        }
+
+        .zuz-scroll-content {
+            min-height: auto !important;
+        }
+    }
+
+    /* Mobile Blog Carousel */
+    @media (max-width: 767px) {
+        .editorial-blog-layout {
+            display: block;
+        }
+
+        .featured-blog-sticky {
+            position: relative;
+            top: auto;
+            margin-bottom: 30px;
+        }
+
+        .editorial-blog-list {
+            display: none;
+            /* Hide the original list on mobile */
+        }
+
+        /* Mobile carousel container */
+        .mobile-blog-carousel {
+            display: block;
+            margin-top: 20px;
+        }
+
+        .mobile-blog-carousel .swiper-slide {
+            height: auto;
+            width: 280px;
+        }
+
+        .mobile-blog-carousel .small-blog-card {
+            background: #fff;
+            padding: 0;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            height: 100%;
+        }
+
+        .mobile-blog-carousel .small-image {
+            height: 220px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .mobile-blog-carousel .content {
+            padding: 16px;
+        }
+
+        .mobile-blog-carousel .meta-date {
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+        .mobile-blog-carousel .title {
+            font-size: 16px;
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+
+        .mobile-blog-carousel .desc {
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .mobile-blog-carousel .read-more-link {
+            font-size: 12px;
+            margin-top: 8px;
+        }
+
+        /* Carousel pagination dots */
+        .mobile-blog-pagination {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 25px;
+            padding-bottom: 10px;
+        }
+
+        .mobile-blog-pagination .swiper-pagination-bullet {
+            width: 8px;
+            height: 8px;
+            background: #ccc;
+            opacity: 1;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-blog-pagination .swiper-pagination-bullet-active {
+            width: 24px;
+            border-radius: 4px;
+            background: var(--zuz-pink-dark);
+        }
+    }
+
+    @media (min-width: 768px) {
+
+        .mobile-blog-carousel,
+        .mobile-blog-pagination {
+            display: none;
+        }
+    }
+
+    /* Hero Slider Zoom & Transition Effects */
+    .zuz-hero-slider .swiper-slide {
+        position: relative;
+        overflow: hidden;
+        opacity: 0 !important;
+        transition: opacity 1s ease;
+    }
+
+    .zuz-hero-slider .swiper-slide-active {
+        opacity: 1 !important;
+    }
+
+    .zuz-hero-slider .swiper-slide-prev,
+    .zuz-hero-slider .swiper-slide-next {
+        opacity: 0 !important;
+    }
+
+    .zuz-hero-slider .swiper-slide .slide-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        transform: scale(1.08);
+        /* Start zoomed in */
+        transition: transform 6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        z-index: 0;
+    }
+
+    .zuz-hero-slider .swiper-slide-active .slide-bg {
+        transform: scale(1);
+        /* Slowly zoom out while active */
+    }
+
+    /* Text animation classes */
+    .zuz-hero-slider .zuz-hero-label,
+    .zuz-hero-slider .zuz-hero-title,
+    .zuz-hero-slider .zuz-hero-subtext,
+    .zuz-hero-slider .zuz-hero-actions,
+    .zuz-hero-slider .zuz-hero-trust {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .zuz-hero-slider .swiper-slide-active .zuz-hero-label {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.1s;
+    }
+
+    .zuz-hero-slider .swiper-slide-active .zuz-hero-title {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.2s;
+    }
+
+    .zuz-hero-slider .swiper-slide-active .zuz-hero-subtext {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.35s;
+    }
+
+    .zuz-hero-slider .swiper-slide-active .zuz-hero-actions {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.5s;
+    }
+
+    .zuz-hero-slider .swiper-slide-active .zuz-hero-trust {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.65s;
+    }
+
+    /* Exit animations for leaving slide */
+    .zuz-hero-slider .swiper-slide-prev .zuz-hero-label,
+    .zuz-hero-slider .swiper-slide-prev .zuz-hero-title,
+    .zuz-hero-slider .swiper-slide-prev .zuz-hero-subtext,
+    .zuz-hero-slider .swiper-slide-prev .zuz-hero-actions,
+    .zuz-hero-slider .swiper-slide-prev .zuz-hero-trust {
+        opacity: 0;
+        transform: translateY(-15px);
+        transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    /* Overlay adjustment for better readability */
+    .zuz-hero-slider .swiper-slide::before {
+        background: rgba(0, 0, 0, 0.35);
+    }
+
+    /* Text color adjustment for dark overlay */
+    .zuz-hero-slider .zuz-hero-label {
+        background: rgba(0, 0, 0, 0.6);
+        color: #fff;
+        border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .zuz-hero-slider .zuz-hero-title {
+        color: #fff;
+    }
+
+    .zuz-hero-slider .zuz-hero-subtext {
+        color: rgba(255, 255, 255, 0.85);
+    }
+
+    .zuz-hero-slider .zuz-hero-trust {
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    .zuz-hero-slider .zuz-hero-trust i {
+        color: #fff;
+    }
+
+    /* Button styling for dark overlay — compact pill style */
+    .zuz-hero-slider .btn-dark {
+        background: rgba(255, 255, 255, 0.15);
+        color: #fff;
+        border-color: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+    }
+
+    .zuz-hero-slider .btn-dark:hover {
+        background: #fff;
+        color: #1a1a1a;
+        border-color: #fff;
+    }
+
+    .zuz-hero-slider .btn-outline-dark {
+        background: transparent;
+        border-color: rgba(255, 255, 255, 0.4);
+        color: rgba(255, 255, 255, 0.85);
+    }
+
+    .zuz-hero-slider .btn-outline-dark:hover {
+        background: rgba(255, 255, 255, 0.12);
+        border-color: rgba(255, 255, 255, 0.7);
+        color: #fff;
+    }
+
+    /* Text alignment variations for hero content */
+    .zuz-hero-content-left {
+        text-align: left;
+        margin-left: 0;
+        margin-right: auto;
+    }
+
+    .zuz-hero-content-center {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .zuz-hero-content-right {
+        text-align: right;
+        margin-left: auto;
+        margin-right: 0;
+    }
+
+    /* For right-aligned content, adjust subtext and actions */
+    .zuz-hero-content-right .zuz-hero-subtext {
+        margin-left: auto;
+        margin-right: 0;
+    }
+
+    .zuz-hero-content-right .zuz-hero-actions {
+        justify-content: flex-end;
+    }
+
+    .zuz-hero-content-center .zuz-hero-subtext {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .zuz-hero-content-center .zuz-hero-actions {
+        justify-content: center;
+    }
+
+    /* Responsive: center all on mobile */
+    @media (max-width: 991px) {
+
+        .zuz-hero-content-left,
+        .zuz-hero-content-center,
+        .zuz-hero-content-right {
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        .zuz-hero-content-right .zuz-hero-subtext,
+        .zuz-hero-content-left .zuz-hero-subtext,
+        .zuz-hero-content-center .zuz-hero-subtext {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .zuz-hero-content-right .zuz-hero-actions,
+        .zuz-hero-content-left .zuz-hero-actions,
+        .zuz-hero-content-center .zuz-hero-actions {
+            justify-content: center;
+        }
+    }
+
+    /* Faster fade transition */
+    .zuz-hero-slider .swiper-slide {
+        opacity: 0 !important;
+        transition: opacity 0.6s ease;
+    }
+
+    .zuz-hero-slider .swiper-slide-active {
+        opacity: 1 !important;
+    }
+
+    .zuz-hero-slider .swiper-slide-prev,
+    .zuz-hero-slider .swiper-slide-next {
+        opacity: 0 !important;
+    }
+
+    /* Faster text animations */
+    .zuz-hero-slider .zuz-hero-label,
+    .zuz-hero-slider .zuz-hero-title,
+    .zuz-hero-slider .zuz-hero-subtext,
+    .zuz-hero-slider .zuz-hero-actions,
+    .zuz-hero-slider .zuz-hero-trust {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .zuz-hero-slider .swiper-slide-active .zuz-hero-label {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.05s;
+    }
+
+    .zuz-hero-slider .swiper-slide-active .zuz-hero-title {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.1s;
+    }
+
+    .zuz-hero-slider .swiper-slide-active .zuz-hero-subtext {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.2s;
+    }
+
+    .zuz-hero-slider .swiper-slide-active .zuz-hero-actions {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.3s;
+    }
+
+    .zuz-hero-slider .swiper-slide-active .zuz-hero-trust {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.4s;
+    }
+
+{% comment %} scrolling text style start  {% endcomment %}
+    .zuz-marquee-section {
+    background: #DFAAB7;
+    overflow: hidden;
+    padding: 22px 0;
+    border-bottom: 1px solid rgba(231,101,137,0.15);
+    border: 2px solid white;
+}
+
+.zuz-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: zuzMarquee 28s linear infinite;
+}
+
+.zuz-marquee-content {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.zuz-marquee-content span {
+    font-family: font-family: "Marcellus", Arial, Helvetica, sans-serif;
+    font-size: 30px;
+    color: #fff;
+    white-space: nowrap;
+    padding: 0 24px;
+    letter-spacing: 1px;
+}
+
+.zuz-marquee-dot {
+    color: #e76589 !important;
+    font-size: 16px !important;
+}
+
+@keyframes zuzMarquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+.zuz-marquee-section:hover .zuz-marquee-track {
+    animation-play-state: paused;
+}
+
+@media (max-width: 767px) {
+    .zuz-marquee-content span {
+        font-size: 18px;
+        padding: 0 16px;
+    }
+}
+
+{% comment %} scrolling text style end here {% endcomment %}
+
+
+{% comment %} Combo Modal Styles start here {% endcomment %}
+
+
+.zuz-combo-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    display: none;
+    align-items: flex-start !important;
+    justify-content: center;
+    padding: 20px;
+    overflow-y: auto;
+    padding-top: calc(var(--zuz-header-h, 90px) + 10px) !important;
+}
+
+.zuz-combo-modal.is-open { display: flex; }
+
+.zuz-combo-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+}
+
+.zuz-combo-modal-box {
+    position: relative;
+    background: #fff;
+    border-radius: 10px;
+    width: 92%;
+    max-width: 560px;      /* default / tablet */
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 32px 28px;
+    z-index: 1;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+}
+
+.zuz-combo-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    line-height: 1;
+    color: #999;
+    cursor: pointer;
+    z-index: 2;
+}
+.zuz-combo-modal-close:hover { color: #333; }
+
+.zuz-combo-modal-title {
+    font-size: 20px;
+    margin: 0 0 8px;
+    color: #222;
+}
+
+.zuz-combo-modal-desc {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.zuz-combo-modal-items li {
+    font-size: 13px;
+    padding: 4px 0;
+    border-bottom: 1px dashed #eee;
+}
+
+
+/* Top row: image + title/desc */
+.zuz-combo-modal-top {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    margin-bottom: 24px;
+    padding-right: 20px;
+}
+
+.zuz-combo-modal-image {
+    flex: 0 0 130px;
+    width: 130px;
+    height: 160px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #f5f5f5;
+}
+
+.zuz-combo-modal-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.zuz-combo-modal-top-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.zuz-combo-modal-title {
+    font-size: 20px;
+    margin: 0 0 8px;
+    color: #222;
+}
+
+.zuz-combo-modal-desc {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Item grid */
+.zuz-combo-modal-items {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.zuz-combo-item {
+    text-align: center;
+}
+
+.zuz-combo-item-img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #f5f5f5;
+    margin-bottom: 6px;
+}
+
+.zuz-combo-item-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.zuz-combo-item-name {
+    font-size: 11px;
+    color: #555;
+    line-height: 1.3;
+}
+
+@media (max-width: 480px) {
+    .zuz-combo-modal-items {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .zuz-combo-modal-top {
+        flex-direction: column;
+    }
+    .zuz-combo-modal-image {
+        width: 100%;
+        height: 180px;
+        flex: none;
+    }
+
+}
+
+@media (min-width: 992px) {
+
+    .zuz-combo-modal-box {
+        max-width: 780px;
+        padding: 40px 44px;
+    }
+
+    .zuz-combo-modal-image {
+        flex: 0 0 180px;
+        width: 180px;
+        height: 220px;
+    }
+
+    .zuz-combo-modal-items {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+/* Mobile — shorter modal, gap from navbar, no side-by-side top block */
+@media (max-width: 767px) {
+    .zuz-combo-modal-box {
+        max-height: 75vh;
+        padding: 24px 18px;
+        width: 100%;
+    }
+
+    .zuz-combo-modal-top {
+        flex-direction: column;
+        padding-right: 24px; /* clear the close button */
+    }
+
+    .zuz-combo-modal-image {
+        width: 100%;
+        height: 160px;
+        flex: none;
+    }
+
+    .zuz-combo-modal-items {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+}
+
+@media (max-width: 420px) {
+    .zuz-combo-modal-items {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+.zuz-combo-item-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+}
+
+.zuz-combo-item-link:hover .zuz-combo-item-name {
+    color: #b98795;
+}
+
+.zuz-combo-item-link:hover .zuz-combo-item-img img {
+    transform: scale(1.04);
+}
+
+.zuz-combo-item-img img {
+    transition: transform 0.3s ease;
+}
+
+
+
+{% comment %} Combo  style {% endcomment %}
+
+.zuz-combo-card .product-thumb {
+    position: relative;
+    overflow: hidden;
+}
+
+.zuz-combo-card .product-buttons {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
+    padding-bottom: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, bottom 0.3s ease;
+}
+
+
+
+.zuz-combo-card:hover .product-buttons {
+    opacity: 1;
+    visibility: visible;
+    bottom: 4px;
+}
+
+.zuz-combo-card .product-button {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    margin: 0 4px;
+}
+
+.zuz-combo-card .product-button i {
+    color: #fff;
+}
+
+.zuz-combo-card .product-button:hover {
+    background: var(--zuz-pink, #b98795);
+}
+
+
+
+.zuz-scroll-content .zuz-ritual-card,
+.zuz-scroll-content .product {
+    transform: none !important;
+    opacity: 1 !important;
+}
+.swiper-slide .slide-bg.slide-bg-zoomout {
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    background-color: transparent !important;
+    transform: none !important;   /* no 1.08 -> 1 zoom on this slide, so it looks less zoomed in */
+    transition: none !important;
+}
+</style>
+<script>
+    // ====== Sticky Header Scroll Behaviour ======
+    var zuzStickyHeader = document.getElementById('zuzStickyHeader');
+    if (zuzStickyHeader) {
+        function updateStickyHeader() {
+            if (window.scrollY > 120) {
+                zuzStickyHeader.classList.add('is-visible');
+            } else {
+                zuzStickyHeader.classList.remove('is-visible');
+            }
+        }
+        window.addEventListener('scroll', updateStickyHeader, { passive: true });
+        updateStickyHeader();
+    }
+</script>
+{% endblock %}
+
+{% block header_section %}
+<!-- TOP HEADER ROW: social | logo | call/whatsapp -->
+{% comment %} <header class="header-section section zuz-home-header d-none d-xl-block">
+    <div class="container">
+        <!-- Row 1: Social icons | Logo | Action icons -->
+        <div class="zuz-header-top-row">
+            <!-- Left: Social links -->
+            <div class="zuz-header-socials">
+                <a href="https://www.instagram.com/zuzanne_christening_outfits/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/zuzanne.christening.outfits/" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            </div>
+
+
+            <!-- Center: Logo -->
+            <div class="zuz-header-logo-center">
+                <a href="/"><img src="{% static 'frontend/assets/images/logo/zuzanne.png' %}" alt="Zuzanne"
+                        class="zuzanne-logo-desktop zuz-home-logo"></a>
+            </div>
+
+            <!-- Right: Call / WhatsApp -->
+            <div class="zuz-header-actions">
+                <a href="tel:+911234567890" class="btn btn-icon btn-outline-dark rounded-circle hintT-bottom"
+                    data-hint="Call"><i class="fas fa-phone-alt"></i></a>
+                <a href="#" class="btn btn-icon btn-outline-dark rounded-circle hintT-bottom" data-hint="WhatsApp" data-zuz-enquiry-trigger data-product="{{product.name }}">
+                   <i class="fab fa-whatsapp"></i>  
+                </a>      
+            </div>
+        </div> 
+
+        <!-- Row 2: Navigation menu -->
+        <div class="zuz-header-nav-row">
+            <nav class="site-main-menu justify-content-center">
+                <ul>
+                    <li><a href="/"><span class="menu-text">Home</span></a></li>
+                    <li><a href="{% url 'about' %}"><span class="menu-text">About Us</span></a></li>
+                    <li class="has-children zuz-shop-mega">
+                        <a href="{% url 'shop' %}"><span class="menu-text">Shop</span></a>
+                        <ul class="sub-menu zuz-mega-panel">
+                            <li class="zuz-mega-wrapper">
+                                {% for col in collections_tree %}
+                                <div class="zuz-mega-col">
+                                    <a href="{% url 'collection' col.slug %}" class="zuz-col-title">{{ col.name }}</a>
+                                    <ul class="zuz-cat-list">
+                                        {% for cat in col.cats %}
+                                        <li><a href="{% url 'category' col.slug cat.slug %}">{{ cat.name }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                {% endfor %}
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="{% url 'blog_list' %}"><span class="menu-text">Blog</span></a></li>
+                    <li><a href="{% url 'contact' %}"><span class="menu-text">Contact Us</span></a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header> {% endcomment %}
+<header class="header-section section zuz-home-header d-none d-xl-block">
+    <div class="container">
+        <!-- Single Row: Logo | Nav | Call/WhatsApp -->
+        <div class="zuz-header-single-row">
+            <!-- Left: Logo -->
+            <div class="zuz-header-logo-center">
+                <a href="/"><img src="{% static 'frontend/assets/images/logo/zuzanne.png' %}" alt="Zuzanne"
+                        class="zuzanne-logo-desktop zuz-home-logo"></a>
+            </div>
+
+            <!-- Center: Navigation menu -->
+            <nav class="site-main-menu justify-content-center">
+                <ul>
+                    <li><a href="/"><span class="menu-text">Home</span></a></li>
+                    <li><a href="{% url 'about' %}"><span class="menu-text">About Us</span></a></li>
+                    <li class="has-children zuz-shop-mega">
+                        <a href="{% url 'shop' %}"><span class="menu-text">Shop</span></a>
+                        <ul class="sub-menu zuz-mega-panel">
+                            <li class="zuz-mega-wrapper">
+                                {% for col in collections_tree %}
+                                <div class="zuz-mega-col">
+                                    <a href="{% url 'collection' col.slug %}" class="zuz-col-title">{{ col.name }}</a>
+                                    <ul class="zuz-cat-list">
+                                        {% for cat in col.cats %}
+                                        <li><a href="{% url 'category' col.slug cat.slug %}">{{ cat.name }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                {% endfor %}
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="{% url 'blog_list' %}"><span class="menu-text">Blog</span></a></li>
+                    <li><a href="{% url 'contact' %}"><span class="menu-text">Contact Us</span></a></li>
+                </ul>
+            </nav>
+
+            <!-- Right: Call / WhatsApp -->
+            <div class="zuz-header-actions">
+                <a href="tel:+911234567890" class="btn btn-icon btn-outline-dark rounded-circle hintT-bottom"
+                    data-hint="Call"><i class="fas fa-phone-alt"></i></a>
+                <a href="#" class="btn btn-icon btn-outline-dark rounded-circle hintT-bottom" data-hint="WhatsApp" data-zuz-enquiry-trigger data-product="{{product.name }}">
+                   <i class="fab fa-whatsapp"></i>  
+                </a>      
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- STICKY HEADER: appears on scroll -->
+<div class="zuz-sticky-header d-none d-xl-block" id="zuzStickyHeader">
+    <div class="container">
+        <div class="zuz-sticky-header-inner">
+            <a href="/" class="zuz-sticky-logo">
+                <img src="{% static 'frontend/assets/images/logo/zuzanne.png' %}" style="height: 60px !important; width: 1998px !important;" alt="Zuzanne">
+            </a>
+            <nav class="site-main-menu justify-content-center">
+                <ul>
+                    <li><a href="/"><span class="menu-text">Home</span></a></li>
+                    <li><a href="{% url 'about' %}"><span class="menu-text">About Us</span></a></li>
+                    <li class="has-children zuz-shop-mega">
+                        <a href="{% url 'shop' %}"><span class="menu-text">Shop</span></a>
+                        <ul class="sub-menu zuz-mega-panel">
+                            <li class="zuz-mega-wrapper">
+                                {% for col in collections_tree %}
+                                <div class="zuz-mega-col">
+                                    <a href="{% url 'collection' col.slug %}" class="zuz-col-title">{{ col.name }}</a>
+                                    <ul class="zuz-cat-list">
+                                        {% for cat in col.cats %}
+                                        <li><a href="{% url 'category' col.slug cat.slug %}">{{ cat.name }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                {% endfor %}
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="{% url 'blog_list' %}"><span class="menu-text">Blog</span></a></li>
+                    <li><a href="{% url 'contact' %}"><span class="menu-text">Contact Us</span></a></li>
+                </ul>
+            </nav>
+            <div class="zuz-sticky-actions">
+                <a href="tel:+911234567890" class="btn btn-icon btn-outline-dark rounded-circle" title="Call"><i
+                        class="fas fa-phone-alt"></i></a>
+
+                        <a href="#" class="btn btn-icon btn-outline-dark rounded-circle" data-hint="WhatsApp" data-zuz-enquiry-trigger data-product="{{product.name }}">
+                                <i class="fab fa-whatsapp"></i> WhatsApp 
+                        </a> 
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block mobile_header_section %}
+<!-- Mobile Header Section Start (Home Page Override) -->
+<div class="mobile-header d-xl-none">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col">
+                <div class="header-logo">
+                    <a href="/"><img src="{% static 'frontend/assets/images/logo/zuzanne.png' %}" id="mobileLogo"
+                            data-default="{% static 'frontend/assets/images/logo/zuzanne.png' %}"
+                            data-scrolled="{% static 'frontend/assets/images/logo/zuzanne2.png' %}" alt="Logo"
+                            class="zuzanne-logo-mobile"></a>
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="header-tools justify-content-end align-items-center">
+                    <div class="mobile-menu-toggle">
+                        <a href="#offcanvas-mobile-menu" class="offcanvas-toggle">
+                            <svg viewBox="0 0 800 600">
+                                <path
+                                    d="M300,220 C300,220 520,220 540,220 C740,220 640,540 520,420 C440,340 300,200 300,200"
+                                    class="top"></path>
+                                <path d="M300,320 L540,320" class="middle"></path>
+                                <path
+                                    d="M300,210 C300,210 520,210 540,210 C740,210 640,530 520,410 C440,330 300,190 300,190"
+                                    class="bottom" transform="translate(480, 320) scale(1, -1) translate(-480, -318) ">
+                                </path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Mobile Header Section End -->
+{% endblock %}
+
+{% block content %}
+<!-- Hero Slider Start -->
+<section class="section zuz-hero-slider">
+    <div class="swiper-container hero-carousel">
+        <div class="swiper-wrapper">
+
+            <!-- Slide 1 -->
+            <div class="swiper-slide">
+                <div class="slide-bg"
+                    style="background-image: url('{% static 'frontend/assets/images/hero-section/family-img.png' %}');"></div>
+                <div class="container">
+                    <div class="zuz-hero-content zuz-hero-content-left">
+                        <span class="zuz-hero-label">LIMITED COLLECTION</span>
+                        <h1 class="zuz-hero-title">Sacred Threads<br>of Devotion</h1>
+                        <div class="zuz-hero-actions">
+                            <a href="{% url 'shop' %}" class="btn btn-dark btn-outline-hover-dark">SHOP NOW</a>
+                            <a href="{% url 'about' %}" class="btn btn-outline-dark btn-outline-hover-dark">READ STORY</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2 (zoomed out) -->
+            <div class="swiper-slide">
+                <div class="slide-bg slide-bg-zoomout"
+                    style="background-image: url('{% static 'frontend/assets/images/hero-section/zuz 12.png' %}');"></div>
+                <div class="container">
+                    <div class="zuz-hero-content zuz-hero-content-right">
+                        <span class="zuz-hero-label">BESPOKE CRAFTSMANSHIP</span>
+                        <h1 class="zuz-hero-title">Made to Order,<br>Made with Prayer</h1>
+                        <div class="zuz-hero-actions">
+                            <a href="{% url 'shop' %}" class="btn btn-dark btn-outline-hover-dark">EXPLORE COLLECTION</a>
+                            <a href="#" class="btn btn-outline-dark btn-hover-dark" data-hint="WhatsApp"
+                                data-zuz-enquiry-trigger data-product="{{ product.name }}">
+                                <i class="fab fa-whatsapp"></i> Enquire Now
+                            </a>
+                            {% comment %} <a href="#" class="btn btn-outline-dark btn-hover-dark" data-zuz-enquiry-trigger data-product="{{ showcase_product.name }}">
+                                <i class="far fa-envelope"></i> Enquire Now
+                            </a> {% endcomment %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3 (optional - add more as needed) -->
+            <div class="swiper-slide">
+                <div class="slide-bg"
+                    style="background-image: url('{% static 'frontend/assets/images/hero-section/zuz 01.png' %}');"></div>
+                <div class="container">
+                    <div class="zuz-hero-content zuz-hero-content-left">
+                        <span class="zuz-hero-label">SACRED CELEBRATIONS</span>
+                        <h1 class="zuz-hero-title">Cherish Every<br>Holy Moment</h1>
+                        <div class="zuz-hero-actions">
+                            <a href="{% url 'shop' %}" class="btn btn-dark btn-outline-hover-dark">VIEW COLLECTION</a>
+                            <a href="{% url 'about' %}" class="btn btn-outline-dark btn-outline-hover-dark">OUR STORY</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Navigation Arrows -->
+    <div class="zuz-hero-nav">
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+    </div>
+
+    <!-- Pagination Dots -->
+    <div class="zuz-hero-pagination">
+        <div class="swiper-pagination"></div>
+    </div>
+</section>
+<!-- Hero Slider End -->
+
+<!-- Scrolling Marquee Text Start -->
+<section class="zuz-marquee-section">
+    <div class="zuz-marquee-track">
+        <div class="zuz-marquee-content">
+            <span>Sacred Threads</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+            <span>Made With Prayer</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+            <span>Bespoke Craftsmanship</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+            <span>Handcrafted Ceremonial Wear</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+        </div>
+        <div class="zuz-marquee-content" aria-hidden="true">
+            <span>Sacred Threads</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+            <span>Made With Prayer</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+            <span>Bespoke Craftsmanship</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+            <span>Handcrafted Ceremonial Wear</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+        </div>
+    </div>
+</section>
+<!-- Scrolling Marquee Text End -->
+
+<!-- Product Section Start -->
+<section class="zuz-collection-section section section-padding">
+
+    <div class="zuz-collection-bg zuz-bg-top-right">
+        <img src="{% static 'frontend/assets/new_images/floral2.svg' %}" alt="">
+    </div>
+
+
+    <div class="container">
+
+        <div class="row learts-mb-50">
+            <div class="col">
+                <!-- Section Title Start -->
+                <div class="section-title text-center mb-0">
+                    <h3 class="sub-title wow fadeInUp" data-wow-duration="1.2s" data-wow-delay="0.1s">Our Collections</h3>
+                    <h2 class="title title-icon-both wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.2s">Signature Ceremonial Pieces</h2>
+                </div>
+                <!-- Section Title End -->
+            </div>
+        </div>
+
+        <!-- Product Tab List Start -->
+        <div class="row learts-mb-40">
+            <div class="col">
+                <ul class="nav text-uppercase justify-content-center mx-n1 mb-n2 wow fadeInUp" data-wow-duration="1.2s" data-wow-delay="0.3s">
+                    <li class="nav-item mx-1 mb-2"><a href="#product-all" data-bs-toggle="tab"
+                            class="btn btn-md btn-light btn-hover-dark active">All</a></li>
+                    {% for col in collections %}
+                    <li class="nav-item mx-1 mb-2"><a href="#product-{{ col.slug }}" data-bs-toggle="tab"
+                            class="btn btn-md btn-light btn-hover-dark">{{ col.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <!-- Product Tab List End -->
+
+        <div class="zuz-ritual-products">
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="product-all">
+                <!-- Products Start -->
+                <div class="products row row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-2">
+                    {% for product in products %}
+                    {% if forloop.counter0|divisibleby:4 %}
+                    <div class="col">
+                        {% elif forloop.counter0|add:"3"|divisibleby:4 %}
+                        <div class="col">
+                            {% elif forloop.counter0|add:"2"|divisibleby:4 %}
+                            <div class="col">
+                                {% else %}
+                                <div class="col">
+                                    {% endif %}
+                                    <div class="product zuz-ritual-card">
+                                        <div class="product-thumb">
+                                            <a href="{% url 'product_detail' product.slug %}" class="image zuz-image-anime zuz-reveal" style="display: block;">
+                                                {% with first_img=product.images.all.0 second_img=product.images.all.1 %}
+                                                {% if first_img %}
+                                                <img src="{{ first_img.image.url }}" alt="{{ product.name }}">
+                                                {% if second_img %}
+                                                <img class="image-hover" src="{{ second_img.image.url }}"
+                                                    alt="{{ product.name }}">
+                                                {% endif %}
+                                                {% else %}
+                                                <img src="{% static 'frontend/assets/images/product/s328/product-1.webp' %}"
+                                                    alt="{{ product.name }}">
+                                                {% endif %}
+                                                {% endwith %}
+                                            </a>
+                                        </div>
+                                        <div class="product-info">
+                                            <h6 class="title"><a href="{% url 'product_detail' product.slug %}">{{ product.name }}</a></h6>
+
+                                            <div class="product-buttons d-none d-md-flex">
+                                                <a href="{% url 'product_detail' product.slug %}"
+                                                    class="product-button hintT-top" data-hint="View Details"><i
+                                                        class="fas fa-search"></i>
+                                                </a>
+                                                <a href="#" class="product-button hintT-top" data-hint="WhatsApp" data-zuz-enquiry-trigger data-product="{{ product.name }}" data-sizes="{{ product.available_sizes }}">
+                                                   <i class="fab fa-whatsapp"></i>
+                                                </a>
+                                                {% comment %} <a href="#" class="product-button hintT-top" data-hint="WhatsApp" data-zuz-enquiry-trigger data-product="{{product.name }}">
+                                                  <i class="fab fa-whatsapp"></i> 
+                                                </a>          {% endcomment %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% empty %}
+                                <div class="col-12 text-center py-5">
+                                    <h4 class="text-muted">No products found.</h4>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <!-- Products End -->
+                        </div>
+
+                        {% for col in collections %}
+                        <div class="tab-pane fade" id="product-{{ col.slug }}">
+                            <div class="products row row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-2">
+                                {% for cat in col.categories.all %}
+                                {% for product in cat.products.all|slice:":5" %}
+                                <div class="col">
+                                    <div class="product zuz-ritual-card">
+                                        <div class="product-thumb">
+                                            <a href="{% url 'product_detail' product.slug %}" class="image zuz-image-anime zuz-reveal" style="display: block;">
+                                                {% with first_img=product.images.all.0 second_img=product.images.all.1 %}
+                                                {% if first_img %}
+                                                <img src="{{ first_img.image.url }}" alt="{{ product.name }}">
+                                                {% if second_img %}
+                                                <img class="image-hover" src="{{ second_img.image.url }}"
+                                                    alt="{{ product.name }}">
+                                                {% endif %}
+                                                {% else %}
+                                                <img src="{% static 'frontend/assets/images/product/s328/product-1.webp' %}"
+                                                    alt="{{ product.name }}">
+                                                {% endif %}
+                                                {% endwith %}
+                                            </a>
+                                        </div>
+                                        <div class="product-info">
+                                            <h6 class="title"><a href="{% url 'product_detail' product.slug %}">{{ product.name }}</a></h6>
+
+                                            <div class="product-buttons d-none d-md-flex">
+                                                <a href="{% url 'product_detail' product.slug %}"
+                                                    class="product-button hintT-top" data-hint="View Details"><i
+                                                        class="fas fa-search"></i></a>
+                                                <a href="#" class="product-button hintT-top" data-hint="WhatsApp" data-zuz-enquiry-trigger data-product="{{ product.name }}"
+                                                    data-sizes="{{ product.available_sizes }}">
+                                                  <i class="fab fa-whatsapp"></i>
+                                                </a>      
+                                                {% comment %} <a href="#" class="product-button hintT-top" data-hint="WhatsApp" data-zuz-enquiry-trigger data-product="{{product.name }}">
+                                                  <i class="fab fa-whatsapp"></i> 
+                                                </a>  {% endcomment %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Product Section End -->
+            <!-- Contact Inquiry Banner Start -->
+            <div class="section section-padding" data-bg-color="#f4ede7">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-lg-6 col-12 align-self-center">
+                            <div class="product-deal-image text-center">
+                                <figure class="zuz-image-anime zuz-reveal" style="border-radius: var(--zuz-image-radius); width: 100%;">
+                                    <img src="{% static 'frontend/assets/new_images/sale-banner.png' %}"
+                                        alt="Contact Us">
+                                </figure>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-12">
+                            <div class="sale-banner9 p-0">
+                                <div class="inner">
+                                    <div class="content">
+                                        <h3 class="title wow fadeInUp zuz-heading-md" data-wow-duration="1.3s" data-wow-delay="0.1s">Bespoke Couture</h3>
+                                        <span class="cuppon zuz-label wow fadeInUp" style="margin-bottom: 20px;" data-wow-duration="1.2s" data-wow-delay="0.2s">Curated for Your Vision</span>
+                                        <p class="zuz-body wow fadeInUp"
+                                            style="color: #666; max-width: 400px; margin: 0 auto 30px auto;" data-wow-duration="1.2s" data-wow-delay="0.3s">
+                                            Commission a one-of-a-kind ceremonial masterpiece. We collaborate closely
+                                            with you to realize designs that elevate your most cherished moments.</p>
+                                        <a href="{% url 'contact' %}"
+                                            class="btn btn-dark btn-outline-hover-dark wow fadeInUp" data-wow-duration="1.1s" data-wow-delay="0.4s">Inquire Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- Contact Inquiry Banner End -->
+
+<!-- Combo Sets Start -->
+<section class="zuz-collection-section section section-padding">
+    <div class="container">
+
+        <div class="row learts-mb-50">
+            <div class="col">
+                <div class="section-title text-center mb-0">
+                    <h3 class="sub-title wow fadeInUp" data-wow-duration="1.2s" data-wow-delay="0.1s">Bundled For You</h3>
+                    <h2 class="title title-icon-both wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.2s">Combo Sets</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="zuz-ritual-products">
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="combo-all">
+                    <div class="products row row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-2">
+ {% for combo in combo_sets %}
+<div class="col">
+   <div class="product zuz-ritual-card zuz-combo-card"
+     data-combo-name="{{ combo.combo_name }}"
+     data-combo-desc="{{ combo.description|default:'' }}"
+     data-combo-image="{% if combo.image %}{{ combo.image.url }}{% else %}{% static 'frontend/assets/images/product/s328/product-1.webp' %}{% endif %}"
+     data-combo-items='[{% for p in combo.products.all %}{"name": "{{ p.name|escapejs }}", "image": "{% if p.images.all.0 %}{{ p.images.all.0.image.url }}{% else %}{% static "frontend/assets/images/product/s328/product-1.webp" %}{% endif %}", "url": "{% url 'product_detail' p.slug %}"}{% if not forloop.last %},{% endif %}{% endfor %}]'>
+
+        <div class="product-thumb">
+            <a href="#" class="image zuz-image-anime zuz-reveal zuz-combo-details-trigger" style="display: block;">
+                {% if combo.image %}
+                <img src="{{ combo.image.url }}" alt="{{ combo.combo_name }}">
+                {% else %}
+                <img src="{% static 'frontend/assets/images/product/s328/product-1.webp' %}" alt="{{ combo.combo_name }}">
+                {% endif %}
+            </a>
+        </div>
+
+        <div class="product-info">
+            <h6 class="title">{{ combo.combo_name }}</h6>
+            <div class="product-buttons d-none d-md-flex">
+                <a href="#" class="product-button hintT-top zuz-combo-details-trigger" data-hint="View Details">
+                    <i class="fas fa-search"></i>
+                </a>
+
+                <a href="#" class="product-button hintT-top" data-hint="WhatsApp"
+                   data-zuz-enquiry-trigger
+                   data-product="{{ combo.combo_name }}"
+                   data-combo-items='[{% for p in combo.products.all %}{"name": "{{ p.name|escapejs }}", "image": "{% if p.images.all.0 %}{{ p.images.all.0.image.url }}{% else %}{% static "frontend/assets/images/product/s328/product-1.webp" %}{% endif %}"}{% if not forloop.last %},{% endif %}{% endfor %}]'>
+                   <i class="fab fa-whatsapp"></i>
+                </a>
+
+                {% comment %} <a href="#" class="product-button hintT-top" data-hint="WhatsApp" data-zuz-enquiry-trigger data-product="{{ combo.combo_name }}" data-combo-items="{% for p in combo.products.all %}{{ p.name }}{% if not forloop.last %}, {% endif %}{% endfor %}">
+                    <i class="fab fa-whatsapp"></i>
+               </a> {% endcomment %}
+            </div>
+        </div>
+    </div>
+</div>
+{% empty %}
+<div class="col-12 text-center py-5">
+    <h4 class="text-muted">No combo sets available.</h4>
+</div>
+{% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<!-- Combo Sets End -->
+
+
+            <!-- GSAP Pinned Section Start -->
+            <div class="section zuz-pinned-section">
+                <div class="container-fluid p-0">
+                    <div class="row g-0">
+                        <div class="col-lg-6 d-none d-lg-block">
+                            <div class="zuz-pin-wrapper d-flex flex-column justify-content-center px-5"
+                                style="background: linear-gradient(135deg, #fff 0%, #fef6f8 100%); min-height: 100vh; padding-top: 10vh; padding-bottom: 10vh; position: relative;">
+                                <div class="zuz-floral-ornament zuz-floral-right" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.05; z-index: 0; pointer-events: none;">
+                                    <svg viewBox="0 0 500 700" xmlns="http://www.w3.org/2000/svg" class="zuz-light-floral" style="width: 100%; height: 100%; object-fit: cover;">
+                                        <defs>
+                                            <linearGradient id="embroideryGradPin" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                <stop offset="0%" stop-color="#e76589" stop-opacity="0.8"/>
+                                                <stop offset="50%" stop-color="#e76589" stop-opacity="0.4"/>
+                                                <stop offset="100%" stop-color="#b98795" stop-opacity="0.6"/>
+                                            </linearGradient>
+                                        </defs>
+                                        <g opacity="0.15" stroke="#e76589" stroke-width="0.4" fill="none">
+                                            <path d="M0,50 Q250,350 500,250 M0,100 Q250,400 500,300 M0,150 Q250,450 500,350 M0,200 Q250,500 500,400 M0,250 Q250,550 500,450" stroke-dasharray="2 4"/>
+                                            <path d="M50,0 Q350,250 250,500 M100,0 Q400,250 300,500 M150,0 Q450,250 350,500 M200,0 Q500,250 400,500 M250,0 Q550,250 450,500" stroke-dasharray="2 4"/>
+                                        </g>
+                                        <path d="M500,700 C300,600 200,400 350,200 C450,50 250,-50 150,50" stroke="url(#embroideryGradPin)" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.85"/>
+                                        <path d="M500,650 C250,550 150,350 300,150 C400,0 200,-100 100,0" stroke="#e76589" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.6"/>
+                                        <path d="M450,700 C200,650 100,450 250,250 C350,100 150,0 50,100" stroke="#e76589" stroke-width="0.6" fill="none" stroke-linecap="round" opacity="0.5"/>
+                                        <path d="M350,200 C250,150 150,250 100,200 C50,150 100,100 150,50" stroke="#b98795" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.7"/>
+                                        <path d="M200,400 C100,450 50,350 0,400" stroke="#e76589" stroke-width="0.8" fill="none" stroke-linecap="round" opacity="0.5"/>
+                                        <g transform="translate(350, 200)" fill="none" stroke="#e76589">
+                                            <path d="M0,0 C-50,-30 -80,20 -40,60 C0,100 60,80 40,30 C20,-20 0,0 0,0" stroke-width="1.2" stroke-opacity="0.6" fill="#e76589" fill-opacity="0.03"/>
+                                            <path d="M0,0 C50,-50 100,-20 70,30 C40,80 -20,50 0,0" stroke-width="1.2" stroke-opacity="0.6" fill="#e76589" fill-opacity="0.03"/>
+                                            <path d="M10,10 C-20,-10 -40,15 -15,40 C10,65 40,50 20,15 C5,-10 10,10 10,10" stroke-width="1.5" stroke-opacity="0.8" fill="#e76589" fill-opacity="0.05"/>
+                                            <path d="M10,10 C40,-20 70,0 50,30 C30,60 -10,35 10,10" stroke-width="1.5" stroke-opacity="0.8" fill="#e76589" fill-opacity="0.05"/>
+                                            <path d="M20,20 C-5,10 -15,30 5,45 C25,60 40,40 20,20" stroke-width="1" stroke-opacity="0.9"/>
+                                            <path d="M20,20 C40,5 60,20 40,40 C20,60 5,40 20,20" stroke-width="1" stroke-opacity="0.9"/>
+                                            <path d="M20,20 L25,15 M20,20 L15,15 M20,20 L25,25" stroke-width="0.8" stroke-opacity="0.7"/>
+                                            <circle cx="25" cy="15" r="2" fill="#b98795" stroke="none" opacity="0.8"/>
+                                            <circle cx="15" cy="15" r="1.5" fill="#e76589" stroke="none" opacity="0.9"/>
+                                            <circle cx="25" cy="25" r="1" fill="#e76589" stroke="none" opacity="0.7"/>
+                                            <circle cx="20" cy="20" r="3" fill="#e76589" stroke="none" opacity="0.4"/>
+                                        </g>
+                                        <g transform="translate(150, 50)" fill="none" stroke="#e76589">
+                                            <path d="M0,0 C-30,-20 -50,10 -20,40 C10,70 40,40 20,10 C0,-10 0,0 0,0" stroke-width="1" stroke-opacity="0.5" fill="#e76589" fill-opacity="0.02"/>
+                                            <path d="M0,0 C30,-30 60,-10 40,20 C20,50 -10,30 0,0" stroke-width="1" stroke-opacity="0.5" fill="#e76589" fill-opacity="0.02"/>
+                                            <path d="M10,10 C-10,0 -20,20 -5,35 C10,50 30,35 15,15 C5,-5 10,10 10,10" stroke-width="1.2" stroke-opacity="0.7"/>
+                                            <circle cx="10" cy="15" r="3" fill="#e76589" stroke="none" opacity="0.5"/>
+                                            <circle cx="15" cy="10" r="1.5" fill="#b98795" stroke="none" opacity="0.8"/>
+                                        </g>
+                                        <g transform="translate(200, 400)" fill="none" stroke="#e76589">
+                                            <path d="M0,0 C-20,10 -30,40 -10,50 C10,60 30,30 0,0" stroke-width="1" stroke-opacity="0.6" fill="#e76589" fill-opacity="0.03"/>
+                                            <path d="M-5,15 C-15,30 -5,45 5,35 C15,25 5,10 -5,15" stroke-width="0.8" stroke-opacity="0.8"/>
+                                            <circle cx="0" cy="25" r="1.5" fill="#e76589" stroke="none" opacity="0.7"/>
+                                        </g>
+                                        <g stroke="#b98795" stroke-width="0.8" fill="none" opacity="0.6">
+                                            <path d="M350,200 C390,170 430,190 440,230 C420,250 380,240 350,200" fill="#e76589" fill-opacity="0.03"/>
+                                            <path d="M350,200 L440,230" stroke-width="0.4" stroke-dasharray="2 2"/>
+                                            <path d="M150,50 C120,20 80,30 70,70 C90,90 130,80 150,50" fill="#e76589" fill-opacity="0.03"/>
+                                            <path d="M150,50 L70,70" stroke-width="0.4" stroke-dasharray="2 2"/>
+                                            <path d="M250,300 C220,270 180,280 170,320 C190,340 230,330 250,300" fill="#e76589" fill-opacity="0.03"/>
+                                            <path d="M250,300 L170,320" stroke-width="0.4" stroke-dasharray="2 2"/>
+                                        </g>
+                                        <path d="M500,680 C320,580 220,380 370,180 C470,30 270,-70 170,30" stroke="#e76589" stroke-width="2.5" stroke-linecap="round" fill="none" stroke-dasharray="0.1 8" opacity="0.75"/>
+                                        <path d="M330,180 C230,130 130,230 80,180 C30,130 80,80 130,30" stroke="#b98795" stroke-width="1.5" stroke-linecap="round" fill="none" stroke-dasharray="0.1 6" opacity="0.6"/>
+                                        <path d="M250,550 C260,540 265,545 255,555 C265,565 260,570 250,560 C240,550 245,545 255,535" stroke="#e76589" stroke-width="0.6" fill="none" opacity="0.5"/>
+                                        <path d="M150,350 C160,340 165,345 155,355 C165,365 160,370 150,360 C140,350 145,345 155,335" stroke="#e76589" stroke-width="0.6" fill="none" opacity="0.5"/>
+                                        <g fill="#e76589" stroke="none" opacity="0.6">
+                                            <circle cx="450" cy="150" r="2"/>
+                                            <circle cx="460" cy="160" r="1.5"/>
+                                            <circle cx="440" cy="170" r="1"/>
+                                            <circle cx="280" cy="100" r="2.5"/>
+                                            <circle cx="290" cy="110" r="1.5"/>
+                                            <circle cx="80" cy="300" r="2"/>
+                                            <circle cx="90" cy="310" r="1"/>
+                                            <circle cx="70" cy="320" r="1.5"/>
+                                            <circle cx="250" cy="600" r="2"/>
+                                            <circle cx="260" cy="615" r="1.2"/>
+                                        </g>
+                                    </svg>
+                                </div>
+                                {% if featured_collection %}
+                                <span class="sub-title wow fadeInUp"
+                                    style="letter-spacing: 4px; color: var(--zuz-pink); font-size: 12px; text-transform: uppercase; font-weight: 600; z-index: 1;" data-wow-duration="1.2s" data-wow-delay="0.1s">Featured Collection</span>
+                                
+                                <div class="zuz-pinned-content-block" style="z-index: 1; display: flex; flex-direction: column; justify-content: center; margin-bottom: 40px;">
+                                    <h2 class="title zuz-heading-xl mt-3 wow fadeInUp"
+                                        style="font-weight: 400; line-height: 1.2; color: #1a1a1a;" data-wow-duration="1.3s" data-wow-delay="0.2s">
+                                        {{ featured_collection.name }}
+                                    </h2>
+
+                                    <div class="featured-collection-desc mt-3 mb-2 wow fadeInUp" style="max-width: 450px;" data-wow-duration="1.2s" data-wow-delay="0.3s">
+                                        <p class="zuz-body" style="color: #666; font-size: 15px; line-height: 1.6;">{{ featured_collection.description|default:"An exclusive curation of ceremonial attire designed to honor life's most precious milestones." }}</p>
+                                    </div>
+
+                                    <div class="featured-stats mt-3 wow fadeInUp" data-wow-duration="1.2s" data-wow-delay="0.4s">
+                                        <div class="row g-4">
+                                            <div class="col-4">
+                                                <div class="stat-item">
+                                                    <span class="stat-number"
+                                                        style="font-size: 28px; font-weight: 500; color: var(--zuz-pink);">20+</span>
+                                                    <span class="stat-label"
+                                                        style="font-size: 12px; color: #888; display: block;">Exclusive Designs</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="stat-item">
+                                                    <span class="stat-number"
+                                                        style="font-size: 28px; font-weight: 500; color: var(--zuz-pink);">100%</span>
+                                                    <span class="stat-label"
+                                                        style="font-size: 12px; color: #888; display: block;">Handcrafted Quality</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="stat-item">
+                                                    <span class="stat-number"
+                                                        style="font-size: 28px; font-weight: 500; color: var(--zuz-pink);">100%</span>
+                                                    <span class="stat-label"
+                                                        style="font-size: 12px; color: #888; display: block;">Premium Silks</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="{% url 'shop' %}?collection={{ featured_collection.slug }}"
+                                    class="btn btn-dark btn-outline-hover-dark mt-4"
+                                    style="align-self: flex-start; padding: 12px 32px; letter-spacing: 2px; font-size: 12px; position: absolute; bottom: 10vh; left: 3rem; z-index: 10;">Explore Collection &rarr;</a>
+                                {% else %}
+                                <span class="sub-title wow fadeInUp"
+                                    style="letter-spacing: 4px; color: var(--zuz-pink); font-size: 12px; text-transform: uppercase; z-index: 1;" data-wow-duration="1.2s" data-wow-delay="0.1s">Featured Collection</span>
+                                
+                                <div class="zuz-pinned-content-block" style="z-index: 1; display: flex; flex-direction: column; justify-content: center; margin-bottom: 40px;">
+                                    <h2 class="title zuz-heading-xl mt-3 wow fadeInUp" style="font-weight: 400; line-height: 1.2;" data-wow-duration="1.3s" data-wow-delay="0.2s">Holy Communion</h2>
+
+                                    <div class="featured-collection-desc mt-3 mb-2 wow fadeInUp" style="max-width: 450px;" data-wow-duration="1.2s" data-wow-delay="0.3s">
+                                        <p class="zuz-body" style="color: #666; font-size: 15px; line-height: 1.6;">An exclusive curation of ceremonial attire. Each garment is meticulously tailored using premium silks and delicate lace, designed to honor the sanctity of life's most precious milestones.</p>
+                                    </div>
+
+                                    <div class="featured-stats mt-3 wow fadeInUp" data-wow-duration="1.2s" data-wow-delay="0.4s">
+                                        <div class="row g-4">
+                                            <div class="col-4">
+                                                <div class="stat-item">
+                                                    <span class="stat-number"
+                                                        style="font-size: 28px; font-weight: 500; color: var(--zuz-pink);">15+</span>
+                                                    <span class="stat-label"
+                                                        style="font-size: 12px; color: #888; display: block;">Ceremonial Pieces</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="stat-item">
+                                                    <span class="stat-number"
+                                                        style="font-size: 28px; font-weight: 500; color: var(--zuz-pink);">Bespoke</span>
+                                                    <span class="stat-label"
+                                                        style="font-size: 12px; color: #888; display: block;">Custom Orders</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="stat-item">
+                                                    <span class="stat-number"
+                                                        style="font-size: 28px; font-weight: 500; color: var(--zuz-pink);">100%</span>
+                                                    <span class="stat-label"
+                                                        style="font-size: 12px; color: #888; display: block;">Premium Silks</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="{% url 'shop' %}" class="btn btn-dark btn-outline-hover-dark mt-4"
+                                    style="align-self: flex-start; padding: 12px 32px; letter-spacing: 2px; font-size: 12px; position: absolute; bottom: 10vh; left: 3rem; z-index: 10;">Explore Collection &rarr;</a>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-12">
+                            <div class="zuz-scroll-content">
+                                <!-- Mobile Header (Hidden on Desktop because desktop has the pinned info block) -->
+                                <div class="section-title mb-4 px-4 pt-5 d-block d-lg-none text-center">
+                                    <h3 class="sub-title" style="color: #b98795;">Featured Collection</h3>
+                                    <h2 class="title">{{ featured_collection.name }}</h2>
+                                </div>
+
+                                <div
+                                    class="products row row-cols-md-2 row-cols-2 px-2 px-md-4 pb-4 pb-md-5 pt-lg-5 mt-lg-3">
+                                    {% for product in featured_products %}
+                                    <div class="col mb-4 mb-md-5">
+                                        <div class="product">
+                                            <div class="product-thumb">
+                                                <a href="{% url 'product_detail' product.slug %}" class="image zuz-image-anime zuz-reveal" style="display: block;">
+                                                    {% with first_img=product.images.all.0 second_img=product.images.all.1 %}
+                                                    {% if first_img %}
+                                                    <img src="{{ first_img.image.url }}" alt="{{ product.name }}"
+                                                        style="border-radius: var(--zuz-image-radius);">
+                                                    {% if second_img %}
+                                                    <img class="image-hover" src="{{ second_img.image.url }}"
+                                                        alt="{{ product.name }}"
+                                                        style="border-radius: var(--zuz-image-radius);">
+                                                    {% endif %}
+                                                    {% else %}
+                                                    <img src="{% static 'frontend/assets/images/product/s328/product-1.webp' %}"
+                                                        alt="{{ product.name }}"
+                                                        style="border-radius: var(--zuz-image-radius);">
+                                                    {% endif %}
+                                                    {% endwith %}
+                                                </a>
+                                            </div>
+                                            <div class="product-info mt-2 mt-md-3 text-center">
+                                                <h6 class="title"><a href="{% url 'product_detail' product.slug %}">{{ product.name }}</a></h6>
+
+                                                <div
+                                                    class="product-buttons justify-content-center mt-2 d-none d-md-flex">
+                                                    <a href="{% url 'product_detail' product.slug %}"
+                                                        class="product-button hintT-top" data-hint="View Details"><i
+                                                            class="fas fa-search"></i></a>
+                                                    <a href="#" class="product-button hintT-top" data-hint="WhatsApp" data-zuz-enquiry-trigger data-product="{{product.name }}">
+                                                       <i class="fab fa-whatsapp"></i> 
+                                                    </a> 
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% empty %}
+                                    <div class="col-12">
+                                        <p class="text-center">More products coming soon.</p>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- GSAP Pinned Section End -->
+            <!-- Testimonials Section Start -->
+            <div class="section section-padding" style="position: relative; isolation: isolate; overflow-x: clip;">
+                
+                <!-- Luxury Embroidery Ornaments -->
+                <div class="zuz-floral-ornament zuz-floral-right">
+                    <svg viewBox="0 0 500 700" xmlns="http://www.w3.org/2000/svg" class="zuz-light-floral">
+                        <defs>
+                            <linearGradient id="embroideryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#e76589" stop-opacity="0.8"/>
+                                <stop offset="50%" stop-color="#e76589" stop-opacity="0.4"/>
+                                <stop offset="100%" stop-color="#b98795" stop-opacity="0.6"/>
+                            </linearGradient>
+                        </defs>
+                        <g opacity="0.15" stroke="#e76589" stroke-width="0.4" fill="none">
+                            <path d="M0,50 Q250,350 500,250 M0,100 Q250,400 500,300 M0,150 Q250,450 500,350 M0,200 Q250,500 500,400 M0,250 Q250,550 500,450" stroke-dasharray="2 4"/>
+                            <path d="M50,0 Q350,250 250,500 M100,0 Q400,250 300,500 M150,0 Q450,250 350,500 M200,0 Q500,250 400,500 M250,0 Q550,250 450,500" stroke-dasharray="2 4"/>
+                        </g>
+                        <path d="M500,700 C300,600 200,400 350,200 C450,50 250,-50 150,50" stroke="url(#embroideryGrad)" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.85"/>
+                        <path d="M500,650 C250,550 150,350 300,150 C400,0 200,-100 100,0" stroke="#e76589" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.6"/>
+                        <path d="M450,700 C200,650 100,450 250,250 C350,100 150,0 50,100" stroke="#e76589" stroke-width="0.6" fill="none" stroke-linecap="round" opacity="0.5"/>
+                        <path d="M350,200 C250,150 150,250 100,200 C50,150 100,100 150,50" stroke="#b98795" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.7"/>
+                        <path d="M200,400 C100,450 50,350 0,400" stroke="#e76589" stroke-width="0.8" fill="none" stroke-linecap="round" opacity="0.5"/>
+                        <g transform="translate(350, 200)" fill="none" stroke="#e76589">
+                            <path d="M0,0 C-50,-30 -80,20 -40,60 C0,100 60,80 40,30 C20,-20 0,0 0,0" stroke-width="1.2" stroke-opacity="0.6" fill="#e76589" fill-opacity="0.03"/>
+                            <path d="M0,0 C50,-50 100,-20 70,30 C40,80 -20,50 0,0" stroke-width="1.2" stroke-opacity="0.6" fill="#e76589" fill-opacity="0.03"/>
+                            <path d="M10,10 C-20,-10 -40,15 -15,40 C10,65 40,50 20,15 C5,-10 10,10 10,10" stroke-width="1.5" stroke-opacity="0.8" fill="#e76589" fill-opacity="0.05"/>
+                            <path d="M10,10 C40,-20 70,0 50,30 C30,60 -10,35 10,10" stroke-width="1.5" stroke-opacity="0.8" fill="#e76589" fill-opacity="0.05"/>
+                            <path d="M20,20 C-5,10 -15,30 5,45 C25,60 40,40 20,20" stroke-width="1" stroke-opacity="0.9"/>
+                            <path d="M20,20 C40,5 60,20 40,40 C20,60 5,40 20,20" stroke-width="1" stroke-opacity="0.9"/>
+                            <path d="M20,20 L25,15 M20,20 L15,15 M20,20 L25,25" stroke-width="0.8" stroke-opacity="0.7"/>
+                            <circle cx="25" cy="15" r="2" fill="#b98795" stroke="none" opacity="0.8"/>
+                            <circle cx="15" cy="15" r="1.5" fill="#e76589" stroke="none" opacity="0.9"/>
+                            <circle cx="25" cy="25" r="1" fill="#e76589" stroke="none" opacity="0.7"/>
+                            <circle cx="20" cy="20" r="3" fill="#e76589" stroke="none" opacity="0.4"/>
+                        </g>
+                        <g transform="translate(150, 50)" fill="none" stroke="#e76589">
+                            <path d="M0,0 C-30,-20 -50,10 -20,40 C10,70 40,40 20,10 C0,-10 0,0 0,0" stroke-width="1" stroke-opacity="0.5" fill="#e76589" fill-opacity="0.02"/>
+                            <path d="M0,0 C30,-30 60,-10 40,20 C20,50 -10,30 0,0" stroke-width="1" stroke-opacity="0.5" fill="#e76589" fill-opacity="0.02"/>
+                            <path d="M10,10 C-10,0 -20,20 -5,35 C10,50 30,35 15,15 C5,-5 10,10 10,10" stroke-width="1.2" stroke-opacity="0.7"/>
+                            <circle cx="10" cy="15" r="3" fill="#e76589" stroke="none" opacity="0.5"/>
+                            <circle cx="15" cy="10" r="1.5" fill="#b98795" stroke="none" opacity="0.8"/>
+                        </g>
+                        <g transform="translate(200, 400)" fill="none" stroke="#e76589">
+                            <path d="M0,0 C-20,10 -30,40 -10,50 C10,60 30,30 0,0" stroke-width="1" stroke-opacity="0.6" fill="#e76589" fill-opacity="0.03"/>
+                            <path d="M-5,15 C-15,30 -5,45 5,35 C15,25 5,10 -5,15" stroke-width="0.8" stroke-opacity="0.8"/>
+                            <circle cx="0" cy="25" r="1.5" fill="#e76589" stroke="none" opacity="0.7"/>
+                        </g>
+                        <g stroke="#b98795" stroke-width="0.8" fill="none" opacity="0.6">
+                            <path d="M350,200 C390,170 430,190 440,230 C420,250 380,240 350,200" fill="#e76589" fill-opacity="0.03"/>
+                            <path d="M350,200 L440,230" stroke-width="0.4" stroke-dasharray="2 2"/>
+                            <path d="M150,50 C120,20 80,30 70,70 C90,90 130,80 150,50" fill="#e76589" fill-opacity="0.03"/>
+                            <path d="M150,50 L70,70" stroke-width="0.4" stroke-dasharray="2 2"/>
+                            <path d="M250,300 C220,270 180,280 170,320 C190,340 230,330 250,300" fill="#e76589" fill-opacity="0.03"/>
+                            <path d="M250,300 L170,320" stroke-width="0.4" stroke-dasharray="2 2"/>
+                        </g>
+                        <path d="M500,680 C320,580 220,380 370,180 C470,30 270,-70 170,30" stroke="#e76589" stroke-width="2.5" stroke-linecap="round" fill="none" stroke-dasharray="0.1 8" opacity="0.75"/>
+                        <path d="M330,180 C230,130 130,230 80,180 C30,130 80,80 130,30" stroke="#b98795" stroke-width="1.5" stroke-linecap="round" fill="none" stroke-dasharray="0.1 6" opacity="0.6"/>
+                        <path d="M250,550 C260,540 265,545 255,555 C265,565 260,570 250,560 C240,550 245,545 255,535" stroke="#e76589" stroke-width="0.6" fill="none" opacity="0.5"/>
+                        <path d="M150,350 C160,340 165,345 155,355 C165,365 160,370 150,360 C140,350 145,345 155,335" stroke="#e76589" stroke-width="0.6" fill="none" opacity="0.5"/>
+                        <g fill="#e76589" stroke="none" opacity="0.6">
+                            <circle cx="450" cy="150" r="2"/>
+                            <circle cx="460" cy="160" r="1.5"/>
+                            <circle cx="440" cy="170" r="1"/>
+                            <circle cx="280" cy="100" r="2.5"/>
+                            <circle cx="290" cy="110" r="1.5"/>
+                            <circle cx="80" cy="300" r="2"/>
+                            <circle cx="90" cy="310" r="1"/>
+                            <circle cx="70" cy="320" r="1.5"/>
+                            <circle cx="250" cy="600" r="2"/>
+                            <circle cx="260" cy="615" r="1.2"/>
+                        </g>
+                    </svg>
+                </div>
+                
+                <div class="zuz-floral-ornament zuz-floral-left zuz-floral-mirror">
+                    <svg viewBox="0 0 500 700" xmlns="http://www.w3.org/2000/svg" class="zuz-light-floral" style="opacity: 0.7;">
+                        <defs>
+                            <linearGradient id="embroideryGradLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#e76589" stop-opacity="0.8"/>
+                                <stop offset="50%" stop-color="#e76589" stop-opacity="0.4"/>
+                                <stop offset="100%" stop-color="#b98795" stop-opacity="0.6"/>
+                            </linearGradient>
+                        </defs>
+                        <g opacity="0.15" stroke="#e76589" stroke-width="0.4" fill="none">
+                            <path d="M0,50 Q250,350 500,250 M0,100 Q250,400 500,300 M0,150 Q250,450 500,350 M0,200 Q250,500 500,400 M0,250 Q250,550 500,450" stroke-dasharray="2 4"/>
+                            <path d="M50,0 Q350,250 250,500 M100,0 Q400,250 300,500 M150,0 Q450,250 350,500 M200,0 Q500,250 400,500 M250,0 Q550,250 450,500" stroke-dasharray="2 4"/>
+                        </g>
+                        <path d="M500,700 C300,600 200,400 350,200 C450,50 250,-50 150,50" stroke="url(#embroideryGradLeft)" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.85"/>
+                        <path d="M500,650 C250,550 150,350 300,150 C400,0 200,-100 100,0" stroke="#e76589" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.6"/>
+                        <path d="M450,700 C200,650 100,450 250,250 C350,100 150,0 50,100" stroke="#e76589" stroke-width="0.6" fill="none" stroke-linecap="round" opacity="0.5"/>
+                        <path d="M350,200 C250,150 150,250 100,200 C50,150 100,100 150,50" stroke="#b98795" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.7"/>
+                        <path d="M200,400 C100,450 50,350 0,400" stroke="#e76589" stroke-width="0.8" fill="none" stroke-linecap="round" opacity="0.5"/>
+                        <g transform="translate(350, 200)" fill="none" stroke="#e76589">
+                            <path d="M0,0 C-50,-30 -80,20 -40,60 C0,100 60,80 40,30 C20,-20 0,0 0,0" stroke-width="1.2" stroke-opacity="0.6" fill="#e76589" fill-opacity="0.03"/>
+                            <path d="M0,0 C50,-50 100,-20 70,30 C40,80 -20,50 0,0" stroke-width="1.2" stroke-opacity="0.6" fill="#e76589" fill-opacity="0.03"/>
+                            <path d="M10,10 C-20,-10 -40,15 -15,40 C10,65 40,50 20,15 C5,-10 10,10 10,10" stroke-width="1.5" stroke-opacity="0.8" fill="#e76589" fill-opacity="0.05"/>
+                            <path d="M10,10 C40,-20 70,0 50,30 C30,60 -10,35 10,10" stroke-width="1.5" stroke-opacity="0.8" fill="#e76589" fill-opacity="0.05"/>
+                            <path d="M20,20 C-5,10 -15,30 5,45 C25,60 40,40 20,20" stroke-width="1" stroke-opacity="0.9"/>
+                            <path d="M20,20 C40,5 60,20 40,40 C20,60 5,40 20,20" stroke-width="1" stroke-opacity="0.9"/>
+                            <path d="M20,20 L25,15 M20,20 L15,15 M20,20 L25,25" stroke-width="0.8" stroke-opacity="0.7"/>
+                            <circle cx="25" cy="15" r="2" fill="#b98795" stroke="none" opacity="0.8"/>
+                            <circle cx="15" cy="15" r="1.5" fill="#e76589" stroke="none" opacity="0.9"/>
+                            <circle cx="25" cy="25" r="1" fill="#e76589" stroke="none" opacity="0.7"/>
+                            <circle cx="20" cy="20" r="3" fill="#e76589" stroke="none" opacity="0.4"/>
+                        </g>
+                        <g transform="translate(150, 50)" fill="none" stroke="#e76589">
+                            <path d="M0,0 C-30,-20 -50,10 -20,40 C10,70 40,40 20,10 C0,-10 0,0 0,0" stroke-width="1" stroke-opacity="0.5" fill="#e76589" fill-opacity="0.02"/>
+                            <path d="M0,0 C30,-30 60,-10 40,20 C20,50 -10,30 0,0" stroke-width="1" stroke-opacity="0.5" fill="#e76589" fill-opacity="0.02"/>
+                            <path d="M10,10 C-10,0 -20,20 -5,35 C10,50 30,35 15,15 C5,-5 10,10 10,10" stroke-width="1.2" stroke-opacity="0.7"/>
+                            <circle cx="10" cy="15" r="3" fill="#e76589" stroke="none" opacity="0.5"/>
+                            <circle cx="15" cy="10" r="1.5" fill="#b98795" stroke="none" opacity="0.8"/>
+                        </g>
+                        <g transform="translate(200, 400)" fill="none" stroke="#e76589">
+                            <path d="M0,0 C-20,10 -30,40 -10,50 C10,60 30,30 0,0" stroke-width="1" stroke-opacity="0.6" fill="#e76589" fill-opacity="0.03"/>
+                            <path d="M-5,15 C-15,30 -5,45 5,35 C15,25 5,10 -5,15" stroke-width="0.8" stroke-opacity="0.8"/>
+                            <circle cx="0" cy="25" r="1.5" fill="#e76589" stroke="none" opacity="0.7"/>
+                        </g>
+                        <g stroke="#b98795" stroke-width="0.8" fill="none" opacity="0.6">
+                            <path d="M350,200 C390,170 430,190 440,230 C420,250 380,240 350,200" fill="#e76589" fill-opacity="0.03"/>
+                            <path d="M350,200 L440,230" stroke-width="0.4" stroke-dasharray="2 2"/>
+                            <path d="M150,50 C120,20 80,30 70,70 C90,90 130,80 150,50" fill="#e76589" fill-opacity="0.03"/>
+                            <path d="M150,50 L70,70" stroke-width="0.4" stroke-dasharray="2 2"/>
+                            <path d="M250,300 C220,270 180,280 170,320 C190,340 230,330 250,300" fill="#e76589" fill-opacity="0.03"/>
+                            <path d="M250,300 L170,320" stroke-width="0.4" stroke-dasharray="2 2"/>
+                        </g>
+                        <path d="M500,680 C320,580 220,380 370,180 C470,30 270,-70 170,30" stroke="#e76589" stroke-width="2.5" stroke-linecap="round" fill="none" stroke-dasharray="0.1 8" opacity="0.75"/>
+                        <path d="M330,180 C230,130 130,230 80,180 C30,130 80,80 130,30" stroke="#b98795" stroke-width="1.5" stroke-linecap="round" fill="none" stroke-dasharray="0.1 6" opacity="0.6"/>
+                        <path d="M250,550 C260,540 265,545 255,555 C265,565 260,570 250,560 C240,550 245,545 255,535" stroke="#e76589" stroke-width="0.6" fill="none" opacity="0.5"/>
+                        <path d="M150,350 C160,340 165,345 155,355 C165,365 160,370 150,360 C140,350 145,345 155,335" stroke="#e76589" stroke = "#e76589" stroke-width="0.6" fill="none" opacity="0.5"/>
+                        <g fill="#e76589" stroke="none" opacity="0.6">
+                            <circle cx="450" cy="150" r="2"/>
+                            <circle cx="460" cy="160" r="1.5"/>
+                            <circle cx="440" cy="170" r="1"/>
+                            <circle cx="280" cy="100" r="2.5"/>
+                            <circle cx="290" cy="110" r="1.5"/>
+                            <circle cx="80" cy="300" r="2"/>
+                            <circle cx="90" cy="310" r="1"/>
+                            <circle cx="70" cy="320" r="1.5"/>
+                            <circle cx="250" cy="600" r="2"/>
+                            <circle cx="260" cy="615" r="1.2"/>
+                        </g>
+                    </svg>
+                </div>
+
+                <div class="container" style="position: relative; z-index: 2;">
+
+                    <!-- Section Title Start -->
+                    <div class="section-title2 text-center mb-5">
+                        <h2 class="title title-icon-both wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.1s">What Our Clients Say</h2>
+                    </div>
+                    <!-- Section Title End -->
+
+                    <div class="testimonial-carousel wow fadeInUp" data-wow-duration="1.4s" data-wow-delay="0.2s">
+                        {% for testimonial in testimonials %}
+                        <div class="col">
+                            <div class="testimonial">
+                                <p>{{ testimonial.review }}</p>
+                                <div class="author">
+                                    {% if testimonial.image %}
+                                    <img src="{{ testimonial.image.url }}" alt="{{ testimonial.name }}">
+                                    {% else %}
+                                    <div
+                                        style="width: 70px; height: 70px; border-radius: 50%; background-color: #f5ecef; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 500; color: #b98795; margin-right: 20px;">
+                                        {{ testimonial.name|make_list|first|upper }}
+                                    </div>
+                                    {% endif %}
+                                    <div class="content">
+                                        <h6 class="name">{{ testimonial.name }}</h6>
+                                        <span class="title">Customer</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="col-12 text-center py-5">
+                            <p class="text-muted">More testimonials coming soon.</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+            <!-- Testimonials Section End -->
+            <!-- Product Showcase Section Start -->
+            {% if showcase_product %}
+            <div class="section zuz-showcase-section">
+                <div class="row g-0">
+
+                    <!-- Left: Two-column sticky image grid -->
+                    <div class="col-lg-7 col-12">
+                        <div class="zuz-showcase-image-grid">
+
+                            <!-- Left col: stays pinned -->
+                            <div class="zuz-showcase-col-left">
+                                <div class="zuz-showcase-sticky-img" style="border-radius: var(--zuz-image-radius); width: 100%;">
+                                    <div class="zuz-image-anime zuz-reveal" style="width: 100%; height: 100%;">
+                                        {% with imgs=showcase_product.images.all %}
+                                        {% if imgs.0 %}
+                                        <img src="{{ imgs.0.image.url }}" alt="{{ showcase_product.name }}">
+                                        {% else %}
+                                        <img src="{% static 'frontend/assets/images/product/s328/product-1.webp' %}"
+                                            alt="{{ showcase_product.name }}">
+                                        {% endif %}
+                                        {% endwith %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right col: scrolls through -->
+                            <div class="zuz-showcase-col-right">
+                                {% with imgs=showcase_product.images.all %}
+                                {% if imgs.count > 1 %}
+                                {% for img in imgs %}
+                                {% if not forloop.first %}
+                                <img src="{{ img.image.url }}" alt="{{ showcase_product.name }}">
+                                {% endif %}
+                                {% endfor %}
+                                {% else %}
+                                <!-- Fallback if only 1 image: 
+                        repeat the same image 2-3 times -->
+                                {% if imgs.0 %}
+                                <img src="{{ imgs.0.image.url }}" alt="{{ showcase_product.name }}">
+                                <img src="{{ imgs.0.image.url }}" alt="{{ showcase_product.name }}">
+                                {% else %}
+                                <img src="{% static 'frontend/assets/images/product/s328/product-1.webp' %}"
+                                    alt="{{ showcase_product.name }}">
+                                <img src="{% static 'frontend/assets/images/product/s328/product-1.webp' %}"
+                                    alt="{{ showcase_product.name }}">
+                                {% endif %}
+                                {% endif %}
+                                {% endwith %}
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Right: Sticky product details -->
+                    <div class="col-lg-5 col-12 zuz-showcase-details-col">
+                        <div class="zuz-showcase-details">
+                            <div class="wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.15s">
+
+                            <span class="collection-label">
+                                {{ showcase_product.category.collection.name }}
+                                &nbsp;/&nbsp;
+                                {{ showcase_product.category.name }}
+                            </span>
+
+                            <h2 class="product-title">
+                                {{ showcase_product.name }}
+                            </h2>
+
+                            <div class="product-desc">
+                                {{ showcase_product.description|safe }}
+                            </div>
+
+                            <hr class="divider">
+
+                            {% if showcase_product.available_sizes %}
+                            <div class="meta-row">
+                                <span class="meta-label">Sizes</span>
+                                <div>
+                                    {% for size in showcase_product.available_sizes.split %}
+                                    <span class="size-tag">
+                                        {{ size|cut:"," }}
+                                    </span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endif %}
+
+                            <div class="meta-row">
+                                <span class="meta-label">Gender</span>
+                                <span style="font-size:14px; color:#333;">
+                                    {{ showcase_product.get_gender_display }}
+                                </span>
+                            </div>
+
+                            <hr class="divider">
+
+                            <div class="showcase-btns">
+                                <a href="{% url 'product_detail' showcase_product.slug %}"
+                                    class="btn btn-dark btn-outline-hover-dark">
+                                    View Details
+                                </a>
+                                <a href="#" class="btn btn-outline-dark btn-hover-dark" data-hint="WhatsApp" data-zuz-enquiry-trigger data-product="{{product.name }}">
+                                       <i class="fab fa-whatsapp"></i> Enquire
+                                </a> 
+                            </div>
+                            
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            {% endif %}
+            <!-- Product Showcase Section End -->
+            <!-- Editorial Blog Section Start -->
+            <section class="zuz-blog-section section section-padding">
+                
+                <div class="zuz-blog-bg zuz-bg-top-left">
+                    <img src="{% static 'frontend/assets/new_images/floral2.svg' %}" alt="">
+                </div>
+
+                <div class="zuz-blog-bg zuz-bg-top-right">
+                    <img src="{% static 'frontend/assets/new_images/floral2.svg' %}" alt="">
+                </div>
+
+                <div class="zuz-blog-bg zuz-bg-bottom-left">
+                    <img src="{% static 'frontend/assets/new_images/floral2.svg' %}" alt="">
+                </div>
+
+                <div class="container">
+                    <div class="section-title2 text-center mb-5">
+                        <span class="sub-title wow fadeInUp" data-wow-duration="1.2s" data-wow-delay="0.1s"
+                            style="font-family: 'Modesty', cursive; color: #b98795; font-size: 42px; text-transform: none; font-weight: normal; letter-spacing: 1px; line-height: 1;">The
+                            Journal</span>
+                        <h2 class="title title-icon-both wow fadeInUp" style="margin-top: 10px;" data-wow-duration="1.3s" data-wow-delay="0.2s">
+                            Editorial Updates
+                        </h2>
+                    </div>
+
+                    <!-- Desktop/Tablet Layout (grid) -->
+                    <div class="editorial-blog-layout desktop-blog-layout">
+                        {% for blog in latest_blogs %}
+
+                        {% if forloop.first %}
+                        <div class="featured-blog-sticky">
+                            <div class="featured-blog-card wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.15s">
+                                {% if blog.image %}
+                                <div class="image-wrapper">
+                                    <a href="{% url 'blog_detail' blog.slug %}" class="zuz-image-anime zuz-reveal" style="display: block;">
+                                        <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="featured-image">
+                                    </a>
+                                </div>
+                                {% endif %}
+                                <div class="content mt-4">
+                                    <span class="meta-date">{{ blog.created_at|date:"F d, Y" }}</span>
+                                    <h3 class="title mt-2"><a href="{% url 'blog_detail' blog.slug %}">{{ blog.title }}</a></h3>
+                                    <p class="desc mt-3">{{ blog.description|safe|truncatewords:30 }}</p>
+                                    <a href="{% url 'blog_detail' blog.slug %}"
+                                        class="btn btn-dark btn-outline-hover-dark mt-3">
+                                        Read Full Story
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Start right column container -->
+                        <div class="editorial-blog-list">
+                            {% else %}
+
+                            <div class="small-blog-card wow fadeInUp" data-wow-duration="1.2s" data-wow-delay="0.2s">
+                                {% if blog.image %}
+                                <div class="image-wrapper">
+                                    <a href="{% url 'blog_detail' blog.slug %}" class="zuz-image-anime zuz-reveal" style="display: block;">
+                                        <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="small-image">
+                                    </a>
+                                </div>
+                                {% endif %}
+                                <div class="content mt-3">
+                                    <span class="meta-date">{{ blog.created_at|date:"F d, Y" }}</span>
+                                    <h5 class="title mt-2"><a href="{% url 'blog_detail' blog.slug %}">{{ blog.title }}</a></h5>
+                                    <p class="desc mt-2 mb-0">{{ blog.description|safe|truncatewords:15 }}</p>
+                                    <a href="{% url 'blog_detail' blog.slug %}" class="read-more-link">Explore</a>
+                                </div>
+                            </div>
+
+                            {% endif %}
+
+                            {% if forloop.last %}
+                        </div>
+                        <!-- End right column container -->
+                        {% endif %}
+
+                        {% empty %}
+                        <div class="col-12 text-center py-5">
+                            <p class="text-muted">No journal entries available.</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Mobile Carousel Layout -->
+                    <div class="mobile-blog-carousel">
+                        <div class="swiper-container blog-mobile-swiper">
+                            <div class="swiper-wrapper">
+                                {% for blog in latest_blogs %}
+                                <div class="swiper-slide">
+                                    <div class="small-blog-card">
+                                        {% if blog.image %}
+                                        <div class="image-wrapper">
+                                            <a href="{% url 'blog_detail' blog.slug %}" class="zuz-image-anime zuz-reveal" style="display: block;">
+                                                <img src="{{ blog.image.url }}" alt="{{ blog.title }}"
+                                                    class="small-image">
+                                            </a>
+                                        </div>
+                                        {% endif %}
+                                        <div class="content">
+                                            <span class="meta-date">{{ blog.created_at|date:"M d, Y" }}</span>
+                                            <h5 class="title"><a href="{% url 'blog_detail' blog.slug %}">{{ blog.title|truncatechars:50 }}</a></h5>
+                                            <p class="desc">{{ blog.description|safe|truncatewords:12 }}</p>
+                                            <a href="{% url 'blog_detail' blog.slug %}" class="read-more-link">Explore
+                                                &rarr;</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% empty %}
+                                <div class="swiper-slide">
+                                    <div class="small-blog-card">
+                                        <div class="content">
+                                            <p class="text-muted">No journal entries available.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <!-- Pagination Dots -->
+                        <div class="mobile-blog-pagination"></div>
+                    </div>
+
+                </div>
+            </section>
+
+
+            <!-- Combo Details Modal -->
+<div class="zuz-combo-modal" id="zuzComboModal">
+    <div class="zuz-combo-modal-overlay"></div>
+    <div class="zuz-combo-modal-box">
+        <button type="button" class="zuz-combo-modal-close" aria-label="Close">&times;</button>
+
+        <!-- Top: image left, title+desc right -->
+        <div class="zuz-combo-modal-top">
+            <div class="zuz-combo-modal-image">
+                <img src="" alt="">
+            </div>
+            <div class="zuz-combo-modal-top-text">
+                <h5 class="zuz-combo-modal-title"></h5>
+                <p class="zuz-combo-modal-desc"></p>
+            </div>
+        </div>
+
+        <!-- Bottom: item grid -->
+        <div class="zuz-combo-modal-items"></div>
+
+        <a href="#" class="btn btn-dark btn-outline-hover-dark mt-3 zuz-combo-modal-whatsapp"
+           data-zuz-enquiry-trigger data-product="">
+            <i class="fab fa-whatsapp"></i> Enquire on WhatsApp
+        </a>
+    </div>
+</div>
+
+ <!-- Combo Details Modal end  -->
+
+
+            <!-- Editorial Blog Section End -->
+            {% endblock %}
+
+            {% block extra_js %}
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+            <script>
+                document.addEventListener("DOMContentLoaded", (event) => {
+                    gsap.registerPlugin(ScrollTrigger);
+
+                    if (window.innerWidth <= 991) {
+                        // Kill desktop-only triggers (pinned section, etc.)
+                        // but preserve the mobile ritual card animations (_zuzRitualMobile)
+                        ScrollTrigger.getAll().forEach(function (trigger) {
+                            if (!trigger.vars || !trigger.vars._zuzRitualMobile) {
+                                trigger.kill();
+                            }
+                        });
+                        return;
+                    }
+
+                    // matchMedia ensures the pinning only happens on desktop (where the split layout exists)
+                    let mm = gsap.matchMedia();
+
+                    mm.add("(min-width: 992px)", () => {
+                        ScrollTrigger.create({
+                            trigger: ".zuz-pinned-section",
+                            start: "top top", // Pin when the top of the section hits the top of the viewport
+                            end: "bottom bottom", // Unpin when the bottom of the right-side content scrolls past
+                            pin: ".zuz-pin-wrapper", // Lock the left image wrapper in place
+                                pinSpacing: true,
+                            markers: false // Set to true if you ever need to debug the start/end lines
+                        });
+                    });
+                });
+            </script>
+
+            <script>
+                (function () {
+                    if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
+
+                    gsap.registerPlugin(ScrollTrigger);
+
+                    var mm = gsap.matchMedia();
+
+                    mm.add("(min-width: 992px)", function () {
+
+                        var wrapper = document.querySelector(".zuz-ritual-products");
+                        if (!wrapper) return;
+
+                        function buildAnimation() {
+                            // Kill any previously created ritual triggers
+                            ScrollTrigger.getAll().forEach(function (t) {
+                                if (t.vars && t.vars._zuzRitual) t.kill();
+                            });
+
+                            var cards = gsap.utils.toArray(
+                                ".zuz-ritual-products .tab-pane.active .zuz-ritual-card"
+                            );
+                            if (!cards.length) return;
+
+                            // Horizontal center of the wrapper
+                            var wrapRect = wrapper.getBoundingClientRect();
+                            var wrapCx   = wrapRect.left + wrapRect.width / 2;
+
+                            // How far each card's center is from the wrapper center
+                            var spreadX = cards.map(function (card) {
+                                var r = card.getBoundingClientRect();
+                                return (r.left + r.width / 2) - wrapCx;
+                            });
+
+                            // Subtle deck offsets — refined for Zuzanne aesthetic
+                            /* More disordered deck offsets — larger Y shifts and steeper
+                               rotations make the stacked visual clearly readable before
+                               cards bloom into the clean grid. */
+                            var deckY   = [  0, -22, 18, -14, 26, -18, 12, -24, 16, -10 ];
+                            var deckRot = [ -9,   6, -7,  10,  -5,  8, -11,  4,  -8,   7 ];
+
+                            /* ── Group cards into visual rows by their scrollY-adjusted top ── */
+                            var scrollY = window.scrollY || window.pageYOffset;
+                            var rows    = [];
+                            var rowMap  = {};
+
+                            cards.forEach(function (card, i) {
+                                var absTop = Math.round(card.getBoundingClientRect().top + scrollY);
+                                // Bucket within ±10px to absorb sub-pixel differences
+                                var bucket = Math.round(absTop / 10) * 10;
+                                if (!rowMap[bucket]) {
+                                    rowMap[bucket] = { absTop: absTop, indices: [] };
+                                    rows.push(rowMap[bucket]);
+                                }
+                                rowMap[bucket].indices.push(i);
+                            });
+
+                            rows.sort(function (a, b) { return a.absTop - b.absTop; });
+
+                            /* ── Per-row ScrollTrigger windows ──
+                               Row 0 opens earliest and fastest.
+                               Each subsequent row's window starts and ends later
+                               in scroll space, so lower rows are always "behind"
+                               the rows above them — exactly the progressive cascade. */
+                            var vh = window.innerHeight;
+
+                            rows.forEach(function (row, ri) {
+                                var rowCards   = row.indices.map(function (i) { return cards[i]; });
+                                var rowSpreadX = row.indices.map(function (i) { return spreadX[i]; });
+
+                                /* Pre-compute per-card collapsed-state values so they can
+                                   be referenced in both the SET call and the closing tween. */
+                                var fromX   = rowCards.map(function (c, ci) {
+                                    return -(rowSpreadX[ci] * 0.88);
+                                });
+                                var fromY   = row.indices.map(function (i) {
+                                    return deckY[i % deckY.length];
+                                });
+                                var fromRot = row.indices.map(function (i) {
+                                    return deckRot[i % deckRot.length];
+                                });
+
+                                /* Snap cards to their collapsed state immediately —
+                                   they should already appear stacked before the trigger fires. */
+                                gsap.set(rowCards, {
+                                    x:        function (ci) { return fromX[ci]; },
+                                    y:        function (ci) { return fromY[ci]; },
+                                    rotation: function (ci) { return fromRot[ci]; },
+                                    scale:    0.94,
+                                    opacity:  0.88   /* stacked cards are visible — not hidden */
+                                });
+
+                                /* Scroll window anchored to this row's own first card.
+                                   start "top 80%" → card enters the lower viewport.
+                                   end   "top 10%"  → card is near the top but still visible.
+                                   This gives the bloom a full sweep of the visible area to
+                                   complete, so it feels slow and handcrafted — not rushed. */
+                                var tl = gsap.timeline({
+                                    scrollTrigger: {
+                                        _zuzRitual: true,
+                                        trigger:    rowCards[0],
+                                        start:      "top 80%",
+                                        end:        "top 10%",
+                                        scrub:      2.5
+                                    }
+                                });
+
+                                /* Phase 1 — 15% of scroll window ─────────────────────────
+                                   Brief pause: cards are already visible (opacity 0.88).
+                                   Just enough delay so the user sees the stacked state
+                                   before the bloom begins. */
+                                tl.to(rowCards, {
+                                    opacity:  1,
+                                    duration: 0.15,
+                                    ease:     "none"
+                                });
+
+                                /* Phase 2 — 85% of scroll window ─────────────────────────
+                                   The full bloom. Cards slowly spread from stacked → grid
+                                   across the card's entire visible journey on screen.
+                                   Once fully open, they STAY open — no Phase 3.
+                                   Scrub handles the reverse automatically when scrolling
+                                   back up: each row's trigger reverses in bottom-to-top
+                                   order, giving the exact cascade-in-reverse the user wants. */
+                                tl.to(rowCards, {
+                                    x:        0,
+                                    y:        0,
+                                    rotation: 0,
+                                    scale:    1,
+                                    opacity:  1,
+                                    ease:     "power2.out",
+                                    duration: 0.85
+                                });
+                            });
+                        }
+
+                        buildAnimation();
+
+                        // Re-run on tab switch so collection tabs also animate
+                        document.querySelectorAll(
+                            "[data-bs-toggle='tab'][href^='#product-'], " +
+                            "[data-toggle='tab'][href^='#product-']"
+                        ).forEach(function (tab) {
+                            tab.addEventListener("shown.bs.tab", function () {
+                                setTimeout(buildAnimation, 60);
+                            });
+                        });
+                    });
+
+                    /* ── Mobile fade-in animation for product cards ──────────────────
+                       On screens ≤ 991px the deck-spread animation does not run.
+                       Instead we give each card a simple staggered fadeInUp as it
+                       enters the viewport, matching the WOW.js style used elsewhere
+                       on the page. Cards are grouped into rows so each row animates
+                       together with a small per-card stagger. */
+                    mm.add("(max-width: 991px)", function () {
+
+                        function buildMobileAnimation() {
+                            // Kill any previously created mobile ritual triggers
+                            ScrollTrigger.getAll().forEach(function (t) {
+                                if (t.vars && t.vars._zuzRitualMobile) t.kill();
+                            });
+
+                            var cards = gsap.utils.toArray(
+                                ".zuz-ritual-products .tab-pane.active .zuz-ritual-card"
+                            );
+                            if (!cards.length) return;
+
+                            /* Make sure cards start from a clean visible state —
+                               no leftover desktop transforms. */
+                            gsap.set(cards, { clearProps: "all" });
+
+                            /* Group cards into rows by their top position */
+                            var scrollY = window.scrollY || window.pageYOffset;
+                            var rows    = [];
+                            var rowMap  = {};
+
+                            cards.forEach(function (card, i) {
+                                var absTop = Math.round(card.getBoundingClientRect().top + scrollY);
+                                var bucket = Math.round(absTop / 10) * 10;
+                                if (!rowMap[bucket]) {
+                                    rowMap[bucket] = { absTop: absTop, cards: [] };
+                                    rows.push(rowMap[bucket]);
+                                }
+                                rowMap[bucket].cards.push(card);
+                            });
+
+                            rows.sort(function (a, b) { return a.absTop - b.absTop; });
+
+                            rows.forEach(function (row) {
+                                /* Set initial hidden state for this row */
+                                gsap.set(row.cards, { opacity: 0, y: 30 });
+
+                                /* Animate in when row enters the viewport */
+                                gsap.to(row.cards, {
+                                    opacity:  1,
+                                    y:        0,
+                                    duration: 0.6,
+                                    ease:     "power2.out",
+                                    stagger:  0.08,
+                                    scrollTrigger: {
+                                        _zuzRitualMobile: true,
+                                        trigger:   row.cards[0],
+                                        start:     "top 88%",
+                                        toggleActions: "play none none none"
+                                    }
+                                });
+                            });
+                        }
+
+                        buildMobileAnimation();
+
+                        // Re-run on tab switch
+                        document.querySelectorAll(
+                            "[data-bs-toggle='tab'][href^='#product-'], " +
+                            "[data-toggle='tab'][href^='#product-']"
+                        ).forEach(function (tab) {
+                            tab.addEventListener("shown.bs.tab", function () {
+                                setTimeout(buildMobileAnimation, 60);
+                            });
+                        });
+                    });
+                })();
+            </script>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    if (typeof ScrollTrigger === "undefined") return;
+                    if (window.innerWidth <= 991) {
+                        // Kill desktop-only triggers (pinned section, etc.)
+                        // but preserve the mobile ritual card animations (_zuzRitualMobile)
+                        ScrollTrigger.getAll().forEach(function (trigger) {
+                            if (!trigger.vars || !trigger.vars._zuzRitualMobile) {
+                                trigger.kill();
+                            }
+                        });
+                    }
+                });
+            </script>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    if (typeof Swiper !== 'undefined') {
+                        var cinematicSwiper = new Swiper('.cinematic-carousel', {
+                            effect: 'coverflow',
+                            grabCursor: true,
+                            centeredSlides: true,
+                            slidesPerView: 'auto',
+                            loop: true,
+                            speed: 700,
+                            coverflowEffect: {
+                                rotate: 0,
+                                stretch: 80,
+                                depth: 180,
+                                modifier: 1,
+                                slideShadows: false,
+                            },
+                            navigation: {
+                                nextEl: '.cinematic-carousel-nav .swiper-button-next',
+                                prevEl: '.cinematic-carousel-nav .swiper-button-prev',
+                            },
+                            autoplay: {
+                                delay: 4000,
+                                disableOnInteraction: false,
+                            },
+                        });
+                    }
+                });
+            </script>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    if (typeof Swiper !== 'undefined') {
+                        var heroSwiper = new Swiper('.hero-carousel', {
+                            slidesPerView: 1,
+                            loop: true,
+                            speed: 600,  // Faster transition (was 1000)
+                            effect: 'fade',
+                            fadeEffect: {
+                                crossFade: true
+                            },
+                            navigation: {
+                                nextEl: '.zuz-hero-nav .swiper-button-next',
+                                prevEl: '.zuz-hero-nav .swiper-button-prev',
+                            },
+                            pagination: {
+                                el: '.zuz-hero-pagination .swiper-pagination',
+                                clickable: true,
+                                dynamicBullets: false,
+                            },
+                            autoplay: {
+                                delay: 4000,  // Faster slide change (was 6000)
+                                disableOnInteraction: false,
+                                pauseOnMouseEnter: true,
+                            },
+                            on: {
+                                slideChangeTransitionStart: function () {
+                                    // Reset all slides to zoomed-in state
+                                    document.querySelectorAll('.hero-carousel .slide-bg').forEach(function (bg) {
+                                        bg.style.transition = 'none'; // snap reset instantly
+                                        bg.style.transform = 'scale(1.08)';
+                                    });
+                                    // Immediately start zoom-out on the incoming active slide
+                                    var activeSlide = document.querySelector('.hero-carousel .swiper-slide-active');
+                                    if (activeSlide) {
+                                        var activeBg = activeSlide.querySelector('.slide-bg');
+                                        if (activeBg) {
+                                            // Re-enable transition then trigger zoom-out
+                                            requestAnimationFrame(function () {
+                                                activeBg.style.transition = 'transform 6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                                                activeBg.style.transform = 'scale(1)';
+                                            });
+                                        }
+                                    }
+                                }
+                            }
+                        });
+
+                        // Initial zoom-out for the first slide on page load
+                        setTimeout(function () {
+                            var activeSlide = document.querySelector('.hero-carousel .swiper-slide-active');
+                            if (activeSlide) {
+                                var activeBg = activeSlide.querySelector('.slide-bg');
+                                if (activeBg) {
+                                    activeBg.style.transform = 'scale(1)';
+                                }
+                            }
+                        }, 100);
+                    }
+                });
+            </script>
+
+            <script>
+                // Mobile Blog Carousel
+                function initMobileBlogCarousel() {
+                    if (window.innerWidth < 768 && typeof Swiper !== 'undefined') {
+                        var blogMobileSwiper = new Swiper('.blog-mobile-swiper', {
+                            slidesPerView: 1.2,
+                            spaceBetween: 16,
+                            centeredSlides: false,
+                            loop: false,
+                            pagination: {
+                                el: '.mobile-blog-pagination',
+                                clickable: true,
+                                dynamicBullets: false,
+                            },
+                            breakpoints: {
+                                480: {
+                                    slidesPerView: 1.5,
+                                    spaceBetween: 16,
+                                },
+                                576: {
+                                    slidesPerView: 2,
+                                    spaceBetween: 20,
+                                },
+                            }
+                        });
+                    }
+                }
+
+                // Initialize on load
+                document.addEventListener('DOMContentLoaded', function () {
+                    initMobileBlogCarousel();
+                });
+
+                // Re-initialize on window resize
+                window.addEventListener('resize', function () {
+                    // Simple approach: reload page on resize across breakpoint
+                    // Or destroy and recreate - but for simplicity, we'll let CSS handle it
+                    if (window.innerWidth < 768) {
+                        if (!window.mobileBlogSwiperInitialized) {
+                            initMobileBlogCarousel();
+                            window.mobileBlogSwiperInitialized = true;
+                        }
+                    } else {
+                        window.mobileBlogSwiperInitialized = false;
+                    }
+                });
+            </script>
+
+        
+                <script>
+document.addEventListener('DOMContentLoaded', function () {
+    var modal      = document.getElementById('zuzComboModal');
+    var imgEl      = modal.querySelector('.zuz-combo-modal-image img');
+    var titleEl    = modal.querySelector('.zuz-combo-modal-title');
+    var descEl     = modal.querySelector('.zuz-combo-modal-desc');
+    var itemsEl    = modal.querySelector('.zuz-combo-modal-items');
+    var waBtn      = modal.querySelector('.zuz-combo-modal-whatsapp');
+    var closeBtn   = modal.querySelector('.zuz-combo-modal-close');
+    var overlay    = modal.querySelector('.zuz-combo-modal-overlay');
+
+    function openModal(card) {
+        zuzUpdateHeaderHeight();
+        var name   = card.getAttribute('data-combo-name') || '';
+        var desc   = card.getAttribute('data-combo-desc') || '';
+        var image  = card.getAttribute('data-combo-image') || '';
+        var itemsRaw = card.getAttribute('data-combo-items') || '[]';
+
+        var items = [];
+        try { items = JSON.parse(itemsRaw); } catch (e) { items = []; }
+
+        imgEl.src = image;
+        imgEl.alt = name;
+
+        titleEl.textContent = name;
+        descEl.textContent  = desc;
+        descEl.style.display = desc ? 'block' : 'none';
+
+        itemsEl.innerHTML = '';
+        items.forEach(function (item) {
+        var wrap = document.createElement('div');
+        wrap.className = 'zuz-combo-item';
+
+       var link = document.createElement('a');
+       link.href = item.url || '#';
+       link.className = 'zuz-combo-item-link';
+
+       var imgWrap = document.createElement('div');
+       imgWrap.className = 'zuz-combo-item-img';
+       var itemImg = document.createElement('img');
+       itemImg.src = item.image || '';
+       itemImg.alt = item.name || '';
+       imgWrap.appendChild(itemImg);
+
+       var nameEl = document.createElement('div');
+       nameEl.className = 'zuz-combo-item-name';
+       nameEl.textContent = item.name || '';
+
+       link.appendChild(imgWrap);
+      link.appendChild(nameEl);
+      wrap.appendChild(link);
+      itemsEl.appendChild(wrap);
+     });
+
+   waBtn.setAttribute('data-product', name);
+    waBtn.setAttribute('data-combo-items', itemsRaw);
+
+    modal.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        modal.classList.remove('is-open');
+        document.body.style.overflow = '';
+    }
+
+    document.addEventListener('click', function (e) {
+        var trigger = e.target.closest('.zuz-combo-details-trigger');
+        if (trigger) {
+            e.preventDefault();
+            openModal(trigger.closest('.zuz-combo-card'));
+        }
+    });
+
+    closeBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', closeModal);
+});
+</script>
+
+
+<script>
+    function zuzUpdateHeaderHeight() {
+    var isDesktop = window.innerWidth >= 1200;
+    var stickyHeader = document.getElementById('zuzStickyHeader');
+    var header;
+
+    if (isDesktop && stickyHeader && stickyHeader.classList.contains('is-visible')) {
+        header = stickyHeader;
+    } else if (isDesktop) {
+        header = document.querySelector('.zuz-home-header');
+    } else {
+        header = document.querySelector('.mobile-header');
+    }
+
+    var bottom = header ? header.getBoundingClientRect().bottom : 90;
+    document.documentElement.style.setProperty('--zuz-header-h', Math.max(bottom, 0) + 'px');
+}
+
+zuzUpdateHeaderHeight(); // ADD THIS — run immediately, don't wait for 'load'
+window.addEventListener('load', zuzUpdateHeaderHeight);
+window.addEventListener('resize', zuzUpdateHeaderHeight);
+window.addEventListener('scroll', zuzUpdateHeaderHeight);
+</script>
+
+{% endblock %}

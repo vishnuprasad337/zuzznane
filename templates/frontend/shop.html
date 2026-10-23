@@ -1,0 +1,459 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+
+{% block seo_title %}{{ shop_title|default:"Shop" }} | Zuzanne Handcrafted Ceremonial Collections{% endblock %}
+{% block seo_description %}Browse the full collection of Zuzanne's premium handcrafted Christian ceremonial wear, including baptism sets, holy communion outfits, and custom accessories.{% endblock %}
+
+{% block extra_css %}
+<style>
+
+
+     /* Fixed aspect ratio for product images */
+       .product-thumb .image img {
+        aspect-ratio: 3 / 4;
+        object-fit: cover;
+        object-position: center top;
+        width: 100%;
+        display: block;
+    }
+
+    /* Pagination button styles start */
+    .pagination-wrapper .pagination {
+        gap: 8px;
+    }
+
+    .pagination-wrapper .page-link {
+        color: #000;
+        background-color: transparent;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 8px 14px;
+        transition: all 0.3s ease;
+    }
+
+    .pagination-wrapper .page-link:hover {
+        color: #fff !important;
+        background-color: #eb98af;
+        border-color: #eb98af;
+    }
+
+    .pagination-wrapper .page-item.active .page-link {
+        color: #fff;
+        background-color: #eb98af;
+        border-color: #eb98af;
+    }
+
+    .pagination-wrapper .page-item.disabled .page-link {
+        color: #aaa;
+        background-color: transparent;
+        border-color: #ddd;
+        pointer-events: none;
+    }
+    /* Pagination button styles end */
+
+    /* Mobile 2-column product grid */
+    @media (max-width: 575px) {
+
+        /* Force isotope 2-column layout on mobile */
+        #shop-products .grid-sizer,
+        #shop-products .grid-item.col {
+            width: 50% !important;
+        }
+
+        /* Tighter column padding */
+        #shop-products .grid-item.col {
+            padding-left: 6px !important;
+            padding-right: 6px !important;
+        }
+        #shop-products {
+            margin-left: -6px !important;
+            margin-right: -6px !important;
+        }
+        
+
+        /* Smaller product info text */
+        .product-info .title {
+            font-size: 12px !important;
+            line-height: 1.4 !important;
+            margin-bottom: 4px !important;
+        }
+        .product-info .price {
+            font-size: 11px !important;
+        }
+        .product-info .product-buttons {
+            display: none !important;
+        }
+
+        /* Shop toolbar on mobile */
+        .shop-toolbar {
+            overflow: unset !important;
+            overflow-x: unset !important;
+        }
+        .shop-toolbar .container, 
+        .shop-toolbar .row {
+            overflow: unset !important;
+            flex-wrap: wrap !important;
+        }
+        .isotope-filter.shop-product-filter {
+            white-space: normal !important;
+            flex-wrap: wrap !important;
+            overflow: unset !important;
+        }
+    }
+
+    {% comment %} scrolling text style start  {% endcomment %}
+    .zuz-marquee-section {
+    background: #c39d7d5c;
+    overflow: hidden;
+    padding: 22px 0;
+    border-bottom: 1px solid rgba(231,101,137,0.15);
+    border: 2px solid white;
+}
+
+.zuz-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: zuzMarquee 28s linear infinite;
+}
+
+.zuz-marquee-content {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.zuz-marquee-content span {
+    font-family: var(--font-heading);
+    font-size: 30px;
+    color:white;
+    white-space: nowrap;
+    padding: 0 24px;
+    letter-spacing: 1px;
+}
+
+.zuz-marquee-dot {
+    display: inline-flex;
+    align-items: center;
+}
+
+@keyframes zuzMarquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+.zuz-marquee-section:hover .zuz-marquee-track {
+    animation-play-state: paused;
+}
+
+@media (max-width: 767px) {
+    .zuz-marquee-content span {
+        font-size: 18px;
+        padding: 0 16px;
+    }
+}
+.zuz-marquee-dot img {
+    height: 28px;
+    width: auto;
+    display: block;
+    object-fit: contain;
+}
+
+@media (max-width: 767px) {
+    .zuz-marquee-dot img {
+        height: 20px;
+    }
+}
+
+{% comment %} scrolling text style end here {% endcomment %}
+
+
+{% comment %} Shop Product Filter Styles start {% endcomment %}
+.shop-product-filter a {
+    border: none;
+    background: transparent;
+    color: #999;
+    font-size: 16px;
+    margin-right: 35px;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.shop-product-filter a.active,
+.shop-product-filter a:hover {
+    color: #222;
+}
+
+{% comment %} shop filter style end  {% endcomment %}
+</style>
+{% endblock %}
+
+{% block content %}
+    <!-- Page Title/Header Start -->
+    <div class="page-title-section section" data-bg-image="{% static 'frontend/assets/new_images/hero_section_inner.png' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+
+                    <div class="page-title wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.1s">
+                        <h1 class="title">{{ shop_title|default:"Shop" }}</h1>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            {% if category %}
+                                <li class="breadcrumb-item"><a href="{% url 'collection' collection.slug %}">{{ collection.name }}</a></li>
+                                <li class="breadcrumb-item active">{{ category.name }}</li>
+                            {% elif collection %}
+                                <li class="breadcrumb-item active">{{ collection.name }}</li>
+                            {% else %}
+                                <li class="breadcrumb-item active">{{ shop_title|default:"Shop" }}</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Page Title/Header End -->
+
+      <!-- Scrolling Marquee Text Start -->
+<section class="zuz-marquee-section">
+    <div class="zuz-marquee-track">
+        <div class="zuz-marquee-content">
+            <span>Sacred Threads</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne2.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+            <span>Made With Prayer</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne2.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+            <span>Bespoke Craftsmanship</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne2.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+            <span>Handcrafted Ceremonial Wear</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne2.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+        </div>
+        <div class="zuz-marquee-content" aria-hidden="true">
+            <span>Sacred Threads</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne2.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+            <span>Made With Prayer</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne2.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+            <span>Bespoke Craftsmanship</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne2.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+            <span>Handcrafted Ceremonial Wear</span>
+            <span class="zuz-marquee-dot"><img src="/static/frontend/assets/images/logo/zuzanne2.png" id="mobileLogo" data-default="/static/frontend/assets/images/logo/zuzanne.png" data-scrolled="/static/frontend/assets/images/logo/zuzanne2.png" alt="Logo" class="zuzanne-logo-mobile"></span>
+        </div>
+    </div>
+</section>
+<!-- Scrolling Marquee Text End -->
+
+    <!-- Shop Products Section Start -->
+    <div class="section section-padding pt-0 zuz-floral-section">
+        <div class="zuz-floral-bg zuz-bg-top-right">
+            <img src="{% static 'frontend/assets/new_images/floral2.svg' %}" alt="">
+        </div>
+
+        <!-- Shop Toolbar Start -->
+        <div class="shop-toolbar border-bottom">
+            <div class="container">
+                <div class="row learts-mb-n20">
+
+                    <!-- Isotop Filter Start -->
+                     <div class="col-md col-12 align-self-center learts-mb-20">
+
+                       <div class="isotope-filter shop-product-filter wow fadeInUp">
+                         {% if collection %}
+                         <a class="{% if not category %}active{% endif %}" href="{% url 'collection' collection.slug %}?sort={{ current_sort }}">
+                             All
+                         </a>
+                         {% for cat in categories %}
+                         <a class="{% if category and category.id == cat.id %}active{% endif %}"
+                           href="{% url 'category' cat.collection.slug cat.slug %}?sort={{ current_sort }}">
+                           {{ cat.name }}
+                         </a>
+                         {% endfor %}
+
+                         {% else %}
+                         <a class="active" href="{% url 'shop' %}?sort={{ current_sort }}">
+                           All
+                         </a>
+                         {% endif %}
+
+                         </div>
+                        {% comment %} <div class="isotope-filter shop-product-filter wow fadeInUp" data-wow-duration="1.2s" data-wow-delay="0.15s" data-target="#shop-products">
+                            <button class="{% if not category %}active{% endif %}" data-filter="*">All</button>
+                            {% for cat in categories %}
+                            <button class="{% if category.id == cat.id %}active{% endif %}" data-filter=".cat-{{ cat.id }}">
+                                {{ cat.name }}
+                            </button>
+                            {% endfor %}
+                        </div> {% endcomment %}
+                    </div> 
+                    <!-- Isotop Filter End -->
+
+                    <div class="col-md-auto col-12 learts-mb-20">
+                        <ul class="shop-toolbar-controls">
+
+                            <li>
+                                <div class="product-sorting">
+                                    <select class="nice-select" id="sort-select">
+                                        <option value="latest" {% if current_sort == 'latest' %}selected="selected"{% endif %}>Sort by latest</option>
+                                        <option value="oldest" {% if current_sort == 'oldest' %}selected="selected"{% endif %}>Sort by oldest</option>
+                                        <option value="name_asc" {% if current_sort == 'name_asc' %}selected="selected"{% endif %}>Sort by name: A to Z</option>
+                                        <option value="name_desc" {% if current_sort == 'name_desc' %}selected="selected"{% endif %}>Sort by name: Z to A</option>
+                                    </select>
+                                </div>
+                            </li>
+
+                            <li>
+                                <a class="product-filter-toggle" href="#product-filter">Filters</a>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- Shop Toolbar End -->
+
+        <!-- Product Filter Start -->
+        <div id="product-filter" class="product-filter bg-light">
+            <div class="container">
+                <div class="row row-cols-lg-2 row-cols-md-2 row-cols-2 learts-mb-n30">
+
+                    <!-- Sort by Start -->
+                    <div class="col learts-mb-30">
+                        <h3 class="widget-title product-filter-widget-title">Sort by</h3>
+                        <ul class="widget-list product-filter-widget customScroll">
+                            <li><a href="?sort=latest" style="{% if current_sort == 'latest' %}color: var(--zuz-pink);{% endif %}">Latest</a></li>
+                            <li><a href="?sort=oldest" style="{% if current_sort == 'oldest' %}color: var(--zuz-pink);{% endif %}">Oldest</a></li>
+                            <li><a href="?sort=name_asc" style="{% if current_sort == 'name_asc' %}color: var(--zuz-pink);{% endif %}">Name: A to Z</a></li>
+                            <li><a href="?sort=name_desc" style="{% if current_sort == 'name_desc' %}color: var(--zuz-pink);{% endif %}">Name: Z to A</a></li>
+                        </ul>
+                    </div>
+                    <!-- Sort by End -->
+
+                    <!-- Categories Start -->
+                    <div class="col learts-mb-30">
+                        <h3 class="widget-title product-filter-widget-title">Categories</h3>
+                        <ul class="widget-list product-filter-widget customScroll">
+                            {% for cat in categories %}
+                            <li>
+                                <a href="{% url 'category' cat.collection.slug cat.slug %}?sort={{ current_sort }}">
+                                    {{ cat.name }}
+                                </a>
+                                <span class="count">
+                                    {{ cat.products.count }}
+                                </span>
+                            </li>
+                            {% empty %}
+                            <li><a href="#">No categories</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <!-- Categories End -->
+
+                </div>
+            </div>
+        </div>
+        <!-- Product Filter End -->
+
+        <div class="section learts-mt-70">
+            <div class="container">
+                <!-- Products Start -->
+                <div id="shop-products" class="products isotope-grid row row-cols-xl-3 row-cols-lg-3 row-cols-md-3 row-cols-2">
+
+                    <div class="grid-sizer col-1"></div>
+
+                    {% for product in products %}
+                    <div class="grid-item col cat-{{ product.category.id }} wow fadeInUp" data-wow-duration="1.2s" data-wow-delay="0.05s">
+                        <div class="product">
+                            <div class="product-thumb">
+                                <a href="{% url 'product_detail' product.slug %}" class="image">
+                                    {% with first_img=product.images.all.0 second_img=product.images.all.1 %}
+                                        {% if first_img %}
+                                            <img src="{{ first_img.image.url }}" alt="{{ product.name }}">
+                                            {% if second_img %}
+                                                <img class="image-hover" src="{{ second_img.image.url }}" alt="{{ product.name }}">
+                                            {% endif %}
+                                        {% else %}
+                                            <img src="{% static 'frontend/assets/images/product/s328/product-1.webp' %}" alt="{{ product.name }}">
+                                        {% endif %}
+                                    {% endwith %}
+                                </a>
+                            </div>
+                            <div class="product-info">
+                                <h6 class="title"><a href="{% url 'product_detail' product.slug %}">{{ product.name }}</a></h6>
+                                {% comment %} <span class="price" style="font-size: 14px; font-weight: 500; color: #999;">
+                                    Bespoke Custom Order
+                                </span> {% endcomment %}
+                                <div class="product-buttons">
+                                    <a href="{% url 'product_detail' product.slug %}" class="product-button hintT-top" data-hint="View Details"><i class="fas fa-search"></i></a>
+                                    <a href="#" class="product-button hintT-top" data-hint="WhatsApp" data-zuz-enquiry-trigger data-product="{{product.name }}">
+                                       <i class="fab fa-whatsapp"></i> 
+                                    </a> 
+                                    {% comment %} <a href="{% url 'contact' %}?product={{ product.name }}" class="product-button hintT-top" data-hint="Inquire Now"><i class="far fa-envelope"></i></a> {% endcomment %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="col-12 text-center py-5 wow fadeInUp" data-wow-duration="1.2s" data-wow-delay="0.1s">
+                        <h4 class="text-muted">No products found in this category.</h4>
+                        <p>Please check back later or contact us for custom orders.</p>
+                    </div>
+                    {% endfor %}
+
+                </div>
+                <!-- Products End -->
+
+                {% if page_obj.paginator.num_pages > 1 %}
+                <!-- Pagination Start -->
+                <div class="pagination-wrapper text-center learts-mt-70">
+                    <ul class="pagination justify-content-center">
+
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}&sort={{ current_sort }}">Prev</a>
+                            </li>
+                        {% endif %}
+
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if num == page_obj.number %}
+                                <li class="page-item active">
+                                    <span class="page-link">{{ num }}</span>
+                                </li>
+                            {% else %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ num }}&sort={{ current_sort }}">{{ num }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}&sort={{ current_sort }}">Next</a>
+                            </li>
+                        {% endif %}
+
+                    </ul>
+                </div>
+                {% endif %}
+                <!-- Pagination End  here -->
+            </div>
+        </div>
+
+    </div>
+    <!-- Shop Products Section End -->
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  new WOW({ offset: 250, mobile: true, live: true }).init();
+  
+  $(document).ready(function() {
+      $('#sort-select').on('change', function() {
+          var selectedSort = $(this).val();
+          var url = new URL(window.location.href);
+          url.searchParams.set('sort', selectedSort);
+          window.location.href = url.toString();
+      });
+  });
+</script>
+{% endblock %}
