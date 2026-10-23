@@ -2700,6 +2700,188 @@ and accessories, created with care and prayers at Zuzanne.{% endblock %}
     transform: none !important;   /* no 1.08 -> 1 zoom on this slide, so it looks less zoomed in */
     transition: none !important;
 }
+/* ===== HERO: brighter images (all screens) ===== */
+.zuz-hero-slider .swiper-slide::before {
+    /* was rgba(0,0,0,0.35) – much lighter now, with a soft gradient
+       that is only strong where the text sits */
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.10) 0%,
+        rgba(0, 0, 0, 0.12) 50%,
+        rgba(0, 0, 0, 0.28) 100%
+    );
+}
+
+/* lighter top gradient behind the navbar */
+.zuz-hero-slider::after {
+    height: 140px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.22) 0%, transparent 100%);
+}
+
+/* subtle brightness/saturation lift on the photo itself */
+.zuz-hero-slider .swiper-slide .slide-bg {
+    filter: brightness(1.12) saturate(1.05);
+}
+
+/* keep text readable without a heavy overlay */
+.zuz-hero-slider .zuz-hero-title,
+.zuz-hero-slider .zuz-hero-subtext {
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.45);
+}
+
+/* ===== HERO: fix family cropping on mobile ===== */
+@media (max-width: 991px) {
+
+    /* Don't over-zoom on mobile (removes the 1.08 scale crop) */
+    .zuz-hero-slider .swiper-slide .slide-bg,
+    .zuz-hero-slider .swiper-slide-active .slide-bg {
+        transform: none !important;
+        transition: none !important;
+        background-size: cover;
+        background-position: 50% 20%;   /* keep faces in frame */
+    }
+
+    /* Slightly shorter hero so the photo isn't stretched so tall
+       (less side-cropping on narrow screens) */
+    .zuz-hero-slider,
+    .zuz-hero-slider .swiper-slide {
+        min-height: 85svh;
+    }
+
+    /* Push text to the bottom so faces stay visible */
+    .zuz-hero-slider .swiper-slide {
+        align-items: flex-end;
+    }
+    .zuz-hero-slider .container {
+        padding-top: 0 !important;
+        padding-bottom: 60px;
+    }
+
+    /* Stronger gradient only at the bottom, behind the text */
+    .zuz-hero-slider .swiper-slide::before {
+        background: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.05) 0%,
+            rgba(0, 0, 0, 0.05) 45%,
+            rgba(0, 0, 0, 0.55) 100%
+        );
+    }
+}
+
+/* Slide-specific focus so everyone in the group photo stays visible */
+@media (max-width: 767px) {
+    .zuz-hero-slider .swiper-slide:nth-child(1) .slide-bg { background-position: 50% 15%; }
+    .zuz-hero-slider .swiper-slide:nth-child(2) .slide-bg { background-position: 50% 20%; }
+    .zuz-hero-slider .swiper-slide:nth-child(3) .slide-bg { background-position: 50% 20%; }
+}
+/* ===== HERO: mobile (all slides) ===== */
+@media (max-width: 991px) {
+    .zuz-hero-slider .swiper-slide .slide-bg,
+    .zuz-hero-slider .swiper-slide-active .slide-bg {
+        transform: none !important;
+        transition: none !important;
+        background-size: cover;
+        background-position: 50% 20%;
+    }
+
+    .zuz-hero-slider,
+    .zuz-hero-slider .swiper-slide {
+        min-height: 85svh;
+    }
+
+    .zuz-hero-slider .swiper-slide {
+        align-items: flex-end;
+    }
+
+    .zuz-hero-slider .container {
+        padding-top: 0 !important;
+        padding-bottom: 60px;
+    }
+
+    .zuz-hero-slider .swiper-slide::before {
+        background: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.05) 0%,
+            rgba(0, 0, 0, 0.05) 45%,
+            rgba(0, 0, 0, 0.55) 100%
+        );
+    }
+}
+/* ===== HERO: family slide ===== */
+/* Desktop/tablet: normal full-cover photo, hide the extra img */
+.zuz-hero-slider .slide-bg.slide-bg-family {
+    background-image: var(--hero-img);
+}
+.zuz-hero-slider .family-fit {
+    display: none;
+}
+
+/* Mobile only: hero height = photo height */
+@media (max-width: 991px) {
+
+    /* let the hero section take the active slide's height */
+    .zuz-hero-slider {
+        min-height: 0 !important;
+    }
+
+    .zuz-hero-slider .slide-bg.slide-bg-family {
+        --fam-scale: 240vw;   /* photo width: bigger = people bigger */
+        position: absolute !important;
+        inset: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        background-image: none !important;
+        overflow: hidden;
+        transform: none !important;
+        transition: none !important;
+        filter: none !important;
+    }
+
+    /* backup layer, only visible if the slide is ever taller than the photo */
+    .zuz-hero-slider .slide-bg-family::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: var(--hero-img);
+        background-size: cover;
+        background-position: 52% 100%;
+    }
+
+    /* sharp photo: scaled up, centred on the people, no fade */
+    .zuz-hero-slider .family-fit {
+        display: block;
+        position: absolute;
+        top: 0;
+        width: var(--fam-scale);
+        max-width: none;
+        height: auto;
+        left: calc(50vw - (var(--fam-scale) * 0.52));
+        transform: none;
+        animation: none;
+        -webkit-mask-image: none;
+                mask-image: none;
+    }
+
+    /* slide height = photo height, so no empty area under the buttons */
+    .zuz-hero-slider .swiper-slide:has(.slide-bg-family) {
+        min-height: 140vw !important;
+        align-items: flex-end !important;
+    }
+
+    /* dark gradient at the bottom so the text stays readable */
+    .zuz-hero-slider .swiper-slide:has(.slide-bg-family)::before {
+        background: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(0, 0, 0, 0) 45%,
+            rgba(0, 0, 0, 0.65) 100%
+        ) !important;
+    }
+
+    .zuz-hero-slider .swiper-slide:has(.slide-bg-family) .container {
+        padding: 0 20px 40px !important;
+    }
+}
 </style>
 <script>
     // ====== Sticky Header Scroll Behaviour ======
@@ -2916,8 +3098,11 @@ and accessories, created with care and prayers at Zuzanne.{% endblock %}
 
             <!-- Slide 1 -->
             <div class="swiper-slide">
-                <div class="slide-bg"
-                    style="background-image: url('{% static 'frontend/assets/images/hero-section/family-img.png' %}');"></div>
+                <div class="slide-bg slide-bg-family"
+    style="--hero-img: url('{% static 'frontend/assets/images/hero-section/family-img.png' %}');">
+    <img class="family-fit"
+         src="{% static 'frontend/assets/images/hero-section/family-img.png' %}" alt="Family">
+</div>
                 <div class="container">
                     <div class="zuz-hero-content zuz-hero-content-left">
                         <span class="zuz-hero-label">LIMITED COLLECTION</span>
@@ -2955,7 +3140,7 @@ and accessories, created with care and prayers at Zuzanne.{% endblock %}
             <!-- Slide 3 (optional - add more as needed) -->
             <div class="swiper-slide">
                 <div class="slide-bg"
-                    style="background-image: url('{% static 'frontend/assets/images/hero-section/zuz 01.png' %}');"></div>
+                    style="background-image: url('{% static 'frontend/assets/images/hero-section/zuzz.png' %}');"></div>
                 <div class="container">
                     <div class="zuz-hero-content zuz-hero-content-left">
                         <span class="zuz-hero-label">SACRED CELEBRATIONS</span>
@@ -4246,7 +4431,7 @@ and accessories, created with care and prayers at Zuzanne.{% endblock %}
                                 prevEl: '.cinematic-carousel-nav .swiper-button-prev',
                             },
                             autoplay: {
-                                delay: 4000,
+                                delay: 6500,
                                 disableOnInteraction: false,
                             },
                         });
@@ -4258,9 +4443,10 @@ and accessories, created with care and prayers at Zuzanne.{% endblock %}
                 document.addEventListener('DOMContentLoaded', function () {
                     if (typeof Swiper !== 'undefined') {
                         var heroSwiper = new Swiper('.hero-carousel', {
-                            slidesPerView: 1,
-                            loop: true,
-                            speed: 600,  // Faster transition (was 1000)
+    slidesPerView: 1,
+    loop: true,
+    autoHeight: window.innerWidth <= 991,   // mobile only: hero follows the active slide's height
+    speed: 600,  // Faster transition (was 1000)Faster transition (was 1000)
                             effect: 'fade',
                             fadeEffect: {
                                 crossFade: true
@@ -4274,13 +4460,15 @@ and accessories, created with care and prayers at Zuzanne.{% endblock %}
                                 clickable: true,
                                 dynamicBullets: false,
                             },
-                            autoplay: {
-                                delay: 4000,  // Faster slide change (was 6000)
-                                disableOnInteraction: false,
-                                pauseOnMouseEnter: true,
-                            },
+                            // hero carousel
+autoplay: {
+    delay: 4500,          // optional, a little slower is fine
+    disableOnInteraction: false,
+    pauseOnMouseEnter: true,
+},
                             on: {
                                 slideChangeTransitionStart: function () {
+                                    if (window.innerWidth <= 991) return;
                                     // Reset all slides to zoomed-in state
                                     document.querySelectorAll('.hero-carousel .slide-bg').forEach(function (bg) {
                                         bg.style.transition = 'none'; // snap reset instantly
