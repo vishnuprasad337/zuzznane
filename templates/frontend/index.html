@@ -2699,6 +2699,7 @@ and accessories, created with care and prayers at Zuzanne.{% endblock %}
     background-color: transparent !important;
     transform: none !important;   /* no 1.08 -> 1 zoom on this slide, so it looks less zoomed in */
     transition: none !important;
+    filter: brightness(0.95) saturate(1.05) !important;   /* slide 2 only: slightly reduced brightness */
 }
 /* ===== HERO: brighter images (all screens) ===== */
 .zuz-hero-slider .swiper-slide::before {
@@ -3099,9 +3100,9 @@ and accessories, created with care and prayers at Zuzanne.{% endblock %}
             <!-- Slide 1 -->
             <div class="swiper-slide">
                 <div class="slide-bg slide-bg-family"
-    style="--hero-img: url('{% static 'frontend/assets/images/hero-section/family-img.png' %}');">
+    style="--hero-img: url('{% static 'frontend/assets/images/hero-section/z7.png' %}');">
     <img class="family-fit"
-         src="{% static 'frontend/assets/images/hero-section/family-img.png' %}" alt="Family">
+         src="{% static 'frontend/assets/images/hero-section/z7.png' %}" alt="Family">
 </div>
                 <div class="container">
                     <div class="zuz-hero-content zuz-hero-content-left">
@@ -3118,7 +3119,7 @@ and accessories, created with care and prayers at Zuzanne.{% endblock %}
             <!-- Slide 2 (zoomed out) -->
             <div class="swiper-slide">
                 <div class="slide-bg slide-bg-zoomout"
-                    style="background-image: url('{% static 'frontend/assets/images/hero-section/zuz 12.png' %}');"></div>
+                    style="background-image: url('{% static 'frontend/assets/images/hero-section/z8.png' %}');"></div>
                 <div class="container">
                     <div class="zuz-hero-content zuz-hero-content-right">
                         <span class="zuz-hero-label">BESPOKE CRAFTSMANSHIP</span>
@@ -3140,7 +3141,7 @@ and accessories, created with care and prayers at Zuzanne.{% endblock %}
             <!-- Slide 3 (optional - add more as needed) -->
             <div class="swiper-slide">
                 <div class="slide-bg"
-                    style="background-image: url('{% static 'frontend/assets/images/hero-section/z4.png' %}');"></div>
+                    style="background-image: url('{% static 'frontend/assets/images/hero-section/z5.png' %}');"></div>
                 <div class="container">
                     <div class="zuz-hero-content zuz-hero-content-left">
                         <span class="zuz-hero-label">SACRED CELEBRATIONS</span>
